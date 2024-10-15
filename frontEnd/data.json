@@ -1,0 +1,38 @@
+[
+  {
+    "name": "প্রাথমিক স্তর",
+    "order": 1,
+    "fixed": true,
+    "uuid": "101"
+  },
+  {
+    "name": "ইবতেদায়ী স্তর",
+    "order": 2,
+    "fixed": true,
+    "uuid": "102"
+  },
+  {
+    "name": "মাধ্যমিক স্তর",
+    "order": 3,
+    "fixed": true,
+    "uuid": "103"
+  },
+  {
+    "name": "দাখিল স্তর",
+    "order": 4,
+    "fixed": true,
+    "uuid": "104"
+  },
+  {
+    "name": "কারিগরি স্তর",
+    "order": 5,
+    "fixed": true,
+    "uuid": "105"
+  },
+  {
+    "name": "উচ্চ-মাধ্যমিক স্তর",
+    "order": 6,
+    "fixed": true,
+    "uuid": "106"
+  }
+]
