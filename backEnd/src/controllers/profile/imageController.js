@@ -26,6 +26,8 @@ exports.update = async (req, res) => {
 
     let profile = userResult.profile;
 
+    console.log(userResult)
+
     // Check profile exist
     let profileResult = await Model.findById(profile);
 

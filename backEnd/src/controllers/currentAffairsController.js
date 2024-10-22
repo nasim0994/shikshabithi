@@ -34,12 +34,14 @@ exports.get = async (req, res) => {
     if (category && category != "undefined" && category != "null")
       query.category = category;
 
-    const result = await Model.find(query).populate({
-      path: "user",
-      populate: {
-        path: "profile",
-      }.sort({ _id: -1 }),
-    });
+    const result = await Model.find(query)
+      .populate({
+        path: "user",
+        populate: {
+          path: "profile",
+        },
+      })
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

@@ -38,7 +38,6 @@ const writtenSchema = new mongoose.Schema(
     },
     videoLink: {
       type: String,
-      required: true,
     },
     explain: {
       type: String,

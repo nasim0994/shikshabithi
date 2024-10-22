@@ -47,7 +47,6 @@ const MCQSchema = new mongoose.Schema(
     },
     videoLink: {
       type: String,
-      required: true,
     },
     explain: {
       type: String,

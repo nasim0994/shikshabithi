@@ -10,6 +10,13 @@ export const authApi = baseApi.injectEndpoints({
         body: info,
       }),
     }),
+    addAdmin: builder.mutation({
+      query: (info) => ({
+        url: "/api/user/addAdmin",
+        method: "POST",
+        body: info,
+      }),
+    }),
 
     forgotPassword: builder.mutation({
       query: (email) => ({
@@ -57,6 +64,7 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useRegisterMutation,
+  useAddAdminMutation,
   useForgotPasswordMutation,
   useSetNewPasswordMutation,
   useLoginMutation,

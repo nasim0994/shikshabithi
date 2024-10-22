@@ -243,7 +243,7 @@ const adminSidebarItems = [
         path: "/admin/others/blog-all",
       },
       {
-        title: "Quetions",
+        title: "Ask Quetions",
         path: "/admin/others/question-all",
       },
       {

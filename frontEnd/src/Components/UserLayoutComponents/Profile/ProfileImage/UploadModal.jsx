@@ -16,6 +16,8 @@ export default function UploadModal({ modal, setModal }) {
 
     const image = images[0]?.file;
 
+    console.log("image",image); 
+
     if (!image) {
       return setError("Image is requerd!");
     }
@@ -24,13 +26,16 @@ export default function UploadModal({ modal, setModal }) {
 
     let res = await updateProfileImage(formData);
 
+
+    console.log(res)
+
     if (res?.data?.success) {
       toast.success("Profile image update success");
       setModal(false);
       setError("");
       window.location.reload();
     } else {
-      setError("something went wrong!");
+      setError(res?.data?.message || "Something went wrong!");
       console.log(res);
     }
   };
