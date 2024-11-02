@@ -2,6 +2,7 @@
 import { lazy, Suspense } from "react";
 import Spinner from "../Components/Loader/Spinner/Spinner.jsx";
 import PackageCheckout from "../Pages/UserLayoutPages/PackageCheckout/PackageCheckout.jsx";
+import Subscription from "../Pages/UserLayoutPages/Profile/Subscription/Subscription.jsx";
 
 const ProfileLayout = lazy(() => import("../Layout/ProfileLayout"));
 const UserLayout = lazy(() => import("../Layout/UserLayout"));
@@ -189,6 +190,10 @@ export const userRoutes = {
         {
           path: "/profile/setting",
           element: <Setting />,
+        },
+        {
+          path: "/profile/subscription",
+          element: <Subscription />,
         },
       ],
     },

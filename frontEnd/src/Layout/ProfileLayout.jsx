@@ -11,11 +11,8 @@ export default function ProfileLayout() {
 
   let menus = [
     { _id: 1, name: "Overview", link: "/profile" },
-    { _id: 2, name: "Ask Question", link: "/ask-question" },
-    { _id: 3, name: "Test", link: "/test" },
-    { _id: 4, name: "Subscription", link: "/subscription" },
+    { _id: 4, name: "Subscription", link: "/profile/subscription" },
     { _id: 5, name: "Setting", link: "/profile/setting" },
-    { _id: 6, name: "My Feedback", link: "/my-feedback" },
   ];
 
   return (
