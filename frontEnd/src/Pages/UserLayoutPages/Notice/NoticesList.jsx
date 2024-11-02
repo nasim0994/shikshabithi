@@ -99,7 +99,7 @@ export default function NoticesList({ activeCategory, selectedSubject }) {
                 <img
                   src={
                     notice?.user?.profile?.image
-                      ? `${import.meta.env.VITE_API_URL}/user/image/${
+                      ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                           notice?.user?.profile?.image
                         }`
                       : `/images/demo_user.png`
@@ -164,12 +164,12 @@ export default function NoticesList({ activeCategory, selectedSubject }) {
                 {notice?.image && (
                   <PhotoProvider>
                     <PhotoView
-                      src={`${import.meta.env.VITE_API_URL}/notice/${
+                      src={`${import.meta.env.VITE_BACKEND_URL}/notice/${
                         notice?.image
                       }`}
                     >
                       <img
-                        src={`${import.meta.env.VITE_API_URL}/notice/${
+                        src={`${import.meta.env.VITE_BACKEND_URL}/notice/${
                           notice?.image
                         }`}
                         alt=""

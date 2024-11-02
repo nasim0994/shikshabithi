@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { useAddAdminMutation } from "../../../Redux/api/user/AdminApi";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetAdminByIdQuery,
+  useUpdateAdminMutation,
+} from "../../../Redux/api/user/AdminApi";
 
-export default function AddAdmin() {
+export default function EditAdmin() {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -11,7 +15,19 @@ export default function AddAdmin() {
     password: "",
   });
 
-  const [addAdmin, { isLoading }] = useAddAdminMutation();
+  const { data } = useGetAdminByIdQuery(id);
+  const admin = data?.data;
+
+  useEffect(() => {
+    if (admin) {
+      setFormData({
+        name: admin?.profile?.name,
+        email: admin?.email,
+      });
+    }
+  }, [admin]);
+
+  const [updateAdmin, { isLoading }] = useUpdateAdminMutation();
 
   const handleChange = (e) => {
     setFormData({
@@ -23,7 +39,7 @@ export default function AddAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await addAdmin(formData);
+      const res = await updateAdmin({ id, formData });
       if (res?.data?.success) {
         setFormData({
           name: "",
@@ -31,7 +47,7 @@ export default function AddAdmin() {
           password: "",
         });
 
-        toast.success(res?.data?.message || "Admin added successfully");
+        toast.success(res?.data?.message || "Admin update successfully");
         navigate("/admin/admins");
       } else {
         toast.error(res?.data?.message || "Failed to add admin");
@@ -72,20 +88,10 @@ export default function AddAdmin() {
               required
             />
           </div>
-          <div>
-            <p className="text-neutral-content text-sm">Password</p>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
 
           <div>
             <button type="submit" className="primary_btn" disabled={isLoading}>
-              {isLoading ? "Adding Admin..." : "Add Admin"}
+              {isLoading ? "Editng Admin..." : "Update Admin"}
             </button>
           </div>
         </form>

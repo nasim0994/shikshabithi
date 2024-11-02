@@ -32,7 +32,7 @@ export default function RelatedBlogs({ activeCategory, selectedSubject }) {
           >
             {blog?.image && (
               <img
-                src={`${import.meta.env.VITE_API_URL}/blogs/${blog?.image}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${blog?.image}`}
                 alt=""
                 className="w-7 h-7 rounded"
               />

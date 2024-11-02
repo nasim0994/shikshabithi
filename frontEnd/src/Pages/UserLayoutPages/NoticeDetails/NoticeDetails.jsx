@@ -70,7 +70,9 @@ export default function NoticeDetails() {
 
             {note?.image && (
               <img
-                src={`${import.meta.env.VITE_API_URL}/notice/${note?.image}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/notice/${
+                  note?.image
+                }`}
                 alt=""
                 className="rounded mt-2 border"
               />
@@ -81,7 +83,7 @@ export default function NoticeDetails() {
                 <img
                   src={
                     note?.user?.profile?.image
-                      ? `${import.meta.env.VITE_API_URL}/user/image/${
+                      ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                           note?.user?.profile?.image
                         }`
                       : `/images/demo_user.png`

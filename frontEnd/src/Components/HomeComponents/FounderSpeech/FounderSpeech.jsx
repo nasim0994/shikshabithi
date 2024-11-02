@@ -18,7 +18,9 @@ export default function FounderSpeech() {
           <div>
             <div className="w-40 sm:w-56 h-40 sm:h-56 mx-auto relative border-4 border-gray-200 rounded-full">
               <img
-                src={`${import.meta.env.VITE_API_URL}/founder/${speech?.image}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/founder/${
+                  speech?.image
+                }`}
                 alt=""
                 className="w-full h-full rounded-full"
               />

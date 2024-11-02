@@ -63,7 +63,7 @@ export default function HandNoteDetails() {
             {note?.images?.map((img) => (
               <img
                 key={img?._id}
-                src={`${import.meta.env.VITE_API_URL}/handnotes/${img}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/handnotes/${img}`}
                 alt=""
                 className="w-full h-44 sm:h-60 rounded mt-2 border"
               />
@@ -74,7 +74,7 @@ export default function HandNoteDetails() {
                 <img
                   src={
                     note?.user?.profile?.image
-                      ? `${import.meta.env.VITE_API_URL}/user/image/${
+                      ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                           note?.user?.profile?.image
                         }`
                       : `/images/demo_user.png`
@@ -88,58 +88,58 @@ export default function HandNoteDetails() {
                 </div>
               </div>
               <div className="text-base relative">
-              <button
-                onClick={() => setShareDropdown(!shareDropdown)}
-                className="sharebtn"
-              >
-                <FaShareAlt />
-              </button>
+                <button
+                  onClick={() => setShareDropdown(!shareDropdown)}
+                  className="sharebtn"
+                >
+                  <FaShareAlt />
+                </button>
 
-              {shareDropdown && (
-                <div className="absolute right-0 top-5 min-w-40 px-3 py-2 rounded bg-base-100 shadow">
-                  <div className="flex items-center gap-2">
-                    <p>share:</p>
-                    <div className="mt-2 sm:mt-0 flex gap-2">
-                      <FacebookShareButton
-                        url={`${import.meta.env.VITE_FRONTEND_URL}/handnotes/${
-                          note?._id
-                        }`}
-                      >
-                        <FaFacebook className="text-xl text-blue-600" />
-                      </FacebookShareButton>
-                      <TwitterShareButton
-                        url={`${import.meta.env.VITE_FRONTEND_URL}/handnotes/${
-                          note?._id
-                        }`}
-                      >
-                        <FaSquareXTwitter className="text-xl" />
-                      </TwitterShareButton>
-                      <TelegramShareButton
-                        url={`${import.meta.env.VITE_FRONTEND_URL}/handnotes/${
-                          note?._id
-                        }`}
-                      >
-                        <FaTelegram className="text-xl text-sky-500" />
-                      </TelegramShareButton>
-                      <LinkedinShareButton
-                        url={`${import.meta.env.VITE_FRONTEND_URL}/handnotes/${
-                          note?._id
-                        }`}
-                      >
-                        <FaLinkedin className="text-xl text-sky-400" />
-                      </LinkedinShareButton>
-                      <WhatsappShareButton
-                        url={`${import.meta.env.VITE_FRONTEND_URL}/handnotes/${
-                          note?._id
-                        }`}
-                      >
-                        <FaWhatsappSquare className="text-xl text-green-500" />
-                      </WhatsappShareButton>
+                {shareDropdown && (
+                  <div className="absolute right-0 top-5 min-w-40 px-3 py-2 rounded bg-base-100 shadow">
+                    <div className="flex items-center gap-2">
+                      <p>share:</p>
+                      <div className="mt-2 sm:mt-0 flex gap-2">
+                        <FacebookShareButton
+                          url={`${
+                            import.meta.env.VITE_FRONTEND_URL
+                          }/handnotes/${note?._id}`}
+                        >
+                          <FaFacebook className="text-xl text-blue-600" />
+                        </FacebookShareButton>
+                        <TwitterShareButton
+                          url={`${
+                            import.meta.env.VITE_FRONTEND_URL
+                          }/handnotes/${note?._id}`}
+                        >
+                          <FaSquareXTwitter className="text-xl" />
+                        </TwitterShareButton>
+                        <TelegramShareButton
+                          url={`${
+                            import.meta.env.VITE_FRONTEND_URL
+                          }/handnotes/${note?._id}`}
+                        >
+                          <FaTelegram className="text-xl text-sky-500" />
+                        </TelegramShareButton>
+                        <LinkedinShareButton
+                          url={`${
+                            import.meta.env.VITE_FRONTEND_URL
+                          }/handnotes/${note?._id}`}
+                        >
+                          <FaLinkedin className="text-xl text-sky-400" />
+                        </LinkedinShareButton>
+                        <WhatsappShareButton
+                          url={`${
+                            import.meta.env.VITE_FRONTEND_URL
+                          }/handnotes/${note?._id}`}
+                        >
+                          <FaWhatsappSquare className="text-xl text-green-500" />
+                        </WhatsappShareButton>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

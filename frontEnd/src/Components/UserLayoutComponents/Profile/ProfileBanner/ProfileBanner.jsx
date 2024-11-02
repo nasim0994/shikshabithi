@@ -10,7 +10,7 @@ export default function ProfileBanner({ loggedUser }) {
       <img
         src={
           loggedUser?.data?.profile?.banner
-            ? `${import.meta.env.VITE_API_URL}/user/banner/${
+            ? `${import.meta.env.VITE_BACKEND_URL}/user/banner/${
                 loggedUser?.data?.profile?.banner
               }`
             : `/images/demo-banner.jpg`

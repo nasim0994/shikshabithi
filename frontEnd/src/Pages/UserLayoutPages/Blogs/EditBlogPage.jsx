@@ -169,7 +169,9 @@ export default function EditBlogPage() {
 
                 {blog?.image && (
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/blogs/${blog?.image}`}
+                    src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
+                      blog?.image
+                    }`}
                     alt=""
                     className="w-full h-32 sm:h-40 rounded"
                   />

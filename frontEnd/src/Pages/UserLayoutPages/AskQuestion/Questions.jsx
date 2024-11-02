@@ -125,7 +125,7 @@ export default function Questions({ activeCategory, selectedSubject }) {
                 <img
                   src={
                     question?.user?.profile?.image
-                      ? `${import.meta.env.VITE_API_URL}/user/image/${
+                      ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                           question?.user?.profile?.image
                         }`
                       : `/images/demo_user.png`
@@ -187,7 +187,7 @@ export default function Questions({ activeCategory, selectedSubject }) {
               {question?.image && (
                 <div className="mt-2 text-sm">
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/askQuestion/${
+                    src={`${import.meta.env.VITE_BACKEND_URL}/askQuestion/${
                       question?.image
                     }`}
                     alt=""
@@ -305,7 +305,7 @@ export default function Questions({ activeCategory, selectedSubject }) {
                               src={
                                 ans?.user?.profile?.image
                                   ? `${
-                                      import.meta.env.VITE_API_URL
+                                      import.meta.env.VITE_BACKEND_URL
                                     }/user/image/${ans?.user?.profile?.image}`
                                   : `/images/demo_user.png`
                               }

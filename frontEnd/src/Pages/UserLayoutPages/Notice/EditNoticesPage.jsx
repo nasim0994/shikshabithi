@@ -157,7 +157,7 @@ export default function EditNoticesPage() {
             <div className="flex gap-4">
               {notice?.image && (
                 <img
-                  src={`${import.meta.env.VITE_API_URL}/notice/${
+                  src={`${import.meta.env.VITE_BACKEND_URL}/notice/${
                     notice?.image
                   }`}
                   alt=""

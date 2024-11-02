@@ -9,13 +9,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: info,
       }),
-    }),
-    addAdmin: builder.mutation({
-      query: (info) => ({
-        url: "/api/user/addAdmin",
-        method: "POST",
-        body: info,
-      }),
+      invalidatesTags: ["user"],
     }),
 
     forgotPassword: builder.mutation({
@@ -24,6 +18,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: email,
       }),
+      invalidatesTags: ["user"],
     }),
 
     setNewPassword: builder.mutation({
@@ -32,6 +27,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: info,
       }),
+      invalidatesTags: ["user"],
     }),
 
     login: builder.mutation({
@@ -64,7 +60,6 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useRegisterMutation,
-  useAddAdminMutation,
   useForgotPasswordMutation,
   useSetNewPasswordMutation,
   useLoginMutation,

@@ -163,7 +163,7 @@ export default function EditHandNotePage() {
               {handnote?.images?.map((image) => (
                 <img
                   key={image?._id}
-                  src={`${import.meta.env.VITE_API_URL}/handnotes/${image}`}
+                  src={`${import.meta.env.VITE_BACKEND_URL}/handnotes/${image}`}
                   alt=""
                   className="w-full h-32 border rounded mt-2"
                 />

@@ -44,14 +44,14 @@ const frontendURL = process.env.FRONTEND_URL;
 exports.getAll = async (req, res) => {
   try {
     const result = await User.find({});
-    console.log("User",result);
+    console.log("User", result);
     res.status(200).json({
       success: true,
       message: "User get success",
       data: result,
     });
   } catch (err) {
-    console.log("Error")
+    console.log("Error");
     res.status(500).json({
       success: false,
       error: err.message,
@@ -262,57 +262,3 @@ exports.recoverPassword = async (req, res) => {
 
   res.send({ success: "Password reset successfully" });
 };
-
-
-
-//---------------------------------
-// add admin user and profile table
-
-exports.addAdmin = async (req, res) => {
-  try {
-    const { email, password, name } = req.body;
-
-    const isExisted = await User.exists({ email });
-
-    if (isExisted) {
-      return res.status(400).json({
-        success: false,
-        message: "Admin already exists. Please use a different email.",
-      });
-    }
-
-    const user = await User.create({ email, password, role: "admin" });
-
-    if (user?._id) {
-      let useId = user._id;
-
-      const profile = await Profile.create({ name, user: useId });
-
-      if (profile?._id) {
-        await User.findByIdAndUpdate(useId, { profile: profile._id });
-
-        res.status(200).json({
-          success: true,
-          message: "Admin registered successfully",
-        });
-      } else {
-        await User.findByIdAndDelete(useId);
-        res.status(400).json({
-          success: false,
-          message: "Profile creation failed, admin deleted",
-        });
-      }
-    } else {
-      res.status(400).json({
-        success: false,
-        message: "Admin registration failed",
-      });
-    }
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      error: error.message,
-    });
-  }
-};
-

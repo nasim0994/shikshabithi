@@ -76,7 +76,7 @@ export default function Comments({ selectedBlog }) {
               className="w-10 max-h-10"
               src={
                 comment?.user?.profile?.image
-                  ? `${import.meta.env.VITE_API_URL}/user/image/${
+                  ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                       comment?.user?.profile?.image
                     }`
                   : `/images/demo_user.png`

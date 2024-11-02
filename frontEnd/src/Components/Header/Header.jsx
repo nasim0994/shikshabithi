@@ -40,7 +40,9 @@ export default function Header() {
               "Top Study Zone"
             ) : (
               <img
-                src={`${import.meta.env.VITE_API_URL}/logo/${data?.data?.logo}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
+                  data?.data?.logo
+                }`}
                 alt="logo"
                 className="w-32 sm:w-44"
               />
@@ -136,7 +138,7 @@ export default function Header() {
                     <img
                       src={
                         loggedUser?.data?.profile?.image
-                          ? `${import.meta.env.VITE_API_URL}/user/image/${
+                          ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                               loggedUser?.data?.profile?.image
                             }`
                           : `/images/demo_user.png`

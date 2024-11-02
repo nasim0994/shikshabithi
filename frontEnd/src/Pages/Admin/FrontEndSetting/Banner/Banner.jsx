@@ -129,7 +129,9 @@ export default function Banner() {
 
             {data?.data?.bg && (
               <img
-                src={`${import.meta.env.VITE_API_URL}/banner/${data?.data?.bg}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/banner/${
+                  data?.data?.bg
+                }`}
                 alt=""
                 className="w-32 mt-4"
               />

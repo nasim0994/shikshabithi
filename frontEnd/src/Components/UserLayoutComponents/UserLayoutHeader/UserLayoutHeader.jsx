@@ -55,7 +55,7 @@ export default function UserLayoutHeader({ setUserSidebar }) {
                 <img
                   src={
                     loggedUser?.data?.profile?.image
-                      ? `${import.meta.env.VITE_API_URL}/user/image/${
+                      ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                           loggedUser?.data?.profile?.image
                         }`
                       : `/images/demo_user.png`

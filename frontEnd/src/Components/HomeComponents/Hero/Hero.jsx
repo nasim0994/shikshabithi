@@ -39,7 +39,7 @@ export default function Hero() {
       <div className="relative h-full">
         {/* bg */}
         <img
-          src={`${import.meta.env.VITE_API_URL}/banner/${banner?.bg}`}
+          src={`${import.meta.env.VITE_BACKEND_URL}/banner/${banner?.bg}`}
           alt=""
           className="absolute w-full h-full"
           loading="lazy"

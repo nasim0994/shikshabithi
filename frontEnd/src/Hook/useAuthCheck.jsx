@@ -14,7 +14,7 @@ export default async function useAuthCheck() {
 
   useEffect(() => {
     if (token) {
-      fetch(`${import.meta.env.VITE_API_URL}/api/user/loggedUser`, {
+      fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/loggedUser`, {
         headers: {
           authorization: `bearer ${token}`,
         },

@@ -55,7 +55,7 @@ export default function Features() {
                   <td>{i + 1}</td>
                   <td>
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/feature/${
+                      src={`${import.meta.env.VITE_BACKEND_URL}/feature/${
                         feature?.icon
                       }`}
                       alt=""

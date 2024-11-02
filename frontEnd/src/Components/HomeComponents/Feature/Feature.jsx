@@ -27,7 +27,9 @@ export default function Feature() {
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
             <img
-              src={`${import.meta.env.VITE_API_URL}/feature/${feature?.icon}`}
+              src={`${import.meta.env.VITE_BACKEND_URL}/feature/${
+                feature?.icon
+              }`}
               alt=""
               className="w-8 sm:w-12"
             />

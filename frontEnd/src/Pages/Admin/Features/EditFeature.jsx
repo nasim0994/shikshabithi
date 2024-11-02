@@ -125,7 +125,7 @@ export default function EditFeature() {
 
                 {feature?.icon && (
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/feature/${
+                    src={`${import.meta.env.VITE_BACKEND_URL}/feature/${
                       feature?.icon
                     }`}
                     alt=""

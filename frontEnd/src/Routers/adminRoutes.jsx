@@ -186,6 +186,7 @@ import AddBoardWritten from "../Pages/Admin/Board/BoardWritten/AddBoardWritten.j
 import CurrentAffairs from "../Pages/Admin/CurrentAffairs/CurrentAffairs.jsx";
 import AddCurrentAffairs from "../Pages/Admin/CurrentAffairs/AddCurrentAffairs.jsx";
 import EditCurrentAffairs from "../Pages/Admin/CurrentAffairs/EditCurrentAffairs.jsx";
+import EditAdmin from "../Pages/Admin/Admins/EditAdmin.jsx";
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
 );
@@ -337,6 +338,7 @@ export const adminRoutes = {
     { path: "features/edit/:id", element: <EditFeature /> },
     { path: "admins", element: <Admins /> },
     { path: "admins/add", element: <AddAdmin /> },
+    { path: "admins/edit/:id", element: <EditAdmin /> },
     { path: "front-end/logo", element: <Logo /> },
     { path: "front-end/banner", element: <Banner /> },
     { path: "front-end/founder-speech", element: <FounderSpeech /> },

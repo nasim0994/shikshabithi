@@ -107,7 +107,9 @@ export default function Favicon() {
         </div>
         <div className="mt-4">
           <img
-            src={`${import.meta.env.VITE_API_URL}/favicon/${data?.data?.icon}`}
+            src={`${import.meta.env.VITE_BACKEND_URL}/favicon/${
+              data?.data?.icon
+            }`}
             alt=""
             className="w-32"
           />

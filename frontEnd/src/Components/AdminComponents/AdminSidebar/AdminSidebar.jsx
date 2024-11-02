@@ -276,7 +276,9 @@ export default function AdminSidebar() {
               "Top Study Zone"
             ) : (
               <img
-                src={`${import.meta.env.VITE_API_URL}/logo/${data?.data?.logo}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
+                  data?.data?.logo
+                }`}
                 alt="logo"
                 className="w-3/5 mx-auto"
               />

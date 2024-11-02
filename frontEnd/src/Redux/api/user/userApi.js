@@ -6,7 +6,7 @@ export const userApi = baseApi.injectEndpoints({
       query: () => ({
         url: "/user/allCustomers",
       }),
-      providesTags: ["users"],
+      providesTags: ["user"],
     }),
     getAllUsers: builder.query({
       query: () => ({
@@ -22,7 +22,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "PUT",
         body: userInfo,
       }),
-      invalidatesTags: ["users"],
+      invalidatesTags: ["user"],
     }),
   }),
 });

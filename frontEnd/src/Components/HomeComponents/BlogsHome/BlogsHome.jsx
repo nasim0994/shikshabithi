@@ -37,7 +37,7 @@ export default function BlogsHome() {
                 {blog?.image && (
                   <Link to={`blog/${blog?._id}`} className="text-sm">
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/blogs/${
+                      src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
                         blog?.image
                       }`}
                       alt=""
@@ -51,7 +51,7 @@ export default function BlogsHome() {
                     <img
                       src={
                         blog?.user?.profile?.image
-                          ? `${import.meta.env.VITE_API_URL}/user/image/${
+                          ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                               blog?.user?.profile?.image
                             }`
                           : `/images/demo_user.png`

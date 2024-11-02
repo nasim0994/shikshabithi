@@ -14,7 +14,9 @@ export default function UserLayoutSidebar() {
             "Top Study Zone"
           ) : (
             <img
-              src={`${import.meta.env.VITE_API_URL}/logo/${data?.data?.logo}`}
+              src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
+                data?.data?.logo
+              }`}
               alt="logo"
               className="w-32 sm:w-44"
             />

@@ -109,7 +109,9 @@ export default function Logo() {
             </div>
             <div className="mt-4">
               <img
-                src={`${import.meta.env.VITE_API_URL}/logo/${data?.data?.logo}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
+                  data?.data?.logo
+                }`}
                 alt=""
                 className="w-32"
               />

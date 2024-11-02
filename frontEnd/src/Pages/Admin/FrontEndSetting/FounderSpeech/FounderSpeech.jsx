@@ -166,7 +166,7 @@ export default function FounderSpeech() {
 
                 {data?.success && (
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/founder/${
+                    src={`${import.meta.env.VITE_BACKEND_URL}/founder/${
                       data?.data?.image
                     }`}
                     alt=""

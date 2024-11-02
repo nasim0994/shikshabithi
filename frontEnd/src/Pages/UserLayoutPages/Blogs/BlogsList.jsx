@@ -145,7 +145,9 @@ export default function BlogsList({ activeCategory, selectedSubject }) {
               {blog?.image && (
                 <Link to={`/blog/${blog?._id}`} className="text-sm">
                   <img
-                    src={`${import.meta.env.VITE_API_URL}/blogs/${blog?.image}`}
+                    src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
+                      blog?.image
+                    }`}
                     alt=""
                     className="rounded-t w-full max-h-64 min-h-48"
                   />

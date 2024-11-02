@@ -14,7 +14,7 @@ import Pagination from "../../../../Components/Pagination/Pagination";
 
 export default function AllBlogs() {
   let [currentPage, setCurrentPage] = useState(1);
-  let limit = 10
+  let limit = 10;
   let query = {};
   query["limit"] = limit;
   query["page"] = currentPage;
@@ -126,7 +126,7 @@ export default function AllBlogs() {
                       className="w-12 rounded-sm"
                       src={`${
                         blog?.image
-                          ? `${import.meta.env.VITE_API_URL}/blogs/${
+                          ? `${import.meta.env.VITE_BACKEND_URL}/blogs/${
                               blog.image
                             }`
                           : "/images/defaultimg.png"

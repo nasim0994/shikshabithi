@@ -98,7 +98,7 @@ export default function Notes({ activeCategory, selectedSubject }) {
                 <img
                   src={
                     handnote?.user?.profile?.image
-                      ? `${import.meta.env.VITE_API_URL}/user/image/${
+                      ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                           handnote?.user?.profile?.image
                         }`
                       : `/images/demo_user.png`
@@ -164,10 +164,14 @@ export default function Notes({ activeCategory, selectedSubject }) {
                   {handnote?.images?.slice(0, 2)?.map((img, i) => (
                     <PhotoView
                       key={i}
-                      src={`${import.meta.env.VITE_API_URL}/handnotes/${img}`}
+                      src={`${
+                        import.meta.env.VITE_BACKEND_URL
+                      }/handnotes/${img}`}
                     >
                       <img
-                        src={`${import.meta.env.VITE_API_URL}/handnotes/${img}`}
+                        src={`${
+                          import.meta.env.VITE_BACKEND_URL
+                        }/handnotes/${img}`}
                         alt=""
                         className="w-full h-28 sm:h-60 border rounded mt-2"
                       />

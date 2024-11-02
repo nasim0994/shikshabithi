@@ -38,7 +38,7 @@ export default function Feedbacks() {
               <img
                 src={
                   feedback?.user?.profile?.image
-                    ? `${import.meta.env.VITE_API_URL}/user/image/${
+                    ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                         feedback?.user?.profile?.image
                       }`
                     : `/images/demo_user.png`

@@ -20,6 +20,7 @@ const blogComment = require("./blogCommentRoutes");
 const handnotes = require("./handnotesRoutes");
 const notice = require("./noticeRoutes");
 
+const admin = require("./adminRoutes");
 const user = require("./userRoutes");
 const userImage = require("./profile/imageRoutes");
 const userBanner = require("./profile/bannerRoutes");
@@ -46,6 +47,7 @@ router.use("/blogComment", blogComment);
 router.use("/handnotes", handnotes);
 router.use("/notice", notice);
 
+router.use("/admin", admin);
 router.use("/user", user);
 router.use("/user/image", userImage);
 router.use("/user/banner", userBanner);
@@ -118,7 +120,6 @@ router.use("/job/mcq", jobMcq);
 router.use("/job/modelTest", jobModeltest);
 router.use("/job/modelTestAttend", jobModeltestAttend);
 
-
 //------------------------------------------------------------------------------
 // Board Routes
 //------------------------------------------------------------------------------
@@ -131,6 +132,5 @@ router.use("/board-exam/board", board);
 router.use("/board-exam/boardMcq", boardMcq);
 router.use("/board-exam/boardWritten", boardWritten);
 router.use("/boardExamResult", boardExamResult);
-
 
 module.exports = router;

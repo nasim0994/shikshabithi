@@ -31,7 +31,6 @@ export default function ViewBlog() {
 
   const details = blog?.details && parser(blog?.details);
 
-  
   return (
     <section className="py-5">
       <div className="container">
@@ -41,7 +40,9 @@ export default function ViewBlog() {
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => handleActive(blog?._id)}
-                  className={`text-xs ${blog?.status == "active" ?"third_btn" :"primary_btn"} `}
+                  className={`text-xs ${
+                    blog?.status == "active" ? "third_btn" : "primary_btn"
+                  } `}
                 >
                   {blog?.status}
                 </button>
@@ -63,7 +64,7 @@ export default function ViewBlog() {
                 {blog?.image && (
                   <div className="mt-2 text-sm">
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/blogs/${
+                      src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
                         blog?.image
                       }`}
                       alt=""
@@ -76,7 +77,7 @@ export default function ViewBlog() {
                   <img
                     src={
                       blog?.user?.profile?.image
-                        ? `${import.meta.env.VITE_API_URL}/user/image/${
+                        ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                             blog?.user?.profile?.image
                           }`
                         : `/images/demo_user.png`

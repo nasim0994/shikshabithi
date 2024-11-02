@@ -13,7 +13,6 @@ export default function ViewHandNote() {
   const { data } = useGetHandNoteQuery(id);
   const handNote = data?.data;
 
-
   const [toggleHandNote] = useToggleHandNoteStatusMutation();
 
   let createdAt = handNote?.createdAt;
@@ -66,7 +65,9 @@ export default function ViewHandNote() {
                   {handNote?.images?.map((image, index) => (
                     <img
                       key={index}
-                      src={`${import.meta.env.VITE_API_URL}/handnotes/${image}`}
+                      src={`${
+                        import.meta.env.VITE_BACKEND_URL
+                      }/handnotes/${image}`}
                       alt="image"
                       className="w-full  h-44 sm:h-96 rounded-t mt-2"
                     />
@@ -77,7 +78,7 @@ export default function ViewHandNote() {
                   <img
                     src={
                       handNote?.user?.profile?.image
-                        ? `${import.meta.env.VITE_API_URL}/user/image/${
+                        ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                             handNote?.user?.profile?.image
                           }`
                         : `/images/demo_user.png`

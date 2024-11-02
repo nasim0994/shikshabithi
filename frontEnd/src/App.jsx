@@ -31,7 +31,7 @@ export default function App() {
         <link
           rel="icon"
           type="image/svg+xml"
-          href={`${import.meta.env.VITE_API_URL}/favicon/${icon}`}
+          href={`${import.meta.env.VITE_BACKEND_URL}/favicon/${icon}`}
         />
       </Helmet>
       <RouterProvider router={router} />

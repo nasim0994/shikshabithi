@@ -24,7 +24,9 @@ export default function AllNotice() {
   let [targetedNotice, setTargetedNotice] = useState([]);
   let [active, setActive] = useState(0);
 
-  const pendingNotice = notices?.filter((notice) => notice?.status == "pending");
+  const pendingNotice = notices?.filter(
+    (notice) => notice?.status == "pending"
+  );
   const activeNotice = notices?.filter((notice) => notice?.status == "active");
 
   useEffect(() => {
@@ -126,7 +128,7 @@ export default function AllNotice() {
                       className="w-12 rounded-sm"
                       src={`${
                         notice?.image
-                          ? `${import.meta.env.VITE_API_URL}/notice/${
+                          ? `${import.meta.env.VITE_BACKEND_URL}/notice/${
                               notice.image
                             }`
                           : "/images/defaultimg.png"

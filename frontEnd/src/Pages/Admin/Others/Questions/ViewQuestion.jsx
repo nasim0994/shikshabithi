@@ -62,7 +62,7 @@ export default function ViewQuestion() {
                 {question?.image && (
                   <div className="mt-2 text-sm">
                     <img
-                      src={`${import.meta.env.VITE_API_URL}/askQuestion/${
+                      src={`${import.meta.env.VITE_BACKEND_URL}/askQuestion/${
                         question?.image
                       }`}
                       alt=""
@@ -75,7 +75,7 @@ export default function ViewQuestion() {
                   <img
                     src={
                       question?.user?.profile?.image
-                        ? `${import.meta.env.VITE_API_URL}/user/image/${
+                        ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                             question?.user?.profile?.image
                           }`
                         : `/images/demo_user.png`

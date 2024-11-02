@@ -42,7 +42,6 @@ export default function BlogDetails() {
   const [addBlogView] = useAddBlogViewMutation();
   const blog = data?.data;
 
-
   const [addComment, { isLoading: isCommentLoading }] =
     useAddBlogCommentMutation();
 
@@ -140,7 +139,7 @@ export default function BlogDetails() {
                   {blog?.image && (
                     <div className="mt-2 text-sm">
                       <img
-                        src={`${import.meta.env.VITE_API_URL}/blogs/${
+                        src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
                           blog?.image
                         }`}
                         alt=""
@@ -154,7 +153,7 @@ export default function BlogDetails() {
                       <img
                         src={
                           blog?.user?.profile?.image
-                            ? `${import.meta.env.VITE_API_URL}/user/image/${
+                            ? `${import.meta.env.VITE_BACKEND_URL}/user/image/${
                                 blog?.user?.profile?.image
                               }`
                             : `/images/demo_user.png`
