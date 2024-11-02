@@ -77,58 +77,73 @@ export default function AddPackage() {
             </div>
           </div>
 
-          <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            <div>
-              <p className="mb-1">Free Model Test</p>
+          <div className="mt-3 flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <p className="mb-1 whitespace-nowrap">Free Model Test</p>
               <input
                 type="text"
                 name="freeModelTest"
                 required
                 placeholder="0"
+                className="w-max"
               />
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <p className="mb-1">Paid Model Test</p>
-              <input type="text" name="paidModelTest" required />
+              <input
+                type="text"
+                name="paidModelTest"
+                required
+                className="w-max"
+              />
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <p className="mb-1">Paid Model Test Vendor</p>
-              <input type="text" name="paidModelTestVendor" required />
+              <input
+                type="text"
+                name="paidModelTestVendor"
+                required
+                className="w-max"
+              />
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <p className="mb-1">On Demand Test</p>
               <input
                 type="text"
                 name="onDemandTest"
                 required
                 placeholder="unlimited"
+                className="w-max"
               />
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <p className="mb-1">Download Hand-note</p>
               <input
                 type="text"
                 name="downloadHandNote"
                 required
                 placeholder="0"
+                className="w-max"
               />
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <p className="mb-1">Download PDF Book</p>
               <input
                 type="text"
                 name="downloadPdfBook"
                 required
                 placeholder="0"
+                className="w-max"
               />
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <p className="mb-1">Page View</p>
               <input
                 type="text"
                 name="pageView"
                 required
                 placeholder="unlimited"
+                className="w-max"
               />
             </div>
           </div>

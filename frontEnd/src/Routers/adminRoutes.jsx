@@ -130,8 +130,6 @@ const ViewNotice = lazy(() =>
   import("../Pages/Admin/Others/Notice/ViewNotice.jsx")
 );
 
-const SEO = lazy(() => import("../Pages/Admin/SEO/SEO"));
-
 const Institutes = lazy(() =>
   import("../Pages/Admin/Job/Institutes/Institutes.jsx")
 );
@@ -191,6 +189,7 @@ import PrivacyPolicy from "../Pages/Admin/Pages/PrivacyPolicy/PrivacyPolicy.jsx"
 import PaymentInstruction from "../Pages/Admin/Pricing/PaymentInstruction/PaymentInstruction.jsx";
 import PaymentRequest from "../Pages/Admin/Pricing/PaymentRequest/PaymentRequest.jsx";
 import Users from "../Pages/Admin/Users/Users.jsx";
+import SEOSetting from "../Pages/Admin/SEOSetting/SEOSetting.jsx";
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
 );
@@ -361,7 +360,7 @@ export const adminRoutes = {
     { path: "others/view-handnote/:id", element: <ViewHandNote /> },
     { path: "others/Notice-all", element: <NoticeList /> },
     { path: "others/view-Notice/:id", element: <ViewNotice /> },
-    { path: "seo", element: <SEO /> },
+    { path: "seo", element: <SEOSetting /> },
     { path: "pricing/payment-instruction", element: <PaymentInstruction /> },
     { path: "pricing/payment-request", element: <PaymentRequest /> },
   ],
