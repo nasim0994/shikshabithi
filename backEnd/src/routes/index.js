@@ -34,6 +34,7 @@ const contact = require("./contactRoutes");
 const privacy = require("./privacyRoute");
 const paymentInstruction = require("./paymentInstructionRoute");
 const paymentRequest = require("./paymentRequestRoute");
+const seo = require("./seoRoutes");
 
 router.use("/logo", logo);
 router.use("/favicon", favicon);
@@ -65,6 +66,7 @@ router.use("/contact", contact);
 router.use("/privacy", privacy);
 router.use("/payment-instruction", paymentInstruction);
 router.use("/payment-request", paymentRequest);
+router.use("/seo", seo);
 
 //------------------------------------------------------------------------------
 // Academy Routes

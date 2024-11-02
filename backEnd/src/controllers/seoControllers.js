@@ -1,3 +1,4 @@
+const fs = require("fs");
 const SEO = require("../models/seoModel");
 
 exports.addSEO = async (req, res) => {
@@ -12,23 +13,16 @@ exports.addSEO = async (req, res) => {
       data: result,
     });
   } catch (err) {
-    res.status(500).json({
+    res.json({
       success: false,
-      error: err.message,
+      message: err.message,
     });
   }
 };
 
 exports.getSEO = async (req, res) => {
   try {
-    const result = await SEO.find({});
-
-    if (!result) {
-      return res.status(404).json({
-        success: false,
-        error: "SEO Setting not found",
-      });
-    }
+    const result = await SEO.findOne();
 
     res.status(200).json({
       success: true,
@@ -36,9 +30,9 @@ exports.getSEO = async (req, res) => {
       data: result,
     });
   } catch (err) {
-    res.status(500).json({
+    res.json({
       success: false,
-      error: err.message,
+      message: err.message,
     });
   }
 };
@@ -51,9 +45,9 @@ exports.updateSEO = async (req, res) => {
     const isExist = await SEO.findById(id);
 
     if (!isExist) {
-      return res.status(404).json({
+      return res.json({
         success: false,
-        error: "SEO Setting not found",
+        message: "SEO Setting not found",
       });
     }
 
@@ -62,9 +56,9 @@ exports.updateSEO = async (req, res) => {
     });
 
     if (!result) {
-      return res.status(404).json({
+      return res.json({
         success: false,
-        error: "SEO Setting not updated",
+        message: "SEO Setting not updated",
       });
     }
 
@@ -74,9 +68,9 @@ exports.updateSEO = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).json({
+    res.json({
       success: false,
-      error: error.message,
+      message: error.message,
     });
   }
 };
