@@ -1,3 +1,4 @@
+import { AiFillWarning } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetSinglePackageQuery } from "../../../Redux/api/packageApi";
 import { IoClose } from "react-icons/io5";
@@ -228,6 +229,21 @@ export default function PackageCheckout() {
                     </button>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {paymentMethod == 2 && (
+              <div className="mt-4">
+                <p className="text-yellow-700 text-sm flex items-start gap-2">
+                  <p>
+                    <AiFillWarning className="mt-[3px]" />
+                  </p>
+                  <p>
+                    SSL security is currently not enabled for this payment
+                    system. For the safety of your data, SSL support will be
+                    added soon. Thank you for your patience and understanding.
+                  </p>
+                </p>
               </div>
             )}
           </form>

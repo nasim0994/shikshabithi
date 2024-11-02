@@ -61,7 +61,16 @@ exports.getAll = async (req, res) => {
 
 exports.gettAllUsers = async (req, res) => {
   try {
-    const result = await User.find({ role: "user" }).populate("profile");
+    const result = await User.find({ role: "user" })
+      .populate({
+        path: "package.package",
+        model: "Package",
+      })
+      .populate({
+        path: "profile",
+        model: "Profile",
+      });
+
     console.log("User", result);
     res.status(200).json({
       success: true,
@@ -208,9 +217,16 @@ exports.loginUser = async (req, res) => {
 
 exports.getMe = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.user.email }).populate(
-      "profile"
-    );
+    const user = await User.findOne({ email: req.user.email })
+      .populate({
+        path: "package.package",
+        model: "Package",
+      })
+      .populate({
+        path: "profile",
+        model: "Profile",
+      });
+
     if (user) {
       res.status(200).json({
         success: true,

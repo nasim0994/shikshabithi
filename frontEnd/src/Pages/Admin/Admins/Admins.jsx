@@ -13,6 +13,8 @@ export default function Admins() {
   const { data } = useGetAllAdminsQuery();
   const admins = data?.data;
 
+  console.log(admins);
+
   const [deleteAdmin] = useDeleteAdminMutation();
   const handleDelete = async (id) => {
     if (loggedUser?.data?._id === id) {

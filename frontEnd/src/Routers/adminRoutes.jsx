@@ -190,6 +190,7 @@ import EditAdmin from "../Pages/Admin/Admins/EditAdmin.jsx";
 import PrivacyPolicy from "../Pages/Admin/Pages/PrivacyPolicy/PrivacyPolicy.jsx";
 import PaymentInstruction from "../Pages/Admin/Pricing/PaymentInstruction/PaymentInstruction.jsx";
 import PaymentRequest from "../Pages/Admin/Pricing/PaymentRequest/PaymentRequest.jsx";
+import Users from "../Pages/Admin/Users/Users.jsx";
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
 );
@@ -339,6 +340,7 @@ export const adminRoutes = {
     { path: "features", element: <Features /> },
     { path: "features/add", element: <AddFeature /> },
     { path: "features/edit/:id", element: <EditFeature /> },
+    { path: "users", element: <Users /> },
     { path: "admins", element: <Admins /> },
     { path: "admins/add", element: <AddAdmin /> },
     { path: "admins/edit/:id", element: <EditAdmin /> },

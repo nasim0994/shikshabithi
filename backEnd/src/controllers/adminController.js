@@ -51,9 +51,16 @@ exports.addAdmin = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const result = await User.find({ role: "admin" }, { password: 0 }).populate(
-      "profile"
-    );
+    const result = await User.find({ role: "admin" }, { password: 0 })
+      .populate({
+        path: "package.package",
+        model: "Package",
+      })
+      .populate({
+        path: "profile",
+        model: "Profile",
+      });
+
     res.status(200).json({
       success: true,
       message: "User get success",

@@ -6,9 +6,9 @@ import {
   MdOutlineDashboard,
   MdFeaturedPlayList,
 } from "react-icons/md";
-import { FaSchool, FaReadme, FaClipboard } from "react-icons/fa";
+import { FaSchool, FaReadme, FaClipboard, FaUsers } from "react-icons/fa";
 
-import { RiAdminFill, RiPsychotherapyFill } from "react-icons/ri";
+import { RiPsychotherapyFill } from "react-icons/ri";
 import { FaChartLine, FaTags } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { TbPackages } from "react-icons/tb";
@@ -201,7 +201,7 @@ const adminSidebarItems = [
   },
 
   {
-    icon: <RiAdminFill />,
+    icon: <FaUsers />,
     title: "Users",
     subMenu: [
       {
@@ -209,7 +209,7 @@ const adminSidebarItems = [
         path: "/admin/users",
       },
       {
-        title: "Add Administators",
+        title: "All Administators",
         path: "/admin/admins",
       },
     ],
