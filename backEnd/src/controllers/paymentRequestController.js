@@ -104,11 +104,27 @@ exports.destroy = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
   const id = req?.params?.id;
+  const { status } = req?.body;
 
   try {
-    const result = await Model.findByIdAndUpdate(id, {
-      status: req.body.status,
-    });
+    const paymentRequest = await Model.findById(id);
+
+    if (!paymentRequest) {
+      return res.json({
+        success: false,
+        message: "Payment Request not found",
+      });
+    }
+
+    let newData = {
+      status,
+    };
+
+    if (status == "approved" && !paymentRequest?.firstApproveDate) {
+      newData.firstApproveDate = new Date();
+    }
+
+    const result = await Model.findByIdAndUpdate(id, newData, { new: true });
 
     if (!result) {
       return res.json({
@@ -117,19 +133,17 @@ exports.updateStatus = async (req, res) => {
       });
     }
 
-    // status == "approved" add user model package id
-    const paymentRequest = await Model.findById(id);
-    const user = await User.findById(paymentRequest?.user);
-    const package = await Package.findById(paymentRequest?.package);
+    const user = await User.findById(result?.user);
+    const package = await Package.findById(result?.package);
 
-    let expiresDate = new Date();
-    if (package.type == "monthly") {
-      expiresDate.setMonth(expiresDate.getMonth() + 1);
-    } else {
-      expiresDate.setFullYear(expiresDate.getFullYear() + 1);
-    }
+    if (status == "approved" && result?.firstApproveDate) {
+      let expiresDate = result?.firstApproveDate;
+      if (package?.type == "monthly") {
+        expiresDate.setMonth(expiresDate.getMonth() + 1);
+      } else {
+        expiresDate.setFullYear(expiresDate.getFullYear() + 1);
+      }
 
-    if (req.body.status == "approved") {
       user.package.package = paymentRequest?.package;
       user.package.expires = expiresDate;
       user.package.status = "active";

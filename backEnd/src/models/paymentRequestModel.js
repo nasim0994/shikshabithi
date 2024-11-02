@@ -40,6 +40,9 @@ const paymentRequestSchema = new mongoose.Schema(
     paymentDate: {
       type: Date,
     },
+    firstApproveDate: {
+      type: Date,
+    },
   },
   { timestamps: false }
 );

@@ -202,8 +202,17 @@ const adminSidebarItems = [
 
   {
     icon: <RiAdminFill />,
-    title: "Administrator",
-    path: "/admin/admins",
+    title: "Users",
+    subMenu: [
+      {
+        title: "All Users",
+        path: "/admin/users",
+      },
+      {
+        title: "Add Administators",
+        path: "/admin/admins",
+      },
+    ],
   },
 
   {
