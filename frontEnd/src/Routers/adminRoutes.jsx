@@ -188,6 +188,8 @@ import AddCurrentAffairs from "../Pages/Admin/CurrentAffairs/AddCurrentAffairs.j
 import EditCurrentAffairs from "../Pages/Admin/CurrentAffairs/EditCurrentAffairs.jsx";
 import EditAdmin from "../Pages/Admin/Admins/EditAdmin.jsx";
 import PrivacyPolicy from "../Pages/Admin/Pages/PrivacyPolicy/PrivacyPolicy.jsx";
+import PaymentInstruction from "../Pages/Admin/Pricing/PaymentInstruction/PaymentInstruction.jsx";
+import PaymentRequest from "../Pages/Admin/Pricing/PaymentRequest/PaymentRequest.jsx";
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
 );
@@ -358,5 +360,7 @@ export const adminRoutes = {
     { path: "others/Notice-all", element: <NoticeList /> },
     { path: "others/view-Notice/:id", element: <ViewNotice /> },
     { path: "seo", element: <SEO /> },
+    { path: "pricing/payment-instruction", element: <PaymentInstruction /> },
+    { path: "pricing/payment-request", element: <PaymentRequest /> },
   ],
 };

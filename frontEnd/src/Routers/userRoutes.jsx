@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, Suspense } from "react";
 import Spinner from "../Components/Loader/Spinner/Spinner.jsx";
+import PackageCheckout from "../Pages/UserLayoutPages/PackageCheckout/PackageCheckout.jsx";
 
 const ProfileLayout = lazy(() => import("../Layout/ProfileLayout"));
 const UserLayout = lazy(() => import("../Layout/UserLayout"));
@@ -277,7 +278,7 @@ export const userRoutes = {
     },
     {
       path: "job/model-test/attend/:id",
-      element: <JobTestAttend/>,
+      element: <JobTestAttend />,
     },
     {
       path: "academy/model-test/attend/:id",
@@ -314,6 +315,14 @@ export const userRoutes = {
     {
       path: "packages",
       element: <PackagesU />,
+    },
+    {
+      path: "package/checkout/:id",
+      element: (
+        <PrivateRoute>
+          <PackageCheckout />
+        </PrivateRoute>
+      ),
     },
     {
       path: "current-affairs",

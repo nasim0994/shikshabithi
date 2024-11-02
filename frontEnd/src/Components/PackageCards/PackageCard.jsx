@@ -83,7 +83,7 @@ export default function PackageCard({ item }) {
       <div className="mt-10 text-center text-xs">
         {user?._id ? (
           <Link
-            to={`/package/${item?._id}`}
+            to={`/package/checkout/${item?._id}`}
             className="bg-primary px-6 py-2 rounded text-base-100"
           >
             Purchase Now
@@ -94,7 +94,7 @@ export default function PackageCard({ item }) {
               To Purchase a Package, please
             </p>
             <Link
-              to="/login"
+              to={`/package/checkout/${item?._id}`}
               className="bg-primary px-6 py-2 rounded text-base-100 mt-2 block w-max mx-auto"
             >
               Login Now

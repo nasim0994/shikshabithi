@@ -187,8 +187,17 @@ const adminSidebarItems = [
 
   {
     icon: <TbPackages />,
-    title: "Packages",
-    path: "/admin/packages",
+    title: "Pricing",
+    subMenu: [
+      {
+        title: "All Packages",
+        path: "/admin/packages",
+      },
+      {
+        title: "Payment Instruction",
+        path: "/admin/pricing/payment-instruction",
+      },
+    ],
   },
 
   {

@@ -9,8 +9,17 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
     },
     package: {
-      type: mongoose.Types.ObjectId,
-      ref: "Package",
+      package: {
+        type: mongoose.Types.ObjectId,
+        ref: "Package",
+      },
+      expires: {
+        type: Date,
+      },
+      status: {
+        type: String,
+        default: "pending",
+      },
     },
     email: {
       type: String,
@@ -32,7 +41,6 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Profile",
     },
-    
   },
   { timestamps: true }
 );
