@@ -1,16 +1,19 @@
 import { Link } from "react-router-dom";
-import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
-import { FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import React from "react";
+import * as FaIcons from "react-icons/fa";
+
 import { useGetLogoQuery } from "../../Redux/api/logoApi";
+import { useGetContactQuery } from "../../Redux/api/contactApi";
 
 export default function Footer() {
   const { data, isLoading } = useGetLogoQuery();
+  const { data: contact } = useGetContactQuery();
 
   return (
     <footer className="bg-gray-100 pt-10 pb-5">
       <div className="container">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 pb-14">
-          <div>
+          <div className="md:col-span-2">
             {isLoading ? (
               "Top Study Zone"
             ) : (
@@ -42,52 +45,29 @@ export default function Footer() {
                   FAQ
                 </Link>
               </li>
-            </ul>
-          </div>
 
-          <div>
-            <h2 className="text-neutral text-xl font-medium">TSZ POLICY</h2>
-            <ul className="text-neutral/80 font-light mt-2 flex flex-col gap-1 text-[15px]">
               <li>
-                <Link to="/" className="hover:underline">
+                <Link to="/privacy-policy" className="hover:underline">
                   Privacy Policy
                 </Link>
               </li>
-              <li>
-                <Link to="/" className="hover:underline">
-                  Terms and Condition
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:underline">
-                  Refund Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/" className="hover:underline">
-                  Cookies Policy
-                </Link>
-              </li>
             </ul>
           </div>
 
           <div>
-            <h2 className="text-neutral text-xl font-medium">
-              SUBSCRIBE OUR NEWSLETTER
-            </h2>
-            <form className="mt-2">
-              <div className="flex text-sm">
-                <input
-                  type="text"
-                  name=""
-                  className="rounded-r-none"
-                  placeholder="example@gmail.com"
-                />
-                <button className="rounded-r bg-primary text-base-100 px-4 py-2">
-                  Subscribe
-                </button>
-              </div>
-            </form>
+            <h2 className="text-neutral text-xl font-medium">Contact</h2>
+
+            <ul className="mt-2 text-[15px] text-neutral-content">
+              <li>
+                <p>{contact?.data[0]?.phone}</p>
+              </li>
+              <li className="my-1">
+                <p>{contact?.data[0]?.email}</p>
+              </li>
+              <li>
+                <p className="italic">{contact?.data[0]?.address}</p>
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -104,43 +84,18 @@ export default function Footer() {
               </Link>
             </p>
 
-            <div className="flex gap-3 items-center">
-              <Link
-                to=""
-                target="_blank"
-                className="w-7 h-7 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-mt-1 duration-200"
-              >
-                <BiLogoFacebook className="text-xl" />
-              </Link>
-              <Link
-                to=""
-                target="_blank"
-                className="w-7 h-7 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-mt-1 duration-200"
-              >
-                <BiLogoLinkedin className="text-xl" />
-              </Link>
-              <Link
-                to=""
-                target="_blank"
-                className="w-7 h-7 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-mt-1 duration-200"
-              >
-                <FaTwitter className="text-lg" />
-              </Link>
-              <Link
-                to=""
-                target="_blank"
-                className="w-7 h-7 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-mt-1 duration-200"
-              >
-                <FaInstagram className="text-xl" />
-              </Link>
-              <Link
-                to=""
-                target="_blank"
-                className="w-7 h-7 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-mt-1 duration-200"
-              >
-                <FaYoutube className="text-xl" />
-              </Link>
-            </div>
+            <ul className="flex items-center gap-2">
+              {contact?.data[0]?.socials?.map((social, i) => (
+                <Link
+                  key={i}
+                  to={social?.url}
+                  target="_blank"
+                  className="text-xl text-neutral duration-300 hover:text-primary"
+                >
+                  {React.createElement(FaIcons[social?.icon])}
+                </Link>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

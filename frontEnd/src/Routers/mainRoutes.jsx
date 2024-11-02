@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home/Home";
 import Spinner from "../Components/Loader/Spinner/Spinner";
+import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 const BlogDetails = lazy(() =>
   import("../Pages/UserLayoutPages/BlogDetails/BlogDetails")
 );
@@ -34,6 +35,10 @@ export const mainRoutes = {
     {
       path: "blog/:id",
       element: <BlogDetails />,
+    },
+    {
+      path: "/privacy-policy",
+      element: <PrivacyPolicy />,
     },
     {
       path: "blog/add",

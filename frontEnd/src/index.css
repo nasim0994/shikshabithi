@@ -6,15 +6,14 @@
 
 :root {
   --primary: #2e236c;
-  --secondary: #e53838;  
-  --third: #00C000;  
+  --secondary: #e53838;
+  --third: #00c000;
 }
 
 @font-face {
   font-family: "solaimanlipi";
   src: url("./assets/font/SolaimanLipi_22-02-2012.ttf") format("truetype");
 }
-
 
 @font-face {
   font-family: "solaimanlipibold";
@@ -266,4 +265,8 @@ table tbody tr:nth-child(even) {
 
 .animate-drop {
   animation: drop 1s infinite ease-in-out;
+}
+
+.h400 .jodit-workplace {
+  height: 400px !important;
 }

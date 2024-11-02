@@ -4,7 +4,7 @@ import ExamCountdown from "/src/assets/images/banner/exam_countdown.png";
 import { useGetBannerQuery } from "../../../Redux/api/bannerApi";
 import { useGetAcademyMCQQuery } from "../../../Redux/api/academy/mcqApi";
 import { useGetAcademyWrittenQuery } from "../../../Redux/api/academy/writtenApi";
-import { useGetAllUsersQuery } from "../../../Redux/api/user/userApi";
+import { useGetAllUsersOnlyQuery } from "../../../Redux/api/user/userApi";
 import { useGetAdmissionModelTestQuery } from "../../../Redux/api/admission/admissionModelTestApi";
 import { useGetExamModelTestQuery } from "../../../Redux/api/academy/academyModelTestApi";
 import { useGetJobModelTestQuery } from "../../../Redux/api/job/jobModelTestApi";
@@ -16,7 +16,7 @@ export default function Hero() {
   const { data: mcq } = useGetAcademyMCQQuery();
   const { data: written } = useGetAcademyWrittenQuery();
 
-  const { data: user } = useGetAllUsersQuery();
+  const { data: user } = useGetAllUsersOnlyQuery();
 
   const { data: admission } = useGetAdmissionModelTestQuery();
   const { data: academy } = useGetExamModelTestQuery();
@@ -24,12 +24,9 @@ export default function Hero() {
 
   const totalMcq = mcq?.data?.length;
   const totalWritten = written?.data?.length;
-  const totalUser = user;
 
   const totalExam =
     admission?.data?.length + academy?.data?.length + job?.data?.length;
-
-  console.log("Calculation", totalExam);
 
   if (isLoading)
     return <div className="w-full h-[40vh] md:h-[60vh] bg-black/90"></div>;
@@ -79,7 +76,9 @@ export default function Hero() {
                 className="w-7 h-7 md:w-10 md:h-9 rounded-full"
               />
               <div>
-                <h2 className="md:text-xl font-bold text-base-100">900K+</h2>
+                <h2 className="md:text-xl font-bold text-base-100">
+                  {user?.data?.length}+
+                </h2>
                 <h3 className="text-xs md:text-sm text-base-100/40">
                   শিক্ষার্থী
                 </h3>

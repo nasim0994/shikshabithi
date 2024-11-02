@@ -102,7 +102,7 @@ const Banner = lazy(() =>
 );
 
 const ContactUs = lazy(() =>
-  import("../Pages/Admin/FrontEndSetting/ContactUs/ContactUs")
+  import("../Pages/Admin/FrontEndSetting/Contact/Contact")
 );
 
 const Profile = lazy(() =>
@@ -187,6 +187,7 @@ import CurrentAffairs from "../Pages/Admin/CurrentAffairs/CurrentAffairs.jsx";
 import AddCurrentAffairs from "../Pages/Admin/CurrentAffairs/AddCurrentAffairs.jsx";
 import EditCurrentAffairs from "../Pages/Admin/CurrentAffairs/EditCurrentAffairs.jsx";
 import EditAdmin from "../Pages/Admin/Admins/EditAdmin.jsx";
+import PrivacyPolicy from "../Pages/Admin/Pages/PrivacyPolicy/PrivacyPolicy.jsx";
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
 );
@@ -342,10 +343,11 @@ export const adminRoutes = {
     { path: "front-end/logo", element: <Logo /> },
     { path: "front-end/banner", element: <Banner /> },
     { path: "front-end/founder-speech", element: <FounderSpeech /> },
-    { path: "front-end/contact", element: <ContactUs /> },
     { path: "front-end/faq", element: <AllFAQ /> },
     { path: "front-end/faq/add", element: <AddFaq /> },
     { path: "front-end/faq/edit/:id", element: <EditFaq /> },
+    { path: "page/contact", element: <ContactUs /> },
+    { path: "page/privacy-policy", element: <PrivacyPolicy /> },
     { path: "general-setting/profile", element: <Profile /> },
     { path: "others/blog-all", element: <BlogList /> },
     { path: "others/view-blog/:id", element: <ViewBlog /> },

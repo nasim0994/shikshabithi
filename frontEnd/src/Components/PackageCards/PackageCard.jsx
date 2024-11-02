@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 export default function PackageCard({ item }) {
+  const { loggedUser } = useSelector((state) => state.user);
+  const user = loggedUser?.data;
+
   return (
     <div className="px-4 py-10 bg-gray-100 rounded">
       <h3 className="text-center text-2xl sm:text-3xl text-neutral font-bold">
@@ -77,13 +81,26 @@ export default function PackageCard({ item }) {
       </ul>
 
       <div className="mt-10 text-center text-xs">
-        <p className="text-neutral-content">To Purchase a Package, please</p>
-        <Link
-          to="/login"
-          className="bg-primary px-6 py-2 rounded text-base-100 mt-2 block w-max mx-auto"
-        >
-          Login Now
-        </Link>
+        {user?._id ? (
+          <Link
+            to={`/package/${item?._id}`}
+            className="bg-primary px-6 py-2 rounded text-base-100"
+          >
+            Purchase Now
+          </Link>
+        ) : (
+          <>
+            <p className="text-neutral-content">
+              To Purchase a Package, please
+            </p>
+            <Link
+              to="/login"
+              className="bg-primary px-6 py-2 rounded text-base-100 mt-2 block w-max mx-auto"
+            >
+              Login Now
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

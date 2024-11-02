@@ -59,6 +59,23 @@ exports.getAll = async (req, res) => {
   }
 };
 
+exports.gettAllUsers = async (req, res) => {
+  try {
+    const result = await User.find({ role: "user" }).populate("profile");
+    console.log("User", result);
+    res.status(200).json({
+      success: true,
+      message: "User get success",
+      data: result,
+    });
+  } catch (err) {
+    res.json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 exports.processRegister = async (req, res) => {
   try {
     const newUser = req.body;

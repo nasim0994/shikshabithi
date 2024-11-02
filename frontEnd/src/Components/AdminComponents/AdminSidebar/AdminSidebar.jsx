@@ -1,3 +1,4 @@
+import { RiPagesFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 import {
@@ -213,12 +214,27 @@ const adminSidebarItems = [
         path: "/admin/front-end/founder-speech",
       },
       {
-        title: "Contact",
-        path: "/admin/front-end/contact",
-      },
-      {
         title: "FAQ",
         path: "/admin/front-end/faq",
+      },
+    ],
+  },
+
+  {
+    icon: <RiPagesFill />,
+    title: "Pages",
+    subMenu: [
+      {
+        title: "Contact",
+        path: "/admin/page/contact",
+      },
+      {
+        title: "Privacy Policy",
+        path: "/admin/page/privacy-policy",
+      },
+      {
+        title: "Terms and Condition",
+        path: "/admin/page/terms-and-condition",
       },
     ],
   },

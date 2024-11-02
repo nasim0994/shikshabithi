@@ -30,6 +30,8 @@ const userPassword = require("./profile/passwordRoutes");
 const tag = require("./tagRoutes");
 const year = require("./yearsRoute");
 const currentAffairs = require("./currentAffairsRoutes");
+const contact = require("./contactRoutes");
+const privacy = require("./privacyRoute");
 
 router.use("/logo", logo);
 router.use("/favicon", favicon);
@@ -57,6 +59,8 @@ router.use("/user/password", userPassword);
 router.use("/tag", tag);
 router.use("/year", year);
 router.use("/currentAffairs", currentAffairs);
+router.use("/contact", contact);
+router.use("/privacy", privacy);
 
 //------------------------------------------------------------------------------
 // Academy Routes

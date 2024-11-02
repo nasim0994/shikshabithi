@@ -8,9 +8,11 @@ const {
   forgotPassword,
   recoverPassword,
   getAll,
+  gettAllUsers,
 } = require("../controllers/userController");
 
 router.get("/all", getAll);
+router.get("/all/user", gettAllUsers);
 router.post("/processRegister", processRegister);
 router.get("/verify/:token", registerUser);
 router.post("/login", loginUser);

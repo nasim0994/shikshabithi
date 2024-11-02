@@ -4,13 +4,22 @@ export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     allCustomers: builder.query({
       query: () => ({
-        url: "/user/allCustomers",
+        url: "/api/user/allCustomers",
       }),
       providesTags: ["user"],
     }),
+
     getAllUsers: builder.query({
       query: () => ({
-        url: "/user/all",
+        url: "/api/user/all",
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+
+    getAllUsersOnly: builder.query({
+      query: () => ({
+        url: "/api/user/all/user",
         method: "GET",
       }),
       providesTags: ["user"],
@@ -18,7 +27,7 @@ export const userApi = baseApi.injectEndpoints({
 
     editUserInfo: builder.mutation({
       query: ({ id, userInfo }) => ({
-        url: `/user/update/info/${id}`,
+        url: `/api/user/update/info/${id}`,
         method: "PUT",
         body: userInfo,
       }),
@@ -29,6 +38,7 @@ export const userApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllUsersQuery,
+  useGetAllUsersOnlyQuery,
   useAllCustomersQuery,
   useEditUserInfoMutation,
 } = userApi;
