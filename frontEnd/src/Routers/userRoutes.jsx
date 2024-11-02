@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import Spinner from "../Components/Loader/Spinner/Spinner.jsx";
 import PackageCheckout from "../Pages/UserLayoutPages/PackageCheckout/PackageCheckout.jsx";
 import Subscription from "../Pages/UserLayoutPages/Profile/Subscription/Subscription.jsx";
+import AddModelTest from "../Pages/UserLayoutPages/Exam/AddModelTest/AddModelTest.jsx";
 
 const ProfileLayout = lazy(() => import("../Layout/ProfileLayout"));
 const UserLayout = lazy(() => import("../Layout/UserLayout"));
@@ -268,6 +269,14 @@ export const userRoutes = {
     {
       path: "exam-list",
       element: <ExamList />,
+    },
+    {
+      path: "/modeltest/add",
+      element: (
+        <PrivateRoute>
+          <AddModelTest />
+        </PrivateRoute>
+      ),
     },
     {
       path: "exam-list/academy/:id",

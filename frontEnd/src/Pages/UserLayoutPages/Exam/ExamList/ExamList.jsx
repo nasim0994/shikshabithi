@@ -6,7 +6,7 @@ import { FaBookReader } from "react-icons/fa";
 import { PiBagFill } from "react-icons/pi";
 import AcademyExam from "./AcademyExam";
 import AdmissionExam from "./AdmissionExam";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import JobExam from "./JobExam";
 
 export default function ExamList() {
@@ -43,7 +43,13 @@ export default function ExamList() {
           <h3 className="text-primary font-medium text-xl">
             Exams || Model Test
           </h3>
-          <BackBtn />
+          <div className="flex items-center gap-2">
+            <BackBtn />
+
+            <Link to="/modeltest/add" className="text-xs primary_btn">
+              Add Model Test
+            </Link>
+          </div>
         </div>
 
         <div className="flex overflow-x-auto gap-2 mt-2 horizontal_scroll">

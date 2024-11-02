@@ -362,6 +362,6 @@ export const adminRoutes = {
     { path: "others/view-Notice/:id", element: <ViewNotice /> },
     { path: "seo", element: <SEOSetting /> },
     { path: "pricing/payment-instruction", element: <PaymentInstruction /> },
-    { path: "pricing/payment-request", element: <PaymentRequest /> },
+    { path: "pricing/payment-history", element: <PaymentRequest /> },
   ],
 };

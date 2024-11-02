@@ -197,6 +197,10 @@ const adminSidebarItems = [
         title: "Payment Instruction",
         path: "/admin/pricing/payment-instruction",
       },
+      {
+        title: "Payment History",
+        path: "/admin/pricing/payment-history",
+      },
     ],
   },
 
@@ -249,10 +253,6 @@ const adminSidebarItems = [
       {
         title: "Privacy Policy",
         path: "/admin/page/privacy-policy",
-      },
-      {
-        title: "Terms and Condition",
-        path: "/admin/page/terms-and-condition",
       },
     ],
   },

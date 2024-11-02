@@ -44,14 +44,13 @@ const frontendURL = process.env.FRONTEND_URL;
 exports.getAll = async (req, res) => {
   try {
     const result = await User.find({});
-    console.log("User", result);
+
     res.status(200).json({
       success: true,
       message: "User get success",
       data: result,
     });
   } catch (err) {
-    console.log("Error");
     res.status(500).json({
       success: false,
       error: err.message,
@@ -71,7 +70,6 @@ exports.gettAllUsers = async (req, res) => {
         model: "Profile",
       });
 
-    console.log("User", result);
     res.status(200).json({
       success: true,
       message: "User get success",
@@ -272,8 +270,6 @@ exports.forgotPassword = async (req, res) => {
 
 exports.recoverPassword = async (req, res) => {
   const { token, newPassword } = req.body;
-
-  console.log(token);
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
   if (!decoded) {

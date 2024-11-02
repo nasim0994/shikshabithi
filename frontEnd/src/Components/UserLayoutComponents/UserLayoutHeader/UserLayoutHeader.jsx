@@ -35,11 +35,15 @@ export default function UserLayoutHeader({ setUserSidebar }) {
               </li>
 
               <li>
+                <NavLink to="/current-affairs">Current Affairs</NavLink>
+              </li>
+
+              <li>
                 <NavLink to="/blogs">Blogs</NavLink>
               </li>
 
               <li>
-                <NavLink to="/packages">Package</NavLink>
+                <NavLink to="/packages">Packages</NavLink>
               </li>
             </ul>
           </nav>
