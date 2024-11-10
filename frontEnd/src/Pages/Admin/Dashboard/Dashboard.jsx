@@ -2,7 +2,7 @@ import { MdFeaturedPlayList, MdOutlineCategory } from "react-icons/md";
 import { TbPackages } from "react-icons/tb";
 import { RiAdminFill } from "react-icons/ri";
 import { useGetFeatureQuery } from "../../../Redux/api/featureApi";
-import { useGetAllAdminsQuery } from "../../../Redux/api/user/AdminApi";
+import { useGetAllAdminsQuery } from "../../../Redux/api/user/adminApi";
 import { useGetPackagesQuery } from "../../../Redux/api/packageApi";
 import { useGetAcademyCategoriesQuery } from "../../../Redux/api/academy/categoryApi";
 import { useGetAcademyClassesQuery } from "../../../Redux/api/academy/classApi";

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useAddAdminMutation } from "../../../Redux/api/user/AdminApi";
+import { useAddAdminMutation } from "../../../Redux/api/user/adminApi";
 
 export default function AddAdmin() {
   const navigate = useNavigate();

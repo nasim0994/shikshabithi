@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetAdminByIdQuery,
   useUpdateAdminMutation,
-} from "../../../Redux/api/user/AdminApi";
+} from "../../../Redux/api/user/adminApi";
 
 export default function EditAdmin() {
   const { id } = useParams();

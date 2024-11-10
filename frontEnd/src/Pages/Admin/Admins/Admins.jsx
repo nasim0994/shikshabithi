@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
   useDeleteAdminMutation,
   useGetAllAdminsQuery,
-} from "../../../Redux/api/user/AdminApi";
+} from "../../../Redux/api/user/adminApi";
 import { useSelector } from "react-redux";
 
 export default function Admins() {
