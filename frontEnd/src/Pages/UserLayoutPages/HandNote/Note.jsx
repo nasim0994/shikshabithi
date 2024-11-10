@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { FcDownload } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
@@ -19,13 +20,10 @@ import {
   FaShareAlt,
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import moment from "moment";
 import { useDeleteHandNoteMutation } from "../../../Redux/api/handnotesApi";
 import { useSelector } from "react-redux";
-import { useEffect, useRef, useState } from "react";
 
 export default function Note({ handnote, i }) {
   const { loggedUser } = useSelector((store) => store.user);
@@ -69,25 +67,29 @@ export default function Note({ handnote, i }) {
     }
   };
 
-  const imageRefs = useRef([]);
+  const handleDownload = async (id) => {
+    try {
+      // Send GET request with the ID to download the PDF
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/handnotes/download/${id}`
+      );
 
-  //   Download as PDF
-  const handleDownloadPDF = async (images) => {
-    const pdf = new jsPDF("portrait", "mm", "a4");
-    const imgWidth = 190; // A4 page width
-    let addedFirstImage = false;
-
-    for (let i = 0; i < images?.length; i++) {
-      const canvas = await html2canvas(imageRefs.current[i]);
-      const imgData = canvas.toDataURL("image/png");
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      if (addedFirstImage) pdf.addPage();
-      pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-      addedFirstImage = true;
+      if (response.ok) {
+        // Create a blob from the response and trigger the download
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${id}.pdf`; // Dynamically naming the file based on ID
+        a.click();
+        window.URL.revokeObjectURL(url);
+      } else {
+        alert("Failed to generate PDF");
+      }
+    } catch (error) {
+      console.error("Error during download:", error);
+      alert("Error generating PDF");
     }
-
-    pdf.save("downloaded-images.pdf");
   };
 
   return (
@@ -118,7 +120,7 @@ export default function Note({ handnote, i }) {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => handleDownloadPDF(handnote?.images)}
+            onClick={() => handleDownload(handnote?._id)}
             className="-mt-1"
           >
             <FcDownload />
@@ -174,10 +176,9 @@ export default function Note({ handnote, i }) {
                 src={`${import.meta.env.VITE_BACKEND_URL}/handnotes/${img}`}
               >
                 <img
-                  ref={(el) => (imageRefs.current[i] = el)}
                   src={`${import.meta.env.VITE_BACKEND_URL}/handnotes/${img}`}
                   alt="handnote"
-                  className="w-full h-28 sm:h-60 border rounded mt-2"
+                  className="w-full h-28 sm:h-60 border rounded mt-2 object-cover"
                   loading="lazy"
                 />
               </PhotoView>

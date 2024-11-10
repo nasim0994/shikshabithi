@@ -3,6 +3,8 @@ const fs = require("fs");
 const { calculatePagination } = require("../utils/calculatePagination");
 const { pick } = require("../utils/pick");
 
+const PDFDocument = require("pdfkit");
+
 exports.add = async (req, res) => {
   const images = req?.files?.map((file) => file.filename);
 
@@ -331,6 +333,58 @@ exports.toggleStatus = async (req, res) => {
       message: "Status updated successfully",
       data: { id, status: newStatus },
     });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+exports.download = async (req, res) => {
+  const id = req?.params?.id;
+
+  try {
+    const handNote = await Model.findById(id);
+
+    if (!handNote) {
+      return res.json({
+        success: false,
+        message: "Hand Note not found",
+      });
+    }
+
+    const pdf = new PDFDocument();
+
+    res.setHeader("Content-Type", "application/pdf");
+
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=${handNote?.title}.pdf`
+    );
+
+    pdf.pipe(res);
+
+    pdf.fontSize(20).text(handNote?.title, {
+      align: "center",
+      margin: 20,
+    });
+
+    handNote?.images?.forEach((image, index) => {
+      pdf.image(`./uploads/handnotes/${image}`, {
+        width: 400,
+        align: "center",
+        valign: "center",
+      });
+
+      if (index < handNote.images.length - 1) {
+        pdf.addPage(); // Only add page break after each image except the last one
+      }
+    });
+
+    pdf.end();
+
+    res.status(200);
   } catch (error) {
     res.status(500).json({
       success: false,

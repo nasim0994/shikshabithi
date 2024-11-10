@@ -10,6 +10,7 @@ const {
   destroy,
   getSingle,
   toggleStatus,
+  download,
 } = require("../controllers/handnotesController");
 
 const storage = multer.diskStorage({
@@ -25,6 +26,8 @@ const upload = multer({ storage: storage }).array("images", 10);
 router.get("/", get);
 router.get("/byuser", verifyToken, getByUser);
 router.post("/add", verifyToken, upload, add);
+
+router.get("/download/:id", download);
 
 router.get("/:id", getSingle);
 router.patch("/toggle-status/:id", verifyToken, toggleStatus);
