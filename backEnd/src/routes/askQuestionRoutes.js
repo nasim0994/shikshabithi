@@ -10,12 +10,14 @@ const {
   destroy,
   getSingle,
   toggleStatus,
+  getAskQuestionLengthByUser,
 } = require("../controllers/askquestionController");
 
 let upload = singleUploder("./uploads/askQuestion", 1000 * 1024, "image");
 
 router.get("/", get);
 router.get("/byuser", verifyToken, getByUser);
+router.get("/length", verifyToken, getAskQuestionLengthByUser);
 
 router.post("/add", (req, res, next) => {
   upload(req, res, (err) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaBookReader } from "react-icons/fa";
 import { HiBuildingLibrary } from "react-icons/hi2";
 import { PiBagFill } from "react-icons/pi";
@@ -7,6 +7,9 @@ import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { useGetAcademySubjectsQuery } from "../../../Redux/api/academy/subjectApi";
 import Questions from "./Questions";
 import { MdOutlineClearAll } from "react-icons/md";
+import { useSelector } from "react-redux";
+import { useGetAskQuestionLengthByUserQuery } from "../../../Redux/api/askQuestionApi";
+import { toast } from "react-toastify";
 
 let categories = [
   { _id: 1, name: "Academy", icon: <HiBuildingLibrary /> },
@@ -16,6 +19,10 @@ let categories = [
 ];
 
 export default function AskQuestion() {
+  const { loggedUser } = useSelector((state) => state.user);
+  const user = loggedUser?.data;
+  const { data } = useGetAskQuestionLengthByUserQuery();
+
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -44,14 +51,42 @@ export default function AskQuestion() {
     }
   }, [active, navigate]);
 
+  const handleAddAskQuestion = () => {
+    const askQuestionLength = data?.data;
+    const askQuestionLimit = parseInt(
+      user?.package?.package?.feature?.askQuestion
+    );
+
+    const expiresAt = new Date(user?.package?.expires);
+    const isExpired = expiresAt < new Date();
+
+    if (!user?.package?.package) {
+      toast.error("Please buy a package to ask questions");
+      return navigate("/packages");
+    } else if (isExpired) {
+      toast.error("Your package has been expired");
+      return navigate("/packages");
+    }
+
+    if (askQuestionLength >= askQuestionLimit) {
+      toast.error("You have reached the limit of asking questions");
+      return;
+    }
+
+    navigate("/ask-question/add");
+  };
+
   return (
     <div>
       <div className="bg-base-100 p-4 rounded shadow">
         <div className="flex justify-between items-center">
           <h3 className="text-primary font-medium text-xl">Ask Questions</h3>
-          <Link to="/ask-question/add" className="text-xs primary_btn">
-            Ask Question?
-          </Link>
+          <button
+            onClick={handleAddAskQuestion}
+            className="text-xs primary_btn"
+          >
+            Add Ask Question?
+          </button>
         </div>
 
         <div className="grid grid-cols-2 sm:flex gap-2 mt-2">

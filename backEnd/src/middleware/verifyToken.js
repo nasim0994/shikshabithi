@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/userModel");
 
 module.exports = async (req, res, next) => {
   try {
@@ -11,7 +12,14 @@ module.exports = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    req.user = decoded;
+    const user = await User.findOne({ email: decoded.email });
+
+    req.user = {
+      _id: user?._id,
+      email: user?.email,
+      password: user?.password,
+      role: user?.role,
+    };
     next();
   } catch (error) {
     res.status(403).json({

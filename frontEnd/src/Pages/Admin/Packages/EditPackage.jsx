@@ -186,7 +186,7 @@ export default function EditPackage() {
 
           <div className="mt-6">
             <button disabled={isLoading && "disabled"} className="primary_btn">
-              {isLoading ? "Loading..." : "Add Package"}
+              {isLoading ? "Loading..." : "Edit Package"}
             </button>
           </div>
         </form>

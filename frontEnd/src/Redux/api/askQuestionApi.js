@@ -27,6 +27,14 @@ export const askQuestionApi = baseApi.injectEndpoints({
       providesTags: ["askQuestion"],
     }),
 
+    getAskQuestionLengthByUser: builder.query({
+      query: () => ({
+        url: `api/askQuestion/length`,
+        method: "GET",
+      }),
+      providesTags: ["askQuestion"],
+    }),
+
     addAskQuestion: builder.mutation({
       query: (formData) => ({
         url: `api/askQuestion/add`,
@@ -71,4 +79,5 @@ export const {
   useGetAskQuestionByUserQuery,
   useGetAskQuestionQuery,
   useGetAskQuestionsQuery,
+  useGetAskQuestionLengthByUserQuery,
 } = askQuestionApi;

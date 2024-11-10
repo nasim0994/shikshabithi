@@ -68,7 +68,8 @@ exports.get = async (req, res) => {
       })
       .populate({
         path: "chapter",
-      }).sort({ _id: -1 });
+      })
+      .sort({ _id: -1 });
 
     res.status(200).json({
       success: true,
@@ -282,6 +283,24 @@ exports.toggleStatus = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+exports.getAskQuestionLengthByUser = async (req, res) => {
+  try {
+    const user = req.user;
+    const result = await Model.find({ user: user?._id }).countDocuments();
+
+    res.status(200).json({
+      success: true,
+      message: "get success",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
       success: false,
       error: error.message,
     });
