@@ -33,7 +33,7 @@ export default function EditPackage() {
     const paidModeltestVendor = form.paidModelTestVendor.value;
     const onDemandtest = form.onDemandTest.value;
     const downloadHandNote = form.downloadHandNote.value;
-    const downloadPdfBook = form.downloadPdfBook.value;
+    const askQuestion = form.askQuestion.value;
     const pageView = form.pageView.value;
 
     const info = {
@@ -47,7 +47,7 @@ export default function EditPackage() {
         paidModeltestVendor,
         onDemandtest,
         downloadHandNote,
-        downloadPdfBook,
+        askQuestion,
         pageView,
       },
     };
@@ -163,13 +163,13 @@ export default function EditPackage() {
               />
             </div>
             <div>
-              <p className="mb-1">Download PDF Book</p>
+              <p className="mb-1">Ask Question</p>
               <input
                 type="text"
-                name="downloadPdfBook"
+                name="askQuestion"
                 required
                 placeholder="0"
-                defaultValue={data?.data?.feature?.downloadPdfBook}
+                defaultValue={data?.data?.feature?.askQuestion}
               />
             </div>
             <div>

@@ -59,9 +59,9 @@ export default function PackageCard({ item }) {
         </li>
 
         <li className="flex justify-between items-center">
-          <p>Download PDF Book</p>
+          <p>Ask Question</p>
           <p className="rounded-lg bg-green-500 px-2 text-xs text-base-100">
-            {item?.feature?.downloadPdfBook}
+            {item?.feature?.askQuestion}
           </p>
         </li>
 

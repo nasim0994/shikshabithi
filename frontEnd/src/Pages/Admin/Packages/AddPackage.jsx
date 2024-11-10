@@ -19,7 +19,7 @@ export default function AddPackage() {
     const paidModeltestVendor = form.paidModelTestVendor.value;
     const onDemandtest = form.onDemandTest.value;
     const downloadHandNote = form.downloadHandNote.value;
-    const downloadPdfBook = form.downloadPdfBook.value;
+    const askQuestion = form.askQuestion.value;
     const pageView = form.pageView.value;
 
     const info = {
@@ -33,7 +33,7 @@ export default function AddPackage() {
         paidModeltestVendor,
         onDemandtest,
         downloadHandNote,
-        downloadPdfBook,
+        askQuestion,
         pageView,
       },
     };
@@ -127,10 +127,10 @@ export default function AddPackage() {
               />
             </div>
             <div className="flex items-center gap-3">
-              <p className="mb-1">Download PDF Book</p>
+              <p className="mb-1">Ask Question</p>
               <input
                 type="text"
-                name="downloadPdfBook"
+                name="askQuestion"
                 required
                 placeholder="0"
                 className="w-max"

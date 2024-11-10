@@ -23,7 +23,7 @@ const packageSchema = new mongoose.Schema(
       paidModeltestVendor: { type: String, required: true },
       onDemandtest: { type: String, required: true },
       downloadHandNote: { type: String, required: true },
-      downloadPdfBook: { type: String, required: true },
+      askQuestion: { type: String, required: true },
       pageView: { type: String, required: true },
     },
   },
