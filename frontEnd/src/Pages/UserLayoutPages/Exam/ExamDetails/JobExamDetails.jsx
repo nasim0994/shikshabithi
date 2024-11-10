@@ -1,15 +1,20 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import BackBtn from "../../../../Components/BackBtn/BackBtn";
 import { useGetSingleJobModelTestQuery } from "../../../../Redux/api/job/jobModelTestApi";
-import ModelTestModal from "../../../../Components/UserLayoutComponents/Exam/ModelTestModal/ModelTestModal";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useGetModelTestAttendLengthQuery } from "../../../../Redux/api/modelTestAttendApi";
+import ModeltestStartBtn from "../ExamList/ModeltestStartBtn";
 
 export default function JobExamDetails() {
   let { id } = useParams();
   const { data } = useGetSingleJobModelTestQuery(id);
   let modelTest = data?.data;
-  const [modelModal, setModelModal] = useState(false);
-  const [selectedModel, setSelectedModel] = useState({});
+
+  const { loggedUser } = useSelector((state) => state.user);
+  const packageData = loggedUser?.data?.package;
+
+  const { data: modeltestAttend } = useGetModelTestAttendLengthQuery();
+  const modelTestAttendLength = modeltestAttend?.data;
 
   return (
     <div className="bg-base-100 rounded shadow">
@@ -74,32 +79,12 @@ export default function JobExamDetails() {
       </div>
 
       <div className="border-t p-3 flex justify-between items-center text-xs font-medium">
-        {modelTest?.examType == "free" ? (
-          <>
-            <button
-              onClick={() => {
-                setModelModal(true);
-                setSelectedModel(modelTest);
-              }}
-              className="bg-green-500  hover:bg-green-600 text-base-100 px-2 py-1 rounded duration-200"
-            >
-              Start Now
-            </button>
-            <ModelTestModal
-              model={selectedModel}
-              modelModal={modelModal}
-              setModelModal={setModelModal}
-              category="job"
-            />
-          </>
-        ) : (
-          <Link
-            to=""
-            className="bg-red-500 hover:bg-red-600 text-base-100 px-2 py-1 rounded duration-200"
-          >
-            Buy Package
-          </Link>
-        )}
+        <ModeltestStartBtn
+          packageData={packageData}
+          modelTestAttendLength={modelTestAttendLength}
+          modelTest={modelTest}
+          category="job"
+        />
       </div>
     </div>
   );

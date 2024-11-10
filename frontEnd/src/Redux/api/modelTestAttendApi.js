@@ -35,6 +35,14 @@ export const modelTestAttendApi = baseApi.injectEndpoints({
       }),
       providesTags: ["modeltestAttend"],
     }),
+
+    getModelTestAttendLength: builder.query({
+      query: () => ({
+        url: `/api/modeltest-attend/length`,
+        method: "GET",
+      }),
+      providesTags: ["modeltestAttend"],
+    }),
   }),
 });
 
@@ -43,4 +51,5 @@ export const {
   useGetSingleModelTestAttendQuery,
   useAddModelTestAttendMutation,
   useDeleteModelTestAttendMutation,
+  useGetModelTestAttendLengthQuery,
 } = modelTestAttendApi;

@@ -8,6 +8,8 @@ import AcademyExam from "./AcademyExam";
 import AdmissionExam from "./AdmissionExam";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import JobExam from "./JobExam";
+import { useGetModelTestAttendLengthQuery } from "../../../../Redux/api/modelTestAttendApi";
+import { useSelector } from "react-redux";
 
 export default function ExamList() {
   const navigate = useNavigate();
@@ -16,6 +18,12 @@ export default function ExamList() {
   let active = queryParams.get("active");
 
   const [activeCategory, setActiveCategory] = useState(1);
+
+  const { loggedUser } = useSelector((state) => state.user);
+  const packageData = loggedUser?.data?.package;
+
+  const { data } = useGetModelTestAttendLengthQuery();
+  const modelTestAttendLength = data?.data;
 
   useEffect(() => {
     if (!active) {
@@ -77,9 +85,24 @@ export default function ExamList() {
         </div>
       </div>
 
-      {activeCategory == 1 && <AcademyExam />}
-      {activeCategory == 2 && <AdmissionExam />}
-      {activeCategory == 3 && <JobExam />}
+      {activeCategory == 1 && (
+        <AcademyExam
+          packageData={packageData}
+          modelTestAttendLength={modelTestAttendLength}
+        />
+      )}
+      {activeCategory == 2 && (
+        <AdmissionExam
+          packageData={packageData}
+          modelTestAttendLength={modelTestAttendLength}
+        />
+      )}
+      {activeCategory == 3 && (
+        <JobExam
+          packageData={packageData}
+          modelTestAttendLength={modelTestAttendLength}
+        />
+      )}
     </div>
   );
 }

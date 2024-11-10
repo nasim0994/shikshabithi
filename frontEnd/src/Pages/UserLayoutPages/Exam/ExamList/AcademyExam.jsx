@@ -22,12 +22,10 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 
 import { useGetExamModelTestQuery } from "../../../../Redux/api/academy/academyModelTestApi";
 import AdmissionSet from "../../../../Components/Skeleton/AdmissionSet";
-import ModelTestModal from "../../../../Components/UserLayoutComponents/Exam/ModelTestModal/ModelTestModal";
 
-export default function AcademyExam() {
-  const [modelModal, setModelModal] = useState(false);
-  const [selectedModel, setSelectedModel] = useState({});
+import ModeltestStartBtn from "./ModeltestStartBtn";
 
+export default function AcademyExam({ packageData, modelTestAttendLength }) {
   const [shareDropdown, setShareDropdown] = useState(null);
 
   const handelshare = (i) => {
@@ -57,10 +55,10 @@ export default function AcademyExam() {
           <div className="p-3">
             <div
               className={`absolute top-0 right-0 rounded-tr text-base-100 text-[11px] py-1 px-2 font-medium capitalize ${
-                modelTest?.status == "active" ? "bg-green-500" : "bg-red-500"
+                modelTest?.examType == "free" ? "bg-green-500" : "bg-red-500"
               }`}
             >
-              {modelTest?.status}
+              {modelTest?.examType}
             </div>
 
             <div className="flex items-center gap-4">
@@ -104,33 +102,12 @@ export default function AcademyExam() {
           </div>
 
           <div className="border-t p-3 flex justify-between items-center text-xs font-medium">
-            {modelTest?.examType == "free" ? (
-              <div>
-                <button
-                  onClick={() => {
-                    setModelModal(true);
-                    setSelectedModel(modelTest);
-                  }}
-                  className="bg-green-500  hover:bg-green-600 text-base-100 px-2 py-1 rounded duration-200"
-                >
-                  Start Now
-                </button>
-
-                <ModelTestModal
-                  model={selectedModel}
-                  modelModal={modelModal}
-                  setModelModal={setModelModal}
-                  category="academy"
-                />
-              </div>
-            ) : (
-              <Link
-                to="/packages"
-                className="bg-red-500 hover:bg-red-600 text-base-100 px-2 py-1 rounded duration-200"
-              >
-                Buy Package
-              </Link>
-            )}
+            <ModeltestStartBtn
+              packageData={packageData}
+              modelTestAttendLength={modelTestAttendLength}
+              modelTest={modelTest}
+              category="academy"
+            />
 
             <div className="flex gap-2 items-center">
               <Link

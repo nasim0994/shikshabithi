@@ -5,7 +5,6 @@ import { BsBookmarksFill } from "react-icons/bs";
 import { IoIosTime } from "react-icons/io";
 import { FaMinusCircle, FaAward } from "react-icons/fa";
 import AdmissionSet from "../../../../Components/Skeleton/AdmissionSet";
-import ModelTestModal from "../../../../Components/UserLayoutComponents/Exam/ModelTestModal/ModelTestModal";
 import { useGetJobModelTestQuery } from "../../../../Redux/api/job/jobModelTestApi";
 
 import {
@@ -23,11 +22,9 @@ import {
   FaShareAlt,
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import ModeltestStartBtn from "./ModeltestStartBtn";
 
-export default function JobExam() {
-  const [modelModal, setModelModal] = useState(false);
-  const [selectedModel, setSelectedModel] = useState({});
-
+export default function JobExam({ packageData, modelTestAttendLength }) {
   const [shareDropdown, setShareDropdown] = useState(null);
 
   const handelshare = (i) => {
@@ -48,9 +45,6 @@ export default function JobExam() {
   const { data, isLoading } = useGetJobModelTestQuery();
   let jobModelTest = data?.data;
 
-  console.log("Job Model Test",jobModelTest);
-  
-
   if (isLoading) return <AdmissionSet />;
 
   return (
@@ -60,10 +54,10 @@ export default function JobExam() {
           <div className="p-3">
             <div
               className={`absolute top-0 right-0 rounded-tr text-base-100 text-[11px] py-1 px-2 font-medium capitalize ${
-                modelTest?.status == "active" ? "bg-green-500" : "bg-red-500"
+                modelTest?.examType == "free" ? "bg-green-500" : "bg-red-500"
               }`}
             >
-              {modelTest?.status}
+              {modelTest?.examType}
             </div>
 
             <div className="flex items-center gap-4">
@@ -103,37 +97,16 @@ export default function JobExam() {
           </div>
 
           <div className="border-t p-3 flex justify-between items-center text-xs font-medium">
-            {modelTest?.examType == "free" ? (
-              <div>
-                <button
-                  onClick={() => {
-                    setModelModal(true);
-                    setSelectedModel(modelTest);
-                  }}
-                  className="bg-green-500  hover:bg-green-600 text-base-100 px-2 py-1 rounded duration-200"
-                >
-                  Start Now
-                </button>
-
-                <ModelTestModal
-                  model={selectedModel}
-                  modelModal={modelModal}
-                  setModelModal={setModelModal}
-                  category="job"
-                />
-              </div>
-            ) : (
-              <Link
-                to="/packages"
-                className="bg-red-500 hover:bg-red-600 text-base-100 px-2 py-1 rounded duration-200"
-              >
-                Buy Package
-              </Link>
-            )}
+            <ModeltestStartBtn
+              packageData={packageData}
+              modelTestAttendLength={modelTestAttendLength}
+              modelTest={modelTest}
+              category="job"
+            />
 
             <div className="flex gap-2 items-center">
               <Link
-                to={`/exam-list/academy/${modelTest?._id}`}
+                to={`/exam-list/job/${modelTest?._id}`}
                 className="flex items-center gap-2 bg-primary/15 px-3 py-2 rounded"
               >
                 <FaEye className="text-sm" />
@@ -158,35 +131,35 @@ export default function JobExam() {
                         <FacebookShareButton
                           url={`${
                             import.meta.env.VITE_FRONTEND_URL
-                          }/exam-list/academy/${modelTest?._id}`}
+                          }/exam-list/job/${modelTest?._id}`}
                         >
                           <FaFacebook className="text-xl text-blue-600" />
                         </FacebookShareButton>
                         <TwitterShareButton
                           url={`${
                             import.meta.env.VITE_FRONTEND_URL
-                          }/exam-list/academy/${modelTest?._id}`}
+                          }/exam-list/job/${modelTest?._id}`}
                         >
                           <FaSquareXTwitter className="text-xl" />
                         </TwitterShareButton>
                         <TelegramShareButton
                           url={`${
                             import.meta.env.VITE_FRONTEND_URL
-                          }/exam-list/academy/${modelTest?._id}`}
+                          }/exam-list/job/${modelTest?._id}`}
                         >
                           <FaTelegram className="text-xl text-sky-500" />
                         </TelegramShareButton>
                         <LinkedinShareButton
                           url={`${
                             import.meta.env.VITE_FRONTEND_URL
-                          }/exam-list/academy/${modelTest?._id}`}
+                          }/exam-list/job/${modelTest?._id}`}
                         >
                           <FaLinkedin className="text-xl text-sky-400" />
                         </LinkedinShareButton>
                         <WhatsappShareButton
                           url={`${
                             import.meta.env.VITE_FRONTEND_URL
-                          }/exam-list/academy/${modelTest?._id}`}
+                          }/exam-list/job/${modelTest?._id}`}
                         >
                           <FaWhatsappSquare className="text-xl text-green-500" />
                         </WhatsappShareButton>

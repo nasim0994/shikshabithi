@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUsers, FaEye, FaQuestionCircle } from "react-icons/fa";
 import { BsBookmarksFill } from "react-icons/bs";
@@ -5,8 +6,6 @@ import { IoIosTime } from "react-icons/io";
 import { FaMinusCircle, FaAward } from "react-icons/fa";
 import { useGetAdmissionModelTestQuery } from "../../../../Redux/api/admission/admissionModelTestApi";
 import AdmissionSet from "../../../../Components/Skeleton/AdmissionSet";
-import { useEffect, useState } from "react";
-import ModelTestModal from "../../../../Components/UserLayoutComponents/Exam/ModelTestModal/ModelTestModal";
 
 import {
   FacebookShareButton,
@@ -24,10 +23,9 @@ import {
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 
-export default function AdmissionExam() {
-  const [modelModal, setModelModal] = useState(false);
-  const [selectedModel, setSelectedModel] = useState({});
+import ModeltestStartBtn from "./ModeltestStartBtn";
 
+export default function AdmissionExam({ packageData, modelTestAttendLength }) {
   const [shareDropdown, setShareDropdown] = useState(null);
 
   const handelshare = (i) => {
@@ -57,10 +55,10 @@ export default function AdmissionExam() {
           <div className="p-3">
             <div
               className={`absolute top-0 right-0 rounded-tr text-base-100 text-[11px] py-1 px-2 font-medium capitalize ${
-                modelTest?.status == "active" ? "bg-green-500" : "bg-red-500"
+                modelTest?.examType == "free" ? "bg-green-500" : "bg-red-500"
               }`}
             >
-              {modelTest?.status}
+              {modelTest?.examType}
             </div>
 
             <div className="flex items-center gap-4">
@@ -100,37 +98,16 @@ export default function AdmissionExam() {
           </div>
 
           <div className="border-t p-3 flex justify-between items-center text-xs font-medium">
-            {modelTest?.examType == "free" ? (
-              <div>
-                <button
-                  onClick={() => {
-                    setModelModal(true);
-                    setSelectedModel(modelTest);
-                  }}
-                  className="bg-green-500  hover:bg-green-600 text-base-100 px-2 py-1 rounded duration-200"
-                >
-                  Start Now
-                </button>
-
-                <ModelTestModal
-                  model={selectedModel}
-                  modelModal={modelModal}
-                  setModelModal={setModelModal}
-                  category="admission"
-                />
-              </div>
-            ) : (
-              <Link
-                to="/packages"
-                className="bg-red-500 hover:bg-red-600 text-base-100 px-2 py-1 rounded duration-200"
-              >
-                Buy Package
-              </Link>
-            )}
+            <ModeltestStartBtn
+              packageData={packageData}
+              modelTestAttendLength={modelTestAttendLength}
+              modelTest={modelTest}
+              category="admission"
+            />
 
             <div className="flex gap-2 items-center">
               <Link
-                to={`/exam-list/academy/${modelTest?._id}`}
+                to={`/exam-list/admission/${modelTest?._id}`}
                 className="flex items-center gap-2 bg-primary/15 px-3 py-2 rounded"
               >
                 <FaEye className="text-sm" />

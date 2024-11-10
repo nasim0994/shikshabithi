@@ -116,3 +116,21 @@ exports.destroy = async (req, res) => {
     });
   }
 };
+
+exports.totalModelTestAttend = async (req, res) => {
+  const user = req.user;
+
+  try {
+    const result = await Model.countDocuments({ user: user?._id });
+    res.status(200).json({
+      success: true,
+      message: "Total model test attend by user",
+      data: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      error: error.message,
+    });
+  }
+};

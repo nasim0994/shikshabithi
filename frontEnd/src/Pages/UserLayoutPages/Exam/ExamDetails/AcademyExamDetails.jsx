@@ -1,16 +1,21 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetSingleExamModelTestQuery } from "../../../../Redux/api/academy/academyModelTestApi";
 import BackBtn from "../../../../Components/BackBtn/BackBtn";
-import ModelTestModal from "../../../../Components/UserLayoutComponents/Exam/ModelTestModal/ModelTestModal";
-import { useState } from "react";
+
+import ModeltestStartBtn from "../ExamList/ModeltestStartBtn";
+import { useGetModelTestAttendLengthQuery } from "../../../../Redux/api/modelTestAttendApi";
+import { useSelector } from "react-redux";
 
 export default function AcademyExamDetails() {
   let { id } = useParams();
   const { data } = useGetSingleExamModelTestQuery(id);
   let modelTest = data?.data;
 
-  const [modelModal, setModelModal] = useState(false);
-  const [selectedModel, setSelectedModel] = useState({});
+  const { loggedUser } = useSelector((state) => state.user);
+  const packageData = loggedUser?.data?.package;
+
+  const { data: modeltestAttend } = useGetModelTestAttendLengthQuery();
+  const modelTestAttendLength = modeltestAttend?.data;
 
   return (
     <div className="bg-base-100 rounded shadow">
@@ -85,33 +90,12 @@ export default function AcademyExamDetails() {
       </div>
 
       <div className="border-t p-3 flex justify-between items-center text-xs font-medium">
-        {modelTest?.examType == "free" ? (
-          <>
-            <button
-              onClick={() => {
-                setModelModal(true);
-                setSelectedModel(modelTest);
-              }}
-              className="bg-green-500  hover:bg-green-600 text-base-100 px-2 py-1 rounded duration-200"
-            >
-              Start Now
-            </button>
-
-            <ModelTestModal
-              model={selectedModel}
-              modelModal={modelModal}
-              setModelModal={setModelModal}
-              category="academy"
-            />
-          </>
-        ) : (
-          <Link
-            to=""
-            className="bg-red-500 hover:bg-red-600 text-base-100 px-2 py-1 rounded duration-200"
-          >
-            Buy Package
-          </Link>
-        )}
+        <ModeltestStartBtn
+          packageData={packageData}
+          modelTestAttendLength={modelTestAttendLength}
+          modelTest={modelTest}
+          category="academy"
+        />
       </div>
     </div>
   );
