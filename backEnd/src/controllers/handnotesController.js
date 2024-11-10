@@ -7,7 +7,7 @@ exports.add = async (req, res) => {
   const images = req?.files?.map((file) => file.filename);
 
   if (images?.length < 1) {
-    return res.status(400).json({
+    return res.json({
       success: false,
       error: "Please upload at least one image",
     });
@@ -42,11 +42,16 @@ exports.add = async (req, res) => {
       error: error?.message,
     });
 
-    fs.unlink(`./uploads/blogs/${image}`, (err) => {
-      if (err) {
-        console.log(err);
-      }
-    });
+    if (images.length > 0) {
+      images.forEach((imagePath) => {
+        const fullPath = `./uploads/handnotes/${imagePath}`;
+        fs.unlink(fullPath, (err) => {
+          if (err) {
+            console.error(err);
+          }
+        });
+      });
+    }
   }
 };
 
@@ -54,7 +59,7 @@ exports.get = async (req, res) => {
   try {
     const paginationOptions = pick(req.query, ["page", "limit"]);
     const { page, limit, skip } = calculatePagination(paginationOptions);
-    const { subject, category , status } = req.query;
+    const { subject, category, status } = req.query;
 
     let query = {};
     if (category && category !== "undefined" && category !== null)
@@ -99,7 +104,7 @@ exports.get = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
       error: error.message,
     });
@@ -138,7 +143,7 @@ exports.getSingle = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
       error: error.message,
     });
@@ -171,7 +176,7 @@ exports.getByUser = async (req, res) => {
       data: result,
     });
   } catch (error) {
-    res.status(400).json({
+    res.json({
       success: false,
       error: error.message,
     });
@@ -319,11 +324,7 @@ exports.toggleStatus = async (req, res) => {
 
     const newStatus = handNote.status === "active" ? "pending" : "active";
 
-    await Model.findByIdAndUpdate(
-      id,
-      { status: newStatus },
-      { new: true }
-    );
+    await Model.findByIdAndUpdate(id, { status: newStatus }, { new: true });
 
     res.status(200).json({
       success: true,

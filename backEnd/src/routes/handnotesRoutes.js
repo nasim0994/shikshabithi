@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-const upload = multer({ storage: storage }).array("images", 5);
+const upload = multer({ storage: storage }).array("images", 10);
 
 router.get("/", get);
 router.get("/byuser", verifyToken, getByUser);
