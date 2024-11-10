@@ -3,8 +3,8 @@ import { FaListCheck } from "react-icons/fa6";
 import { IoBookmarks } from "react-icons/io5";
 import { MdClose, MdDoNotDisturbOn } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import { useGetSingleModelTestAttendQuery } from "../../../../Redux/api/academy/academyModelTestAttendApi";
 import MCQ from "./MCQ";
+import { useGetSingleModelTestAttendQuery } from "../../../../Redux/api/modelTestAttendApi";
 
 export default function ModelTestDetails() {
   const { id } = useParams();
