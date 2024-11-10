@@ -44,6 +44,14 @@ export const modelTestApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ondemandtest"],
     }),
+
+    getOnDemandTestLength: builder.query({
+      query: () => ({
+        url: `/api/academy/ondemandtest/length`,
+        method: "GET",
+      }),
+      providesTags: ["ondemandtest"],
+    }),
   }),
 });
 
@@ -53,4 +61,5 @@ export const {
   useAddAcademyModelTestMutation,
   useUpdateAcademyModelTestMutation,
   useDeleteAcademyModelTestMutation,
+  useGetOnDemandTestLengthQuery,
 } = modelTestApi;

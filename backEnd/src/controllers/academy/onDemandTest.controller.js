@@ -136,3 +136,21 @@ exports.destoy = async (req, res) => {
     });
   }
 };
+
+exports.totalAttend = async (req, res) => {
+  const user = req.user;
+
+  try {
+    const result = await OnDemandTest.countDocuments({ user: user?._id });
+    res.status(200).json({
+      success: true,
+      message: "Total by user get success",
+      data: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

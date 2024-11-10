@@ -43,8 +43,6 @@ export default function Mcq({ mcq, i, page, limit }) {
     });
   }, [shareDropdown]);
 
-  console.log(mcq);
-
   const createdAt = mcq?.createdAt;
   const updatedAt = mcq?.updatedAt;
   const timeAgoCreatedAt = moment(createdAt).fromNow();

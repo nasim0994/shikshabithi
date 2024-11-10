@@ -24,6 +24,13 @@ export default function PackageCard({ item }) {
 
       <ul className="border-t pt-8 mt-8 text-sm sm:text-[15px] text-neutral/80 flex flex-col gap-2">
         <li className="flex justify-between items-center">
+          <p>On Demand Test</p>
+          <p className="rounded-lg bg-green-500 px-2 text-[11px] text-base-100">
+            {item?.feature?.onDemandtest}
+          </p>
+        </li>
+
+        <li className="flex justify-between items-center">
           <p>Free Model Test</p>
           <p className="rounded-lg bg-primary/70 px-2 text-[11px] text-base-100">
             {item?.feature?.freeModeltest}
@@ -41,13 +48,6 @@ export default function PackageCard({ item }) {
           <p>Add Model Test (vendor)</p>
           <p className="rounded-lg bg-pink-600 px-2 text-[11px] text-base-100">
             {item?.feature?.paidModeltestVendor}
-          </p>
-        </li>
-
-        <li className="flex justify-between items-center">
-          <p>On Demand Test</p>
-          <p className="rounded-lg bg-green-500 px-2 text-[11px] text-base-100">
-            {item?.feature?.onDemandtest}
           </p>
         </li>
 

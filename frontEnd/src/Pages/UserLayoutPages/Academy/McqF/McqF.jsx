@@ -9,6 +9,9 @@ import Pagination from "../../../../Components/Pagination/Pagination";
 import { useGetSingleAcademyClassQuery } from "../../../../Redux/api/academy/classApi";
 import { useGetTagQuery } from "../../../../Redux/api/tagApi";
 import { useGetSingleAdmissionQuestionSetQuery } from "../../../../Redux/api/admission/questionSetApi";
+import { useGetOnDemandTestLengthQuery } from "../../../../Redux/api/academy/modeltestApi";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function McqF() {
   window.scroll(0, 0);
@@ -50,6 +53,36 @@ export default function McqF() {
 
   const [examInfoModal, setExamInfoModal] = useState(false);
 
+  const { loggedUser } = useSelector((state) => state.user);
+  const { data: length } = useGetOnDemandTestLengthQuery();
+
+  const packageData = loggedUser?.data?.package;
+  const totalLength = length?.data;
+
+  const handleOnDemandTest = () => {
+    if (!packageData?.package && totalLength >= 5) {
+      toast.error("You have reached the limit of free exams");
+      return;
+    }
+
+    if (packageData?.expires) {
+      const isExpired = new Date(packageData?.expires) < new Date();
+      if (isExpired) {
+        toast.error("Your package has expired");
+        return;
+      }
+    }
+
+    const freeModelTestLimit = packageData?.package?.feature?.onDemandtest;
+
+    if (packageData?.package && totalLength >= freeModelTestLimit) {
+      toast.error("You have reached the limit of ondemandtest exams");
+      return;
+    }
+
+    setExamInfoModal(true);
+  };
+
   return (
     <div>
       <section className="grid md:grid-cols-3 items-start gap-6">
@@ -73,21 +106,17 @@ export default function McqF() {
 
           <div className="p-4 bg-base-100">
             <ul className="flex items-center justify-center gap-2 text-xs text-base-100">
-              <li>
+              {/* <li>
                 <Link
-                  to={`${
-                    subjectId
-                      ? `/academy/subject-${subjectId}/chapters`
-                      : chapterId && `/academy/chapter-${chapterId}/content`
-                  }`}
+                  to={`/academy/subject-${subjectId}/chapters`}
                   className="bg-primary px-4 py-2 rounded"
                 >
                   Read
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <button
-                  onClick={() => setExamInfoModal(true)}
+                  onClick={handleOnDemandTest}
                   className="bg-rose-700 px-4 py-2 rounded"
                 >
                   Test
@@ -102,11 +131,12 @@ export default function McqF() {
               </li>
               <li>
                 <Link
-                  to={`${
-                    subjectId
-                      ? `/academy/written?subject=${subjectId}`
-                      : chapterId && `/academy/written?chapter=${chapterId}`
-                  }`}
+                  // to={`${
+                  //   subjectId
+                  //     ? `/academy/written?subject=${subjectId}`
+                  //     : chapterId && `/academy/written?chapter=${chapterId}`
+                  // }`}
+                  to={`/academy/written?subject=${subjectId}&chapter=${chapterId}`}
                   className="bg-sky-500 px-4 py-2 rounded"
                 >
                   Written

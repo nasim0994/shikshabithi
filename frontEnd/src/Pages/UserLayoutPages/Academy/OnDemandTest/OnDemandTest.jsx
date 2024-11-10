@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 export default function OnDemandTest() {
   const navigate = useNavigate();
 
-  const {loggedUser} = useSelector((store) => store?.user);
+  const { loggedUser } = useSelector((store) => store?.user);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -158,7 +158,7 @@ export default function OnDemandTest() {
     const res = await addAcademyModelTest(examInfo);
     if (res?.data?.success) {
       Swal.fire("", "Exam successfully submitted", "success");
-      navigate("/exam-result");
+      navigate("/exam/result/ondemandtest");
     } else {
       Swal.fire("", "something went wrong", "error");
       console.log(res);

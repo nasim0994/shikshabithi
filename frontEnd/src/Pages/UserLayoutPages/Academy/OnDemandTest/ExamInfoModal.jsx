@@ -36,7 +36,7 @@ export default function ExamInfoModal({
       ></div>
 
       <div
-        className={`p-4 modal w-[95%] lg:w-[45%] min-h-60 md:min-h-[400px] mx-auto ${
+        className={`p-4 modal w-[95%] lg:w-[60%] xl:w-[45%] min-h-60 mx-auto ${
           examInfoModal && "modal_show text-neutral"
         }`}
       >
