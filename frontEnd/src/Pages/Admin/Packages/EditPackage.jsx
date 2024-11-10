@@ -134,7 +134,7 @@ export default function EditPackage() {
               />
             </div>
             <div>
-              <p className="mb-1">Paid Model Test Vendor</p>
+              <p className="mb-1">Add Model Test Vendor</p>
               <input
                 type="text"
                 name="paidModelTestVendor"

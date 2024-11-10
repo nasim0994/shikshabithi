@@ -98,7 +98,7 @@ export default function AddPackage() {
               />
             </div>
             <div className="flex items-center gap-3">
-              <p className="mb-1">Paid Model Test Vendor</p>
+              <p className="mb-1">Add Model Test Vendor</p>
               <input
                 type="text"
                 name="paidModelTestVendor"

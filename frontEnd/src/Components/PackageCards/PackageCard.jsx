@@ -38,7 +38,7 @@ export default function PackageCard({ item }) {
         </li>
 
         <li className="flex justify-between items-center">
-          <p>Paid Model Test (Vendor)</p>
+          <p>Add Model Test (vendor)</p>
           <p className="rounded-lg bg-pink-600 px-2 text-[11px] text-base-100">
             {item?.feature?.paidModeltestVendor}
           </p>

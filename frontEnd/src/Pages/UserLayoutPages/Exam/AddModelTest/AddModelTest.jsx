@@ -116,7 +116,7 @@ export default function AddModelTest() {
 
     if (res?.data?.success) {
       toast.success("Exam Model Test add Success");
-      navigate("/admin/academy/modelTest/all");
+      navigate("/exam-list");
     } else {
       toast.error("something went wrong!");
       console.log(res);

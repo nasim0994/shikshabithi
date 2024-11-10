@@ -6,10 +6,11 @@ import { FaBookReader } from "react-icons/fa";
 import { PiBagFill } from "react-icons/pi";
 import AcademyExam from "./AcademyExam";
 import AdmissionExam from "./AdmissionExam";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import JobExam from "./JobExam";
 import { useGetModelTestAttendLengthQuery } from "../../../../Redux/api/modelTestAttendApi";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function ExamList() {
   const navigate = useNavigate();
@@ -44,6 +45,23 @@ export default function ExamList() {
     { _id: 3, name: "Job", icon: <PiBagFill className="text-sm" /> },
   ];
 
+  const handleAddModelTest = () => {
+    if (!packageData?.package) {
+      toast.error("You need to purchase a package to add model test");
+      return;
+    }
+
+    const isExpired = new Date(packageData?.expires) < new Date();
+    if (isExpired) {
+      toast.error("Your package has expired");
+      return;
+    }
+
+    // const modeltestLimit = packageData?.package?.feature?.paidModeltestVendor;
+
+    navigate("/modeltest/add");
+  };
+
   return (
     <div>
       <div className="bg-base-100 p-4 rounded shadow">
@@ -54,9 +72,12 @@ export default function ExamList() {
           <div className="flex items-center gap-2">
             <BackBtn />
 
-            <Link to="/modeltest/add" className="text-xs primary_btn">
+            <button
+              onClick={handleAddModelTest}
+              className="text-xs primary_btn"
+            >
               Add Model Test
-            </Link>
+            </button>
           </div>
         </div>
 
