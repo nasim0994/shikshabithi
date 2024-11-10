@@ -1,6 +1,5 @@
-import { CiCircleCheck } from "react-icons/ci";
-
 import { Link } from "react-router-dom";
+import { CiCircleCheck } from "react-icons/ci";
 
 export default function ModelTestSubmitModal({ exitTimeModal, category }) {
   return (

@@ -18,9 +18,9 @@ import { IoIosTime } from "react-icons/io";
 import { GrCheckboxSelected } from "react-icons/gr";
 import ModelTestSubmitModal from "./ModelTestSubmitModal";
 import ModelTestSkeleton from "../../../../Components/Skeleton/ModelTestSkeleton";
-import { useAddModelTestAttendMutation } from "../../../../Redux/api/academy/academyModelTestAttendApi";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useAddModelTestAttendMutation } from "../../../../Redux/api/modelTestAttendApi";
 
 export default function AcademyTestAttend() {
   let { id } = useParams();
@@ -138,6 +138,7 @@ export default function AcademyTestAttend() {
     const info = {
       user: loggedUser?.data?._id,
       modelTest: id,
+      modelTestType: "AcademyModelTest",
       mcqs: examQuetion,
       result: {
         obtainMark,

@@ -36,6 +36,9 @@ const paymentInstruction = require("./paymentInstructionRoute");
 const paymentRequest = require("./paymentRequestRoute");
 const seo = require("./seoRoutes");
 
+const allModeltestAttend = require("./modelTestAttendRoute");
+router.use("/modeltest-attend", allModeltestAttend);
+
 router.use("/logo", logo);
 router.use("/favicon", favicon);
 router.use("/banner", banner);

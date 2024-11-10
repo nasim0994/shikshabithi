@@ -2,17 +2,19 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import { FaAward, FaBookmark, FaQuestion, FaCheck } from "react-icons/fa";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { MdInfo, MdClose, MdDoNotDisturbOn } from "react-icons/md";
+import { MdInfo, MdClose } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
 import { IoBookmarks } from "react-icons/io5";
-import { useGetAcademyModelTestQuery } from "../../../../Redux/api/academy/modeltestApi";
 import { useState } from "react";
+import { useGetBoardExamResultQuery } from "../../../../Redux/api/board/boardExamResultApi";
 import { useSelector } from "react-redux";
 import Pagination from "../../../../Components/Pagination/Pagination";
+import ExamResultHead from "./ExamResultHead";
 
-export default function OnDemandTest() {
+export default function BoardExamResult() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(null);
+
   const { loggedUser } = useSelector((store) => store?.user);
 
   let limit = 10;
@@ -22,13 +24,13 @@ export default function OnDemandTest() {
   query["user"] = loggedUser?.data?._id;
   query["limit"] = limit;
   query["page"] = currentPage;
-  const { data } = useGetAcademyModelTestQuery({ ...query });
+  const { data } = useGetBoardExamResultQuery({ ...query });
   const mcqs = data?.data;
-
-  console.log("onDemand", data);
 
   return (
     <div>
+      <ExamResultHead />
+
       <div className="mt-4 grid md:grid-cols-2 items-start gap-4">
         {mcqs?.map((mcq) => (
           <div
@@ -37,7 +39,7 @@ export default function OnDemandTest() {
           >
             <div className="bg-gray-100 text-neutral p-4 py-3 flex justify-between items-center">
               <div>
-                <h2 className="font-medium">On Demand Test</h2>
+                <h2 className="font-medium">Board Exam Result</h2>
                 <p className="text-xs text-neutral-content">
                   Time: {moment(mcq?.createdAt).fromNow()}
                 </p>
@@ -54,7 +56,7 @@ export default function OnDemandTest() {
 
             <div
               className={`${
-                open && active === mcq?._id ? "h-max" : "h-0 overflow-hidden"
+                open && active == mcq?._id ? "h-max" : "h-0 overflow-hidden"
               } duration-300`}
             >
               <div className="p-4 grid grid-cols-2 gap-3 text-[13px]">
@@ -63,7 +65,7 @@ export default function OnDemandTest() {
                     <FaQuestion />
                   </div>
                   <div>
-                    <p>{mcq?.totalQuestion}</p>
+                    <p>{mcq?.mcqs?.length}</p>
                     <p className="text-neutral-content text-xs">
                       TOTAL QUESTION
                     </p>
@@ -75,7 +77,7 @@ export default function OnDemandTest() {
                     <IoBookmarks />
                   </div>
                   <div>
-                    <p>{mcq?.totalMark}</p>
+                    <p>{mcq?.mcqs?.length}</p>
                     <p className="text-neutral-content text-xs">TOTAL MARK</p>
                   </div>
                 </div>
@@ -131,23 +133,11 @@ export default function OnDemandTest() {
                     <p className="text-neutral-content text-xs">PASS MARK</p>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2">
-                  <div className="bg-primary/80 text-base-100 p-2 rounded">
-                    <MdDoNotDisturbOn />
-                  </div>
-                  <div>
-                    <p>- {mcq?.result?.totalNegativeMark}</p>
-                    <p className="text-neutral-content text-xs">
-                      NEGATIVE MARK
-                    </p>
-                  </div>
-                </div>
               </div>
 
               <div className="border-t px-3 py-2 flex justify-between items-center text-xs uppercase text-base-100">
                 <div>
-                  {mcq?.result?.resultType === "PASS" ? (
+                  {mcq?.result?.resultType == "PASS" ? (
                     <span className="bg-primary px-2 py-1 rounded">Passes</span>
                   ) : (
                     <span className="bg-red-500 px-2 py-1 rounded">Failed</span>
@@ -155,7 +145,7 @@ export default function OnDemandTest() {
                 </div>
 
                 <Link
-                  to={`/exam-result/${mcq?._id}`}
+                  to={`/exam-result/boardexam/${mcq?._id}`}
                   className="bg-gray-300 text-neutral px-2 py-1 rounded flex items-center gap-1"
                 >
                   <MdInfo className="text-[15px]" /> Details
@@ -165,7 +155,6 @@ export default function OnDemandTest() {
           </div>
         ))}
       </div>
-
       {data?.meta?.pages > 1 && (
         <Pagination
           pages={data?.meta?.pages}

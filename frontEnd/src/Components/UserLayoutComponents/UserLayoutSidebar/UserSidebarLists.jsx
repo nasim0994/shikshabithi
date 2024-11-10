@@ -30,7 +30,7 @@ export default function UserSidebarLists() {
         </li>
 
         <li>
-          <NavLink to="/exam-result">
+          <NavLink to="/exam/result/modeltest">
             <PiExam />
             Exam Result
           </NavLink>

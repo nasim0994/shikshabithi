@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { FaAward, FaBookmark, FaQuestion, FaCheck } from "react-icons/fa";
@@ -6,13 +5,13 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { MdInfo, MdClose, MdDoNotDisturbOn } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
 import { IoBookmarks } from "react-icons/io5";
-import { useGetModelTestAttendQuery } from "../../../../../Redux/api/academy/academyModelTestAttendApi";
-import { useGetAdmissionMTAttendQuery } from "../../../../../Redux/api/admission/admissionModelTestAttendApi";
+import { useGetAcademyModelTestQuery } from "../../../../Redux/api/academy/modeltestApi";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import Pagination from "../../../../../Components/Pagination/Pagination";
-import { useGetJobModelTestAttendQuery } from "../../../../../Redux/api/job/jobModelTestAttendApi";
+import Pagination from "../../../../Components/Pagination/Pagination";
+import ExamResultHead from "./ExamResultHead";
 
-export default function ModelTest({ category }) {
+export default function OnDemandTestResult() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(null);
   const { loggedUser } = useSelector((store) => store?.user);
@@ -24,64 +23,30 @@ export default function ModelTest({ category }) {
   query["user"] = loggedUser?.data?._id;
   query["limit"] = limit;
   query["page"] = currentPage;
-  const { data: academy, isLoading } = useGetModelTestAttendQuery({ ...query });
-  const { data: admission, isLoading: admissionLoading } =
-    useGetAdmissionMTAttendQuery({ ...query });
-
-  const { data: job, isLoading: jobLoading } = useGetJobModelTestAttendQuery({
-    ...query,
-  });
-
-  const [modelTest, setModelTest] = useState([]);
-  const [meta, setMeta] = useState({});
-
-  useEffect(() => {
-    if (category == "academy") {
-      setModelTest(academy?.data);
-      setMeta(academy?.meta);
-    } else if (category == "admission") {
-      setModelTest(admission?.data);
-      setMeta(admission?.meta);
-    } else if (category == "job") {
-      setModelTest(job?.data);
-      setMeta(job?.meta);
-    }
-  }, [category, academy, admission, job]);
-  if (isLoading || admissionLoading || jobLoading)
-    return (
-      <div className="mt-3 grid sm:grid-cols-2 gap-2">
-        <div className="bg-base-100 h-20 rounded"></div>
-        <div className="bg-base-100 h-20 rounded"></div>
-        <div className="bg-base-100 h-20 rounded"></div>
-        <div className="bg-base-100 h-20 rounded"></div>
-        <div className="bg-base-100 h-20 rounded"></div>
-        <div className="bg-base-100 h-20 rounded"></div>
-        <div className="bg-base-100 h-20 rounded"></div>
-        <div className="bg-base-100 h-20 rounded"></div>
-      </div>
-    );
+  const { data } = useGetAcademyModelTestQuery({ ...query });
+  const mcqs = data?.data;
 
   return (
     <div>
-      <div className="mt-2 grid md:grid-cols-2 items-start gap-4">
-        {modelTest?.map((test) => (
+      <ExamResultHead />
+
+      <div className="mt-4 grid md:grid-cols-2 items-start gap-4">
+        {mcqs?.map((mcq) => (
           <div
-            key={test?._id}
+            key={mcq?._id}
             className="bg-base-100 rounded overflow-hidden shadow border border-primary"
           >
             <div className="bg-gray-100 text-neutral p-4 py-3 flex justify-between items-center">
               <div>
-                <h2 className="font-medium">
-                  Model Test <small className="pl-1">{category}</small>
-                </h2>
+                <h2 className="font-medium">On Demand Test</h2>
                 <p className="text-xs text-neutral-content">
-                  Time: {moment(test?.createdAt).fromNow()}
+                  Time: {moment(mcq?.createdAt).fromNow()}
                 </p>
               </div>
               <button
                 onClick={() => {
                   setOpen(!open);
-                  setActive(test?._id);
+                  setActive(mcq?._id);
                 }}
               >
                 <MdOutlineKeyboardArrowDown />
@@ -90,7 +55,7 @@ export default function ModelTest({ category }) {
 
             <div
               className={`${
-                open && active == test?._id ? "h-max" : "h-0 overflow-hidden"
+                open && active === mcq?._id ? "h-max" : "h-0 overflow-hidden"
               } duration-300`}
             >
               <div className="p-4 grid grid-cols-2 gap-3 text-[13px]">
@@ -99,7 +64,7 @@ export default function ModelTest({ category }) {
                     <FaQuestion />
                   </div>
                   <div>
-                    <p>{test?.modelTest?.mcqs?.length}</p>
+                    <p>{mcq?.totalQuestion}</p>
                     <p className="text-neutral-content text-xs">
                       TOTAL QUESTION
                     </p>
@@ -111,7 +76,7 @@ export default function ModelTest({ category }) {
                     <IoBookmarks />
                   </div>
                   <div>
-                    <p>{test?.modelTest?.totalMark}</p>
+                    <p>{mcq?.totalMark}</p>
                     <p className="text-neutral-content text-xs">TOTAL MARK</p>
                   </div>
                 </div>
@@ -122,8 +87,7 @@ export default function ModelTest({ category }) {
                   </div>
                   <div>
                     <p>
-                      {test?.result?.totalRightAns +
-                        test?.result?.totalWrongAns}
+                      {mcq?.result?.totalRightAns + mcq?.result?.totalWrongAns}
                     </p>
                     <p className="text-neutral-content text-xs">ANSWERED</p>
                   </div>
@@ -134,27 +98,27 @@ export default function ModelTest({ category }) {
                     <FaCheck />
                   </div>
                   <div>
-                    <p>{test?.result?.totalRightAns}</p>
+                    <p>{mcq?.result?.totalRightAns}</p>
                     <p className="text-neutral-content text-xs">RIGHT ANSWER</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <div className="bg-secondary/80 text-base-100 p-2 rounded">
+                  <div className="bg-primary/80 text-base-100 p-2 rounded">
                     <MdClose />
                   </div>
                   <div>
-                    <p>{test?.result?.totalWrongAns}</p>
+                    <p>{mcq?.result?.totalWrongAns}</p>
                     <p className="text-neutral-content text-xs">WRONG ANSWER</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <div className="bg-primary/80 text-base-100 p-2 rounded">
+                  <div className="bg-secondary/80 text-base-100 p-2 rounded">
                     <FaAward />
                   </div>
                   <div>
-                    <p>{test?.result?.obtainMark}</p>
+                    <p>{mcq?.result?.obtainMark}</p>
                     <p className="text-neutral-content text-xs">OBTAIN MARK</p>
                   </div>
                 </div>
@@ -164,17 +128,17 @@ export default function ModelTest({ category }) {
                     <FaBookmark />
                   </div>
                   <div>
-                    <p>{test?.modelTest?.passMark}</p>
+                    <p>{mcq?.passMark}</p>
                     <p className="text-neutral-content text-xs">PASS MARK</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <div className="bg-secondary/80 text-base-100 p-2 rounded">
+                  <div className="bg-primary/80 text-base-100 p-2 rounded">
                     <MdDoNotDisturbOn />
                   </div>
                   <div>
-                    <p>- {test?.result?.totalNegativeMark}</p>
+                    <p>- {mcq?.result?.totalNegativeMark}</p>
                     <p className="text-neutral-content text-xs">
                       NEGATIVE MARK
                     </p>
@@ -184,7 +148,7 @@ export default function ModelTest({ category }) {
 
               <div className="border-t px-3 py-2 flex justify-between items-center text-xs uppercase text-base-100">
                 <div>
-                  {test?.result?.resultType == "PASS" ? (
+                  {mcq?.result?.resultType === "PASS" ? (
                     <span className="bg-primary px-2 py-1 rounded">Passes</span>
                   ) : (
                     <span className="bg-red-500 px-2 py-1 rounded">Failed</span>
@@ -192,7 +156,7 @@ export default function ModelTest({ category }) {
                 </div>
 
                 <Link
-                  to={`/exam-result/modeltest?exam=${test?._id}&category=${category}`}
+                  to={`/exam-result/${mcq?._id}`}
                   className="bg-gray-300 text-neutral px-2 py-1 rounded flex items-center gap-1"
                 >
                   <MdInfo className="text-[15px]" /> Details
@@ -202,11 +166,13 @@ export default function ModelTest({ category }) {
           </div>
         ))}
       </div>
-      <Pagination
-        pages={meta?.pages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {data?.meta?.pages > 1 && (
+        <Pagination
+          pages={data?.meta?.pages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

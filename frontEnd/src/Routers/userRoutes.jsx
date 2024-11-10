@@ -4,6 +4,9 @@ import Spinner from "../Components/Loader/Spinner/Spinner.jsx";
 import PackageCheckout from "../Pages/UserLayoutPages/PackageCheckout/PackageCheckout.jsx";
 import Subscription from "../Pages/UserLayoutPages/Profile/Subscription/Subscription.jsx";
 import AddModelTest from "../Pages/UserLayoutPages/Exam/AddModelTest/AddModelTest.jsx";
+import ModelTestResult from "../Pages/UserLayoutPages/Exam/ExamResult/ModelTestResult.jsx";
+import OnDemandTestResult from "../Pages/UserLayoutPages/Exam/ExamResult/OnDemandTestResult.jsx";
+import BoardExamResult from "../Pages/UserLayoutPages/Exam/ExamResult/BoardExamResult.jsx";
 
 const ProfileLayout = lazy(() => import("../Layout/ProfileLayout"));
 const UserLayout = lazy(() => import("../Layout/UserLayout"));
@@ -159,9 +162,6 @@ const OnDemandTest = lazy(() =>
 );
 
 //----------------------------Exam
-const ExamResult = lazy(() =>
-  import("../Pages/UserLayoutPages/Exam/ExamResult/ExamResult")
-);
 
 //-------------------Admission
 const Admission = lazy(() =>
@@ -302,18 +302,33 @@ export const userRoutes = {
       path: "admission/model-test/attend/:id",
       element: <AdmissionTestAttend />,
     },
+
+    //-------------Result
     {
-      path: "exam-result/modeltest",
+      path: "exam/result/ondemandtest",
+      element: <OnDemandTestResult />,
+    },
+    {
+      path: "exam/result/modeltest",
+      element: <ModelTestResult />,
+    },
+    {
+      path: "exam/result/boardexam",
+      element: <BoardExamResult />,
+    },
+
+    {
+      path: "exam-result/modeltest/:id",
       element: <ModelTestDetails />,
     },
-    {
-      path: "exam-result",
-      element: <ExamResult />,
-    },
-    {
-      path: "exam-result/:id",
-      element: <ExamResultDetails />,
-    },
+    // {
+    //   path: "exam-result",
+    //   element: <ExamResult />,
+    // },
+    // {
+    //   path: "exam-result/:id",
+    //   element: <ExamResultDetails />,
+    // },
     {
       path: "exam-result/boardexam/:id",
       element: <BoardExamResultDetails />,
