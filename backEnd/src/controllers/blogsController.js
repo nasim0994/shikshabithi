@@ -72,18 +72,23 @@ exports.get = async (req, res) => {
     const result = await Model.find(query)
       .populate({
         path: "user",
+        select: "profile package",
         populate: {
           path: "profile",
+          select: "name image",
         },
       })
       .populate({
         path: "subject",
+        select: "name class",
         populate: {
           path: "class",
+          select: "name",
         },
       })
       .populate({
         path: "chapter",
+        select: "name",
       })
       .populate({
         path: "tags",

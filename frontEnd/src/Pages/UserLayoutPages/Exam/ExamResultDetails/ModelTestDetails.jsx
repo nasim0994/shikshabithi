@@ -1,46 +1,24 @@
-import { useEffect, useState } from "react";
 import { FaAward, FaBookmark, FaCheck, FaQuestion } from "react-icons/fa";
 import { FaListCheck } from "react-icons/fa6";
 import { IoBookmarks } from "react-icons/io5";
 import { MdClose, MdDoNotDisturbOn } from "react-icons/md";
-import { useLocation } from "react-router-dom";
-import { useGetSingleAdmissionMTAttendQuery } from "../../../../Redux/api/admission/admissionModelTestAttendApi";
+import { useParams } from "react-router-dom";
 import { useGetSingleModelTestAttendQuery } from "../../../../Redux/api/academy/academyModelTestAttendApi";
 import MCQ from "./MCQ";
 
 export default function ModelTestDetails() {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  let exam = queryParams.get("exam");
-  let category = queryParams.get("category");
+  const { id } = useParams();
 
-  const [modelTest, setModelTest] = useState({});
+  const { data: modelTestData } = useGetSingleModelTestAttendQuery(id);
+  const modelTest = modelTestData?.data;
 
   let mcqs = modelTest?.mcqs;
-
-  const { data: academy, isLoading } = useGetSingleModelTestAttendQuery(exam);
-  const { data: admission, isLoading: admissionLoading } =
-    useGetSingleAdmissionMTAttendQuery(exam);
-
-  useEffect(() => {
-    if (category == "academy") {
-      setModelTest(academy?.data);
-    } else if (category == "admission") {
-      setModelTest(admission?.data);
-    } else if (category == "job") {
-      setModelTest({});
-    }
-  }, [category, academy, admission]);
-
-  if ((isLoading, admissionLoading)) return "Loading...";
 
   return (
     <div>
       <div className="bg-base-100 rounded shadow overflow-hidden">
         <div className="bg-primary text-base-100 p-4 text-center">
-          <h2 className="text-xl">
-            Model Test <small className="pl-1 text-xs">{category}</small>
-          </h2>
+          <h2 className="text-xl">{modelTest?.modelTestType}</h2>
         </div>
 
         <div className="p-4 grid grid-cols-2 gap-3 text-[13px]">

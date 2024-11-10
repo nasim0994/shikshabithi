@@ -31,12 +31,10 @@ exports.insert = async (req, res) => {
 exports.get = async (req, res) => {
   const paginationOptions = pick(req.query, ["page", "limit"]);
   const { page, limit, skip } = calculatePagination(paginationOptions);
-  const { subject, user } = req.query;
+  const { user } = req.query;
 
   try {
     let query = {};
-    if (subject && subject !== "undefined" && subject !== null)
-      query.subject = subject;
     query.user = user;
 
     const result = await Model.find(query)
@@ -83,44 +81,6 @@ exports.getSingle = async (req, res) => {
     });
   }
 };
-
-// exports.update = async (req, res) => {
-//   const id = req?.params?.id;
-//   const data = req?.body;
-
-//   try {
-//     const isExist = await Model.findById(id);
-
-//     if (!isExist) {
-//       return res.status(404).json({
-//         success: false,
-//         error: "Model Test not found",
-//       });
-//     }
-
-//     const result = await Model.findByIdAndUpdate(id, data, {
-//       new: true,
-//     });
-
-//     if (!result?._id) {
-//       return res.status(404).json({
-//         success: false,
-//         error: "Model Test not updated",
-//       });
-//     }
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Model Test updated success",
-//       data: result,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       error: error.message,
-//     });
-//   }
-// };
 
 exports.destroy = async (req, res) => {
   try {

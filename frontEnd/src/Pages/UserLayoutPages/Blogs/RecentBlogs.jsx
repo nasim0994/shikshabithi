@@ -8,8 +8,6 @@ export default function RecentBlogs() {
   const { data } = useGetByViewersQuery({ ...query });
   const blogs = data?.data;
 
-  console.log(blogs);
-
   return (
     <div className="bg-base-100 rounded p-3 shadow">
       <h3 className="font-medium text-lg text-neutral border-b pb-1">

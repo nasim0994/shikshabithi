@@ -41,17 +41,12 @@ export default function ClassCard({ cls }) {
             MCQ
           </Link>
 
-          {cls?.category?.uuid !== "101" && cls?.category?.uuid !== "102" && (
-            <Link
-              to={`/academy/board-exam/mcq?class=${cls?._id}`}
-              className="border rounded px-2 py-1 hover:bg-base-100 duration-200"
-            >
-              Board Exam
-              {/* {boardMcqs?.length && boardWrittens?.length
-                ? parseInt(boardMcqs?.length + boardWrittens?.length)
-                : 0} */}
-            </Link>
-          )}
+          <Link
+            to={`/academy/board-exam/mcq?class=${cls?._id}`}
+            className="border rounded px-2 py-1 hover:bg-base-100 duration-200"
+          >
+            Board Exam
+          </Link>
         </div>
       </div>
       <div>

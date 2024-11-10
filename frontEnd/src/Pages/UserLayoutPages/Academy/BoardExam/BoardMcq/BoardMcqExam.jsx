@@ -143,7 +143,7 @@ export default function BoardMcqExam() {
     let res = await addBoardExamResult(info);
     if (res?.data?.success) {
       toast.success("Board Exam submit success");
-      navigate("/exam-result");
+      navigate("/exam/result/boardexam");
       setTime(0);
     } else {
       toast.error("something went wrong!");

@@ -86,7 +86,6 @@ const mcqRouters = require("./academy/mcq.routes");
 const writtenRouters = require("./academy/written.routes");
 const onDemandTestRouters = require("./academy/onDemandTest.routes");
 const examModelTest = require("./academy/academyModelTestRoute");
-const modeltestAttend = require("./academy/academyModelTestAttendRoute");
 
 router.use("/academy/category", categoryRoutes);
 router.use("/academy/class", classRoutes);
@@ -101,7 +100,6 @@ router.use("/academy/written", writtenRouters);
 router.use("/academy/ondemandtest", onDemandTestRouters);
 
 router.use("/examModelTest", examModelTest);
-router.use("/modeltestAttend", modeltestAttend);
 
 //------------------------------------------------------------------------------
 // Admission Routes
@@ -110,13 +108,11 @@ const universityRoutes = require("./admission/university.routes");
 const questionSetRoutes = require("./admission/questionSet.routes");
 const admissionMCQRoutes = require("./admission/admissionMCQ.routes");
 const admissionModeltest = require("./admission/admissionModelTestRoute");
-const admissionModeltestAttend = require("./admission/admissionModelTestAttendRoute");
 
 router.use("/admission/university", universityRoutes);
 router.use("/admission/questionSet", questionSetRoutes);
 router.use("/admission/mcq", admissionMCQRoutes);
 router.use("/admission/modelTest", admissionModeltest);
-router.use("/admission/modeltestAttent", admissionModeltestAttend);
 
 //------------------------------------------------------------------------------
 // Job Routes
@@ -125,13 +121,11 @@ const institute = require("./job/instituteRoutes");
 const jobQuesSet = require("./job/jobQuesSetRoutes");
 const jobMcq = require("./job/jobMCQRoutes");
 const jobModeltest = require("./job/jobModelTestRoute");
-const jobModeltestAttend = require("./job/jobModelTestAttendRoute");
 
 router.use("/job/institute", institute);
 router.use("/job/questionSet", jobQuesSet);
 router.use("/job/mcq", jobMcq);
 router.use("/job/modelTest", jobModeltest);
-router.use("/job/modelTestAttend", jobModeltestAttend);
 
 //------------------------------------------------------------------------------
 // Board Routes

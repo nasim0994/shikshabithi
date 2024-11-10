@@ -31,11 +31,12 @@ exports.insert = async (req, res) => {
 exports.get = async (req, res) => {
   const paginationOptions = pick(req.query, ["page", "limit"]);
   const { page, limit, skip } = calculatePagination(paginationOptions);
-  const { user } = req.query;
+  const { user, modelTestType } = req.query;
 
   try {
     let query = {};
-    if (user) query.user = user;
+    query.user = user;
+    query.modelTestType = modelTestType;
 
     const result = await Model.find(query)
       .skip(skip)

@@ -20,7 +20,7 @@ import ModelTestSubmitModal from "./ModelTestSubmitModal";
 import ModelTestSkeleton from "../../../../Components/Skeleton/ModelTestSkeleton";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { useAddJobModelTestAttendMutation } from "../../../../Redux/api/job/jobModelTestAttendApi";
+import { useAddModelTestAttendMutation } from "../../../../Redux/api/modelTestAttendApi";
 
 export default function JobTestAttend() {
   let { id } = useParams();
@@ -112,7 +112,7 @@ export default function JobTestAttend() {
   }, [time]);
 
   const [addModelTestAttend, { isLoading: addLoading }] =
-    useAddJobModelTestAttendMutation();
+    useAddModelTestAttendMutation();
 
   //----------Handle Submite
   const handleExamSubmit = async () => {
@@ -138,6 +138,7 @@ export default function JobTestAttend() {
     const info = {
       user: loggedUser?.data?._id,
       modelTest: id,
+      modelTestType: "JobModelTest",
       mcqs: examQuetion,
       result: {
         obtainMark,
@@ -152,7 +153,7 @@ export default function JobTestAttend() {
     let res = await addModelTestAttend(info);
     if (res?.data?.success) {
       toast.success("Model test submit success");
-      navigate("/exam-result?test=modeltest&category=job");
+      navigate("/exam/result/modeltest?category=job");
       setTime(0);
     } else {
       toast.error("something went wrong!");

@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleExamModelTestQuery } from "../../../../Redux/api/academy/academyModelTestApi";
 import { useEffect, useState } from "react";
 import perser from "html-react-parser";
 import {
@@ -20,6 +19,7 @@ import ModelTestSubmitModal from "./ModelTestSubmitModal";
 import ModelTestSkeleton from "../../../../Components/Skeleton/ModelTestSkeleton";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useGetSingleExamModelTestQuery } from "../../../../Redux/api/academy/academyModelTestApi";
 import { useAddModelTestAttendMutation } from "../../../../Redux/api/modelTestAttendApi";
 
 export default function AcademyTestAttend() {
@@ -153,7 +153,7 @@ export default function AcademyTestAttend() {
     let res = await addModelTestAttend(info);
     if (res?.data?.success) {
       toast.success("Model test submit success");
-      navigate("/exam-result?test=modeltest&category=academy");
+      navigate("/exam/result/modeltest?category=academy");
       setTime(0);
     } else {
       toast.error("something went wrong!");

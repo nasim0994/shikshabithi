@@ -82,14 +82,7 @@ export default function BlogsList({ activeCategory, selectedSubject }) {
   }, [blogCurrentPage, subject, chapter, tag, selectedSubject]);
 
   let query = {};
-  query["category"] =
-    activeCategory == 1
-      ? "academy"
-      : activeCategory == 2
-      ? "admission"
-      : activeCategory == 3
-      ? "job"
-      : "others";
+  query["category"] = activeCategory;
   query["subject"] = subject ? subject : selectedSubject;
   query["chapter"] = chapter;
   query["tag"] = tag;
@@ -97,12 +90,8 @@ export default function BlogsList({ activeCategory, selectedSubject }) {
   query["status"] = "active";
   query["limit"] = blogLimit;
   query["page"] = blogCurrentPage;
-  const {
-    data,
-    isLoading: isBlogsLoading,
-    isFetching,
-  } = useGetBlogsQuery({ ...query });
 
+  const { data, isLoading, isFetching } = useGetBlogsQuery({ ...query });
   const blogs = data?.data;
 
   // Handle Delete
@@ -134,7 +123,7 @@ export default function BlogsList({ activeCategory, selectedSubject }) {
     setShareDropdown(i);
   };
 
-  if (isBlogsLoading || isFetching) return <BlogsSkeleton />;
+  if (isLoading || isFetching) return <BlogsSkeleton />;
 
   return (
     <div className="lg:col-span-3">
@@ -148,8 +137,9 @@ export default function BlogsList({ activeCategory, selectedSubject }) {
                     src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
                       blog?.image
                     }`}
-                    alt=""
+                    alt="blog"
                     className="rounded-t w-full max-h-64 min-h-48"
+                    loading="lazy"
                   />
                 </Link>
               )}

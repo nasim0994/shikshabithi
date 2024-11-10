@@ -18,7 +18,7 @@ import { GrCheckboxSelected } from "react-icons/gr";
 import ModelTestSubmitModal from "./ModelTestSubmitModal";
 import ModelTestSkeleton from "../../../../Components/Skeleton/ModelTestSkeleton";
 import { useGetSingleAdmissionModelTestQuery } from "../../../../Redux/api/admission/admissionModelTestApi";
-import { useAddAdmissionMTAttendMutation } from "../../../../Redux/api/admission/admissionModelTestAttendApi";
+import { useAddModelTestAttendMutation } from "../../../../Redux/api/modelTestAttendApi";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
@@ -111,8 +111,8 @@ export default function AdmissionTestAttend() {
     }
   }, [time]);
 
-  const [addAdmissionMTAttend, { isLoading: addLoading }] =
-    useAddAdmissionMTAttendMutation();
+  const [addModelTestAttend, { isLoading: addLoading }] =
+    useAddModelTestAttendMutation();
   //----------Handle Submite
   const handleExamSubmit = async () => {
     const totalRight = examQuetion.filter(
@@ -137,6 +137,7 @@ export default function AdmissionTestAttend() {
     const info = {
       user: loggedUser?.data?._id,
       modelTest: id,
+      modelTestType: "AdmissionModelTest",
       mcqs: examQuetion,
       result: {
         obtainMark,
@@ -148,10 +149,10 @@ export default function AdmissionTestAttend() {
       },
     };
 
-    let res = await addAdmissionMTAttend(info);
+    let res = await addModelTestAttend(info);
     if (res?.data?.success) {
       toast.success("Model test submit success");
-      navigate("/exam-result?test=modeltest&category=admission");
+      navigate("/exam/result/modeltest?category=admission");
       setTime(0);
     } else {
       toast.error("something went wrong!");

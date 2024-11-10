@@ -12,9 +12,21 @@ import RelatedBlogs from "./RelatedBlogs";
 
 let categories = [
   { _id: 1, name: "Academy", icon: <HiBuildingLibrary /> },
-  { _id: 2, name: "Admission", icon: <FaBookReader className="text-xs" /> },
-  { _id: 3, name: "Job", icon: <PiBagFill className="text-sm" /> },
-  { _id: 4, name: "Others", icon: <MdOutlineClearAll className="text-sm" /> },
+  {
+    _id: 2,
+    name: "Admission",
+    icon: <FaBookReader className="text-xs" />,
+  },
+  {
+    _id: 3,
+    name: "Job",
+    icon: <PiBagFill className="text-sm" />,
+  },
+  {
+    _id: 4,
+    name: "Others",
+    icon: <MdOutlineClearAll className="text-sm" />,
+  },
 ];
 
 export default function Blogs() {
@@ -26,26 +38,19 @@ export default function Blogs() {
   const queryParams = new URLSearchParams(location.search);
   let active = queryParams.get("active");
 
-  const [activeCategory, setActiveCategory] = useState(1);
+  const [activeCategory, setActiveCategory] = useState("academy");
   const [selectedSubject, setSelectedSubject] = useState("");
 
   let query = {};
   if (active == "admission") query["classuuid"] = 200;
+
   const { data: subject } = useGetAcademySubjectsQuery({ ...query });
   const subjects = subject?.data;
 
   useEffect(() => {
     if (!active) {
       navigate("/blogs?active=academy");
-      setActiveCategory(1);
-    } else if (active == "academy") {
-      setActiveCategory(1);
-    } else if (active == "admission") {
-      setActiveCategory(2);
-    } else if (active == "job") {
-      setActiveCategory(3);
-    } else if (active == "others") {
-      setActiveCategory(4);
+      setActiveCategory(active);
     }
   }, [active, navigate]);
 
@@ -67,14 +72,14 @@ export default function Blogs() {
               <button
                 key={category?._id}
                 onClick={() => {
-                  setActiveCategory(category?._id);
+                  setActiveCategory(category?.name.toLocaleLowerCase());
                   navigate(
                     `/blogs?active=${category?.name.toLocaleLowerCase()}`
                   );
                   setSelectedSubject("");
                 }}
                 className={`flex items-center gap-2 border rounded-xl px-2.5 py-1.5 duration-300 ${
-                  activeCategory === category._id
+                  activeCategory === category.name.toLocaleLowerCase()
                     ? "bg-primary text-white"
                     : "hover:border-primary/60 hover:bg-primary/5"
                 }`}

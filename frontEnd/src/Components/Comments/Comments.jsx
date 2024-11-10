@@ -128,11 +128,14 @@ export default function Comments({ selectedBlog }) {
       ) : (
         <p className="text-[13px] text-red-500">No comment found.</p>
       )}
-      <Pagination
-        pages={commentData?.meta?.pages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+
+      {commentData?.meta?.pages > 1 && (
+        <Pagination
+          pages={commentData?.meta?.pages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

@@ -317,22 +317,24 @@ export const userRoutes = {
       element: <BoardExamResult />,
     },
 
-    {
-      path: "exam-result/modeltest/:id",
-      element: <ModelTestDetails />,
-    },
     // {
     //   path: "exam-result",
     //   element: <ExamResult />,
     // },
-    // {
-    //   path: "exam-result/:id",
-    //   element: <ExamResultDetails />,
-    // },
+
     {
-      path: "exam-result/boardexam/:id",
+      path: "exam-result/details/ondemandtest/:id",
+      element: <ExamResultDetails />,
+    },
+    {
+      path: "exam-result/details/modeltest/:id",
+      element: <ModelTestDetails />,
+    },
+    {
+      path: "exam-result/details/boardexam/:id",
       element: <BoardExamResultDetails />,
     },
+
     {
       path: "faqs",
       element: <Faqs />,
