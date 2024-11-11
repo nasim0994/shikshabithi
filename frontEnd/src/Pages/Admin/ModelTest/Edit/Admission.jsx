@@ -4,16 +4,30 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useGetAdmissionUniversitiesQuery } from "../../../../Redux/api/admission/universityApi";
 import { useGetAdmissionAllQuestionSetQuery } from "../../../../Redux/api/admission/questionSetApi";
-import { useAddModelTestMutation } from "../../../../Redux/api/modelTestApi";
+import { useUpdateModelTestMutation } from "../../../../Redux/api/modelTestApi";
 
-export default function Admission({ selectedMainCategory, userId }) {
+export default function Admission({ selectedMainCategory, modelTest, id }) {
   const navigate = useNavigate();
 
   const [selectedUniversity, setSelectedUniversity] = useState("");
   const [selectedSet, setSelectedSet] = useState("");
+  const [selectedExamType, setSelectedExamType] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedNegativeMark, setSelectedNegativeMark] = useState("");
 
   const [selectedMcqs, setSelectedMcqs] = useState([]);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (modelTest?._id) {
+      setSelectedUniversity(modelTest?.university?._id);
+      setSelectedSet(modelTest?.set?._id);
+      setSelectedExamType(modelTest?.examType);
+      setSelectedStatus(modelTest?.status);
+      setSelectedNegativeMark(modelTest?.negativeMark);
+      setSelectedMcqs(modelTest?.mcqs);
+    }
+  }, [modelTest]);
 
   const { data: university } = useGetAdmissionUniversitiesQuery();
   let universities = university?.data;
@@ -53,9 +67,9 @@ export default function Admission({ selectedMainCategory, userId }) {
     setSelectedMcqs(randomMcq?.map((item) => item?._id));
   };
 
-  const [addModelTest, { isLoading }] = useAddModelTestMutation();
+  const [updateModelTest, { isLoading }] = useUpdateModelTestMutation();
 
-  const handleAdd = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     let form = e.target;
     let university = form.university.value;
@@ -66,8 +80,8 @@ export default function Admission({ selectedMainCategory, userId }) {
     let negativeMark = form.negativeMark.value;
     let passMark = form.passMark.value;
     let duration = form.duration.value;
+
     let info = {
-      vendor: userId,
       mainCategory: selectedMainCategory,
       category: university,
       categoryType: "University",
@@ -80,14 +94,13 @@ export default function Admission({ selectedMainCategory, userId }) {
       negativeMark,
       passMark,
       duration,
-      status: "pending",
     };
 
-    let res = await addModelTest(info);
+    let res = await updateModelTest({ id, info });
 
     if (res?.data?.success) {
-      toast.success("Exam Model Test add Success");
-      navigate(`/exam-list?active=${selectedMainCategory}`);
+      toast.success("Exam Model Test edit Success");
+      navigate(`/admin/modeltest/all`);
     } else {
       toast.error("something went wrong!");
       console.log(res);
@@ -96,7 +109,7 @@ export default function Admission({ selectedMainCategory, userId }) {
 
   return (
     <div className="mt-4">
-      <form onSubmit={handleAdd} className="flex flex-col gap-4">
+      <form onSubmit={handleEdit} className="flex flex-col gap-4">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <p className="mb-1">University</p>
@@ -104,6 +117,7 @@ export default function Admission({ selectedMainCategory, userId }) {
               name="university"
               required
               onChange={(e) => setSelectedUniversity(e.target.value)}
+              value={selectedUniversity}
             >
               {universities?.map((university) => (
                 <option key={university?._id} value={university?._id}>
@@ -119,6 +133,7 @@ export default function Admission({ selectedMainCategory, userId }) {
               name="set"
               required
               onChange={(e) => setSelectedSet(e.target.value)}
+              value={selectedSet}
             >
               {sets?.map((set) => (
                 <option key={set?._id} value={set?._id}>
@@ -130,7 +145,12 @@ export default function Admission({ selectedMainCategory, userId }) {
 
           <div>
             <p className="mb-1">Exam type</p>
-            <select name="examType" required>
+            <select
+              name="examType"
+              required
+              onChange={(e) => setSelectedExamType(e.target.value)}
+              value={selectedExamType}
+            >
               <option value="free">Free</option>
               <option value="paid">Paid</option>
             </select>
@@ -139,7 +159,12 @@ export default function Admission({ selectedMainCategory, userId }) {
 
         <div>
           <p className="mb-1">Name</p>
-          <input type="text" name="name" required />
+          <input
+            type="text"
+            name="name"
+            required
+            defaultValue={modelTest?.name}
+          />
         </div>
 
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -155,6 +180,7 @@ export default function Admission({ selectedMainCategory, userId }) {
               type="number"
               name="totalQuestion"
               required
+              defaultValue={modelTest?.mcqs?.length}
             />
 
             {error && <p className="text-xs text-red-500">{error}</p>}
@@ -162,17 +188,32 @@ export default function Admission({ selectedMainCategory, userId }) {
 
           <div>
             <p>Total Mark:</p>
-            <input type="number" name="totalMark" required />
+            <input
+              type="number"
+              name="totalMark"
+              required
+              defaultValue={modelTest?.totalMark}
+            />
           </div>
 
           <div>
             <p>Pass Mark:</p>
-            <input type="number" name="passMark" required />
+            <input
+              type="number"
+              name="passMark"
+              required
+              defaultValue={modelTest?.passMark}
+            />
           </div>
 
           <div>
             <p>Negative Mark:</p>
-            <select name="negativeMark" required>
+            <select
+              name="negativeMark"
+              value={selectedNegativeMark}
+              required
+              onChange={(e) => setSelectedNegativeMark(e.target.value)}
+            >
               <option value="0">0.00</option>
               <option value="0.25">0.25</option>
               <option value="0.50">0.50</option>
@@ -184,13 +225,32 @@ export default function Admission({ selectedMainCategory, userId }) {
             <p>
               Duration: <small className="text-neutral-content">min.</small>
             </p>
-            <input type="number" name="duration" required />
+            <input
+              type="number"
+              name="duration"
+              required
+              defaultValue={modelTest?.duration}
+            />
+          </div>
+
+          <div>
+            <p>Status:</p>
+            <select
+              name="status"
+              required
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              value={selectedStatus}
+            >
+              <option value="active">Active</option>
+              <option value="pending">Pending</option>
+              <option value="deactive">Deactive</option>
+            </select>
           </div>
         </div>
 
         <div className="mt-5">
           <button disabled={isLoading && "disabled"} className="primary_btn">
-            {isLoading ? "Loading..." : "Add Model Test"}
+            {isLoading ? "Loading..." : "Edit Model Test"}
           </button>
         </div>
       </form>

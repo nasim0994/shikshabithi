@@ -72,7 +72,6 @@ export default function Job({ selectedMainCategory, userId }) {
     let negativeMark = form.negativeMark.value;
     let passMark = form.passMark.value;
     let duration = form.duration.value;
-    let status = form.status.value;
 
     let info = {
       vendor: userId,
@@ -88,7 +87,7 @@ export default function Job({ selectedMainCategory, userId }) {
       negativeMark,
       passMark,
       duration,
-      status,
+      status: "pending",
     };
 
     let res = await addModelTest(info);
@@ -193,15 +192,6 @@ export default function Job({ selectedMainCategory, userId }) {
               Duration: <small className="text-neutral-content">min.</small>
             </p>
             <input type="number" name="duration" required />
-          </div>
-
-          <div>
-            <p>Status:</p>
-            <select name="status" required>
-              <option value="active">Active</option>
-              <option value="pending">Pending</option>
-              <option value="deactive">Deactive</option>
-            </select>
           </div>
         </div>
 

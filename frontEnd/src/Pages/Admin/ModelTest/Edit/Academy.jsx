@@ -6,18 +6,32 @@ import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classAp
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
-import { useAddModelTestMutation } from "../../../../Redux/api/modelTestApi";
+import { useUpdateModelTestMutation } from "../../../../Redux/api/modelTestApi";
 
-export default function Academy({ selectedMainCategory, userId }) {
+export default function Academy({ selectedMainCategory, modelTest, id }) {
   const navigate = useNavigate();
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedClass, setSelectedClass] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
   const [selectedChapter, setSelectedChapter] = useState("");
+  const [selectedExamType, setSelectedExamType] = useState("");
+  const [selectedNegativeMark, setSelectedNegativeMark] = useState("");
 
   const [selectedMcqs, setSelectedMcqs] = useState([]);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (modelTest?._id) {
+      setSelectedCategory(modelTest?.category?._id);
+      setSelectedClass(modelTest?.class?._id);
+      setSelectedSubject(modelTest?.subject?._id);
+      setSelectedChapter(modelTest?.chapter?._id);
+      setSelectedExamType(modelTest?.examType);
+      setSelectedNegativeMark(modelTest?.negativeMark);
+      setSelectedMcqs(modelTest?.mcqs);
+    }
+  }, [modelTest]);
 
   //------------------------Category
   const { data: category } = useGetAcademyCategoriesQuery();
@@ -80,10 +94,10 @@ export default function Academy({ selectedMainCategory, userId }) {
     setSelectedMcqs(randomMcq?.map((item) => item?._id));
   };
 
-  //------------------Handle add model test
-  const [addModelTest, { isLoading }] = useAddModelTestMutation();
+  //------------------Handle edit model test
+  const [updateModelTest, { isLoading }] = useUpdateModelTestMutation();
 
-  const handleAdd = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     let form = e.target;
     let category = form.category.value;
@@ -98,7 +112,6 @@ export default function Academy({ selectedMainCategory, userId }) {
     let duration = form.duration.value;
 
     let info = {
-      vendor: userId,
       mainCategory: selectedMainCategory,
       category,
       categoryType: "AcademyCategory",
@@ -113,14 +126,13 @@ export default function Academy({ selectedMainCategory, userId }) {
       negativeMark,
       passMark,
       duration,
-      status: "pending",
     };
 
-    const res = await addModelTest(info);
+    const res = await updateModelTest({ id, info });
 
     if (res?.data?.success) {
-      toast.success("Exam Model Test add Success");
-      navigate(`/exam-list?active=${selectedMainCategory}`);
+      toast.success("Exam Model Test edit Success");
+      navigate(`/admin/modeltest/all`);
     } else {
       toast.error("something went wrong!");
       console.log(res);
@@ -129,7 +141,7 @@ export default function Academy({ selectedMainCategory, userId }) {
 
   return (
     <div className="mt-4">
-      <form onSubmit={handleAdd} className="flex flex-col gap-4">
+      <form onSubmit={handleEdit} className="flex flex-col gap-4">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <p className="mb-1">Category Name</p>
@@ -137,6 +149,7 @@ export default function Academy({ selectedMainCategory, userId }) {
               name="category"
               required
               onChange={(e) => setSelectedCategory(e.target.value)}
+              value={selectedCategory}
             >
               {categories?.map((category) => (
                 <option key={category?._id} value={category?._id}>
@@ -152,6 +165,7 @@ export default function Academy({ selectedMainCategory, userId }) {
               name="class"
               required
               onChange={(e) => setSelectedClass(e.target.value)}
+              value={selectedClass}
             >
               {classes?.map((clas) => (
                 <option key={clas?._id} value={clas?._id}>
@@ -165,8 +179,9 @@ export default function Academy({ selectedMainCategory, userId }) {
             <p className="mb-1">Subject Name</p>
             <select
               name="subject"
-              onChange={(e) => setSelectedSubject(e.target.value)}
               required
+              onChange={(e) => setSelectedSubject(e.target.value)}
+              value={selectedSubject}
             >
               {subjects?.map((subject) => (
                 <option key={subject?._id} value={subject?._id}>
@@ -195,17 +210,28 @@ export default function Academy({ selectedMainCategory, userId }) {
 
         <div>
           <p className="mb-1">Name</p>
-          <input type="text" name="name" required />
+          <input
+            type="text"
+            name="name"
+            required
+            defaultValue={modelTest?.name}
+          />
         </div>
 
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div>
             <p>Exam type</p>
-            <select name="examType" required>
+            <select
+              name="examType"
+              required
+              onChange={(e) => setSelectedExamType(e.target.value)}
+              value={selectedExamType}
+            >
               <option value="free">Free</option>
               <option value="paid">Paid</option>
             </select>
           </div>
+
           <div>
             <p>
               Total Question:{" "}
@@ -218,6 +244,7 @@ export default function Academy({ selectedMainCategory, userId }) {
               type="number"
               name="totalQuestion"
               required
+              defaultValue={modelTest?.mcqs?.length}
             />
 
             {error && <p className="text-xs text-red-500">{error}</p>}
@@ -225,17 +252,32 @@ export default function Academy({ selectedMainCategory, userId }) {
 
           <div>
             <p>Total Mark:</p>
-            <input type="number" name="totalMark" required />
+            <input
+              type="number"
+              name="totalMark"
+              required
+              defaultValue={modelTest?.totalMark}
+            />
           </div>
 
           <div>
             <p>Pass Mark:</p>
-            <input type="number" name="passMark" required />
+            <input
+              type="number"
+              name="passMark"
+              required
+              defaultValue={modelTest?.passMark}
+            />
           </div>
 
           <div>
             <p>Negative Mark:</p>
-            <select name="negativeMark" required>
+            <select
+              name="negativeMark"
+              value={selectedNegativeMark}
+              required
+              onChange={(e) => setSelectedNegativeMark(e.target.value)}
+            >
               <option value="0.00">0.00</option>
               <option value="0.25">0.25</option>
               <option value="0.50">0.50</option>
@@ -247,13 +289,18 @@ export default function Academy({ selectedMainCategory, userId }) {
             <p>
               Duration: <small className="text-neutral-content">min.</small>
             </p>
-            <input type="number" name="duration" required />
+            <input
+              type="number"
+              name="duration"
+              required
+              defaultValue={modelTest?.duration}
+            />
           </div>
         </div>
 
         <div className="mt-5">
           <button disabled={isLoading && "disabled"} className="primary_btn">
-            {isLoading ? "Loading..." : "Add Model Test"}
+            {isLoading ? "Loading..." : "Edit Model Test"}
           </button>
         </div>
       </form>

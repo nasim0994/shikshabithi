@@ -68,7 +68,8 @@ const modelTestSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ["active", "pending", "deactive"],
+      default: "pending",
+      enum: ["active", "pending"],
     },
     participated: {
       type: Number,

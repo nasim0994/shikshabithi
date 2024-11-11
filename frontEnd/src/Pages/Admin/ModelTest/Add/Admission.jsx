@@ -80,14 +80,14 @@ export default function Admission({ selectedMainCategory, userId }) {
       negativeMark,
       passMark,
       duration,
-      status: "pending",
+      status: "active",
     };
 
     let res = await addModelTest(info);
 
     if (res?.data?.success) {
       toast.success("Exam Model Test add Success");
-      navigate(`/exam-list?active=${selectedMainCategory}`);
+      navigate(`/admin/modeltest/all`);
     } else {
       toast.error("something went wrong!");
       console.log(res);

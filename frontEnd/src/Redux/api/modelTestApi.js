@@ -51,6 +51,14 @@ export const modelTestApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    updateModelTestStatus: builder.mutation({
+      query: (id) => ({
+        url: `/api/modeltest/update/status/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["modelTest"],
+    }),
   }),
 });
 
@@ -61,4 +69,5 @@ export const {
   useGetModelTestQuery,
   useGetSingleModelTestQuery,
   useGetTotalLengthByVendorQuery,
+  useUpdateModelTestStatusMutation,
 } = modelTestApi;

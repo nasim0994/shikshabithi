@@ -1,66 +1,45 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
-import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
-import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
-import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
+import { useGetInstitutesQuery } from "../../../../Redux/api/job/instituteApi";
+import { useGetJobQuesSetQuery } from "../../../../Redux/api/job/jobQuesSetApi";
 import { useAddModelTestMutation } from "../../../../Redux/api/modelTestApi";
 
-export default function Academy({ selectedMainCategory, userId }) {
+export default function Job({ selectedMainCategory, userId }) {
   const navigate = useNavigate();
 
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedClass, setSelectedClass] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
-  const [selectedChapter, setSelectedChapter] = useState("");
+  const [selectedInstitute, setSelectedInstitute] = useState("");
+  const [selectedSet, setSelectedSet] = useState("");
 
   const [selectedMcqs, setSelectedMcqs] = useState([]);
   const [error, setError] = useState("");
 
-  //------------------------Category
-  const { data: category } = useGetAcademyCategoriesQuery();
-  const categories = category?.data;
+  const { data: institute } = useGetInstitutesQuery();
+  let institutes = institute?.data;
 
   useEffect(() => {
-    if (category?.data?.length > 0) setSelectedCategory(category?.data[0]?._id);
-  }, [category?.data]);
+    if (institutes?.length > 0) {
+      setSelectedInstitute(institutes[0]?._id);
+    }
+  }, [institutes]);
 
-  //------------------------Classes
-  let query = {};
-  query["category"] = selectedCategory;
-  const { data: cls } = useGetAcademyClassesQuery({ ...query });
-  const classes = cls?.data;
-
-  useEffect(() => {
-    setSelectedClass(cls?.data[0]?._id);
-  }, [cls?.data]);
-
-  //---------------------Subject
-  let subjectQuery = {};
-  subjectQuery["category"] = selectedCategory;
-  subjectQuery["cls"] = selectedClass;
-  const { data: subject } = useGetAcademySubjectsQuery({ ...subjectQuery });
-  const subjects = subject?.data;
+  let setQuery = {};
+  setQuery["institute"] = selectedInstitute;
+  const { data: set } = useGetJobQuesSetQuery({ ...setQuery });
+  let sets = set?.data;
 
   useEffect(() => {
-    setSelectedSubject(subject?.data[0]?._id);
-  }, [subject]);
-
-  //---------------------chapter
-  let chapterQuery = {};
-  chapterQuery["category"] = selectedCategory;
-  chapterQuery["cls"] = selectedClass;
-  chapterQuery["subject"] = selectedSubject;
-  const { data: chapter } = useGetAcademyChaptersQuery({ ...chapterQuery });
-  const chapters = chapter?.data;
+    if (sets?.length > 0) {
+      setSelectedSet(sets[0]?._id);
+    }
+  }, [sets]);
 
   let mcqQuery = {};
-  mcqQuery["subject"] = selectedSubject;
-  mcqQuery["chapter"] = selectedChapter;
+  mcqQuery["jobSets"] = selectedSet;
   const { data: mcq } = useGetAcademyMCQQuery({ ...mcqQuery });
 
+  // handle change mcq
   const handleOnchange = (value) => {
     if (value > mcq?.data?.length) {
       return setError(`${value} mcq not found!`);
@@ -80,16 +59,13 @@ export default function Academy({ selectedMainCategory, userId }) {
     setSelectedMcqs(randomMcq?.map((item) => item?._id));
   };
 
-  //------------------Handle add model test
   const [addModelTest, { isLoading }] = useAddModelTestMutation();
 
   const handleAdd = async (e) => {
     e.preventDefault();
     let form = e.target;
-    let category = form.category.value;
-    let cls = form.class.value;
-    let subject = form.subject.value;
-    let chapter = form.chapter.value;
+    let institute = form.institute.value;
+    let set = form.set.value;
     let examType = form.examType.value;
     let name = form.name.value;
     let totalMark = form.totalMark.value;
@@ -100,12 +76,10 @@ export default function Academy({ selectedMainCategory, userId }) {
     let info = {
       vendor: userId,
       mainCategory: selectedMainCategory,
-      category,
-      categoryType: "AcademyCategory",
-      subCategory: cls,
-      subCategoryType: "Class",
-      subject,
-      chapter,
+      category: institute,
+      categoryType: "Institute",
+      subCategory: set,
+      subCategoryType: "JobQuesSet",
       examType,
       name,
       mcqs: selectedMcqs,
@@ -113,14 +87,14 @@ export default function Academy({ selectedMainCategory, userId }) {
       negativeMark,
       passMark,
       duration,
-      status: "pending",
+      status: "active",
     };
 
-    const res = await addModelTest(info);
+    let res = await addModelTest(info);
 
     if (res?.data?.success) {
       toast.success("Exam Model Test add Success");
-      navigate(`/exam-list?active=${selectedMainCategory}`);
+      navigate(`/admin/modeltest/all`);
     } else {
       toast.error("something went wrong!");
       console.log(res);
@@ -132,63 +106,40 @@ export default function Academy({ selectedMainCategory, userId }) {
       <form onSubmit={handleAdd} className="flex flex-col gap-4">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
           <div>
-            <p className="mb-1">Category Name</p>
+            <p className="mb-1">Institute</p>
             <select
-              name="category"
+              name="institute"
               required
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={(e) => setSelectedInstitute(e.target.value)}
             >
-              {categories?.map((category) => (
-                <option key={category?._id} value={category?._id}>
-                  {category?.name}
+              {institutes?.map((institute) => (
+                <option key={institute?._id} value={institute?._id}>
+                  {institute?.name}
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <p className="mb-1">Class Name</p>
+            <p className="mb-1">Question Set</p>
             <select
-              name="class"
+              name="set"
               required
-              onChange={(e) => setSelectedClass(e.target.value)}
+              onChange={(e) => setSelectedSet(e.target.value)}
             >
-              {classes?.map((clas) => (
-                <option key={clas?._id} value={clas?._id}>
-                  {clas?.name}
+              {sets?.map((set) => (
+                <option key={set?._id} value={set?._id}>
+                  {set?.name}
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <p className="mb-1">Subject Name</p>
-            <select
-              name="subject"
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              required
-            >
-              {subjects?.map((subject) => (
-                <option key={subject?._id} value={subject?._id}>
-                  {subject?.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <p className="mb-1">Chapter Name</p>
-            <select
-              name="chapter"
-              onChange={(e) => setSelectedChapter(e.target.value)}
-              value={selectedChapter}
-            >
-              <option value="">select Chapter</option>
-              {chapters?.map((chapter) => (
-                <option key={chapter?._id} value={chapter?._id}>
-                  {chapter?.name}
-                </option>
-              ))}
+            <p className="mb-1">Exam type</p>
+            <select name="examType" required>
+              <option value="free">Free</option>
+              <option value="paid">Paid</option>
             </select>
           </div>
         </div>
@@ -199,13 +150,6 @@ export default function Academy({ selectedMainCategory, userId }) {
         </div>
 
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-          <div>
-            <p>Exam type</p>
-            <select name="examType" required>
-              <option value="free">Free</option>
-              <option value="paid">Paid</option>
-            </select>
-          </div>
           <div>
             <p>
               Total Question:{" "}
@@ -236,7 +180,7 @@ export default function Academy({ selectedMainCategory, userId }) {
           <div>
             <p>Negative Mark:</p>
             <select name="negativeMark" required>
-              <option value="0.00">0.00</option>
+              <option value="0">0.00</option>
               <option value="0.25">0.25</option>
               <option value="0.50">0.50</option>
               <option value="0.1">0.1</option>

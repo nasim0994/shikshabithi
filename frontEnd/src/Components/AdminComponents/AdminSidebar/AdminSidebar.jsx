@@ -114,6 +114,21 @@ const adminSidebarItems = [
 
   {
     icon: <FaClipboard />,
+    title: "Model Test",
+    subMenu: [
+      {
+        title: "All Model Test",
+        path: "/admin/modeltest/all",
+      },
+      {
+        title: "Add Model Test",
+        path: "/admin/modeltest/add",
+      },
+    ],
+  },
+
+  {
+    icon: <FaClipboard />,
     title: "Board Exam",
     subMenu: [
       {

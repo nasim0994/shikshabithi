@@ -23,6 +23,7 @@ export default function ExamList() {
 
   const query = {};
   if (active) query.mainCategory = active;
+  query.status = "active";
 
   const { data: allModeltestData } = useGetModelTestQuery(query);
   const allModeltest = allModeltestData?.data;

@@ -32,10 +32,13 @@ exports.insert = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
-  const { mainCategory, subject, chapter } = req.query;
+  const { mainCategory, subject, chapter, status } = req.query;
 
   try {
     let query = {};
+    if (status) {
+      query.status = status;
+    }
     if (mainCategory && mainCategory !== "undefined" && mainCategory !== null) {
       query.mainCategory = mainCategory;
     }
@@ -152,7 +155,13 @@ exports.update = async (req, res) => {
       });
     }
 
-    const result = await Model.findByIdAndUpdate(id, data, {
+    let newData = {
+      ...data,
+      chapter: data?.chapter ? data?.chapter : undefined,
+      subject: data?.subject ? data?.subject : undefined,
+    };
+
+    const result = await Model.findByIdAndUpdate(id, newData, {
       new: true,
     });
 
@@ -224,6 +233,45 @@ exports.totalAddLength = async (req, res) => {
     res.json({
       success: false,
       error: error.message,
+    });
+  }
+};
+
+exports.updateStatus = async (req, res) => {
+  const id = req?.params?.id;
+
+  try {
+    const isExist = await Model.findById(id);
+
+    if (!isExist) {
+      return res.json({
+        success: false,
+        message: "Model Test not found",
+      });
+    }
+
+    const result = await Model.findByIdAndUpdate(
+      id,
+      { status: isExist?.status == "active" ? "pending" : "active" },
+      { new: true }
+    );
+
+    if (!result?._id) {
+      return res.json({
+        success: false,
+        message: "Model Test not updated",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Model Test updated success",
+      data: result,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
     });
   }
 };

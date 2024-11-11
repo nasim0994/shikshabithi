@@ -190,6 +190,9 @@ import PaymentInstruction from "../Pages/Admin/Pricing/PaymentInstruction/Paymen
 import PaymentRequest from "../Pages/Admin/Pricing/PaymentRequest/PaymentRequest.jsx";
 import Users from "../Pages/Admin/Users/Users.jsx";
 import SEOSetting from "../Pages/Admin/SEOSetting/SEOSetting.jsx";
+import AllModelTest from "../Pages/Admin/ModelTest/AllModelTest.jsx";
+import AdminAddModelTest from "../Pages/Admin/ModelTest/Add/AdminAddModelTest.jsx";
+import AdminEditModelTest from "../Pages/Admin/ModelTest/Edit/AdminEditModelTest.jsx";
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
 );
@@ -208,9 +211,9 @@ const AddSubSubChapter = lazy(() =>
 const EditSubSubChapter = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubSubChapters/EditSubSubChapter")
 );
-const AllModelTest = lazy(() =>
-  import("../Pages/Admin/Academy/ModelTest/AllModelTest")
-);
+// const AllModelTest = lazy(() =>
+//   import("../Pages/Admin/Academy/ModelTest/AllModelTest")
+// );
 const AddModelTest = lazy(() =>
   import("../Pages/Admin/Academy/ModelTest/AddModelTest/AddModelTest")
 );
@@ -297,7 +300,7 @@ export const adminRoutes = {
     { path: "academy/writtens", element: <Writtens /> },
     { path: "academy/written/add", element: <AddWritten /> },
     { path: "academy/written/edit/:id", element: <EditWritten /> },
-    { path: "academy/modeltest/all", element: <AllModelTest /> },
+    // { path: "academy/modeltest/all", element: <AllModelTest /> },
     { path: "academy/modeltest/add", element: <AddModelTest /> },
     { path: "academy/modeltest/edit/:id", element: <EditModeltest /> },
     { path: "admission/modeltest/all", element: <AdmissionModelTest /> },
@@ -327,6 +330,11 @@ export const adminRoutes = {
     { path: "current-affairs", element: <CurrentAffairs /> },
     { path: "current-affairs/add", element: <AddCurrentAffairs /> },
     { path: "current-affairs/edit/:id", element: <EditCurrentAffairs /> },
+
+    { path: "modeltest/all", element: <AllModelTest /> },
+    { path: "modeltest/add", element: <AdminAddModelTest /> },
+    { path: "modeltest/edit/:id", element: <AdminEditModelTest /> },
+
     { path: "tags", element: <Tags /> },
     { path: "tags/add", element: <AddTag /> },
     { path: "tags/edit/:id", element: <EditTag /> },
