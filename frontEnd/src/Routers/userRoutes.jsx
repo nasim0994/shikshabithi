@@ -7,6 +7,7 @@ import AddModelTest from "../Pages/UserLayoutPages/Exam/AddModelTest/AddModelTes
 import ModelTestResult from "../Pages/UserLayoutPages/Exam/ExamResult/ModelTestResult.jsx";
 import OnDemandTestResult from "../Pages/UserLayoutPages/Exam/ExamResult/OnDemandTestResult.jsx";
 import BoardExamResult from "../Pages/UserLayoutPages/Exam/ExamResult/BoardExamResult.jsx";
+import ExamDetails from "../Pages/UserLayoutPages/Exam/ExamDetails/ExamDetails.jsx";
 
 const ProfileLayout = lazy(() => import("../Layout/ProfileLayout"));
 const UserLayout = lazy(() => import("../Layout/UserLayout"));
@@ -42,12 +43,10 @@ const QuestionBankDetails = lazy(() =>
 const ExamList = lazy(() =>
   import("../Pages/UserLayoutPages/Exam/ExamList/ExamList")
 );
-const AcademyExamDetails = lazy(() =>
-  import("../Pages/UserLayoutPages/Exam/ExamDetails/AcademyExamDetails")
-);
-const AdmissionExamDetails = lazy(() =>
-  import("../Pages/UserLayoutPages/Exam/ExamDetails/AdmissionExamDetails")
-);
+// const AcademyExamDetails = lazy(() =>
+//   import("../Pages/UserLayoutPages/Exam/ExamDetails/ExamDetails.jsx")
+// );
+
 const AcademyTestAttend = lazy(() =>
   import("../Pages/UserLayoutPages/Exam/ModelTestAttend/AcademyTestAttend")
 );
@@ -105,9 +104,6 @@ const NoticeDetails = lazy(() =>
 const Job = lazy(() => import("../Pages/UserLayoutPages/Job/Job.jsx"));
 const JobQuesSetDetails = lazy(() =>
   import("../Pages/UserLayoutPages/Job/JobQuesSetDetails/JobQuesSetDetails.jsx")
-);
-const JobExamDetails = lazy(() =>
-  import("../Pages/UserLayoutPages/Exam/ExamDetails/JobExamDetails.jsx")
 );
 
 const JobTestAttend = lazy(() =>
@@ -279,17 +275,10 @@ export const userRoutes = {
       ),
     },
     {
-      path: "exam-list/academy/:id",
-      element: <AcademyExamDetails />,
+      path: "exam/modeltest/:id",
+      element: <ExamDetails />,
     },
-    {
-      path: "exam-list/admission/:id",
-      element: <AdmissionExamDetails />,
-    },
-    {
-      path: "exam-list/job/:id",
-      element: <JobExamDetails />,
-    },
+
     {
       path: "job/model-test/attend/:id",
       element: <JobTestAttend />,

@@ -36,7 +36,10 @@ const paymentInstruction = require("./paymentInstructionRoute");
 const paymentRequest = require("./paymentRequestRoute");
 const seo = require("./seoRoutes");
 
+const allModeltest = require("./modelTestRoute");
 const allModeltestAttend = require("./modelTestAttendRoute");
+
+router.use("/modeltest", allModeltest);
 router.use("/modeltest-attend", allModeltestAttend);
 
 router.use("/logo", logo);

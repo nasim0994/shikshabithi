@@ -4,13 +4,14 @@ import { HiBuildingLibrary } from "react-icons/hi2";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { FaBookReader } from "react-icons/fa";
 import { PiBagFill } from "react-icons/pi";
-import AcademyExam from "./AcademyExam";
-import AdmissionExam from "./AdmissionExam";
 import { useLocation, useNavigate } from "react-router-dom";
-import JobExam from "./JobExam";
-import { useGetModelTestAttendLengthQuery } from "../../../../Redux/api/modelTestAttendApi";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import {
+  useGetModelTestQuery,
+  useGetTotalLengthByVendorQuery,
+} from "../../../../Redux/api/modelTestApi";
+import ExamCard from "./ExamCard";
 
 export default function ExamList() {
   const navigate = useNavigate();
@@ -20,11 +21,14 @@ export default function ExamList() {
 
   const [activeCategory, setActiveCategory] = useState(1);
 
+  const query = {};
+  if (active) query.mainCategory = active;
+
+  const { data: allModeltestData } = useGetModelTestQuery(query);
+  const allModeltest = allModeltestData?.data;
+
   const { loggedUser } = useSelector((state) => state.user);
   const packageData = loggedUser?.data?.package;
-
-  const { data } = useGetModelTestAttendLengthQuery();
-  const modelTestAttendLength = data?.data;
 
   useEffect(() => {
     if (!active) {
@@ -45,6 +49,8 @@ export default function ExamList() {
     { _id: 3, name: "Job", icon: <PiBagFill className="text-sm" /> },
   ];
 
+  const { data } = useGetTotalLengthByVendorQuery();
+
   const handleAddModelTest = () => {
     if (!packageData?.package) {
       toast.error("You need to purchase a package to add model test");
@@ -57,7 +63,15 @@ export default function ExamList() {
       return;
     }
 
-    // const modeltestLimit = packageData?.package?.feature?.paidModeltestVendor;
+    const modeltestLimit = parseInt(
+      packageData?.package?.feature?.paidModeltestVendor
+    );
+    const totalLength = parseInt(data?.data);
+
+    if (totalLength >= modeltestLimit) {
+      toast.error("You have reached the limit of adding model test");
+      return;
+    }
 
     navigate("/modeltest/add");
   };
@@ -106,24 +120,16 @@ export default function ExamList() {
         </div>
       </div>
 
-      {activeCategory == 1 && (
-        <AcademyExam
-          packageData={packageData}
-          modelTestAttendLength={modelTestAttendLength}
-        />
-      )}
-      {activeCategory == 2 && (
-        <AdmissionExam
-          packageData={packageData}
-          modelTestAttendLength={modelTestAttendLength}
-        />
-      )}
-      {activeCategory == 3 && (
-        <JobExam
-          packageData={packageData}
-          modelTestAttendLength={modelTestAttendLength}
-        />
-      )}
+      <div className="mt-2 flex flex-col gap-2">
+        {allModeltest?.map((modelTest, i) => (
+          <ExamCard
+            key={modelTest?._id}
+            modelTest={modelTest}
+            i={i}
+            packageData={packageData}
+          />
+        ))}
+      </div>
     </div>
   );
 }
