@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function PackageCard({ item }) {
   const { loggedUser } = useSelector((state) => state.user);
   const user = loggedUser?.data;
+  const navigate = useNavigate();
 
   return (
     <div className="px-4 py-10 bg-gray-100 rounded">
@@ -82,12 +84,19 @@ export default function PackageCard({ item }) {
 
       <div className="mt-10 text-center text-xs">
         {user?._id ? (
-          <Link
+          <button
             to={`/package/checkout/${item?._id}`}
+            onClick={() => {
+              if (user?.package?.package) {
+                toast.warning("You already have a package");
+              } else {
+                navigate(`/package/checkout/${item?._id}`);
+              }
+            }}
             className="bg-primary px-6 py-2 rounded text-base-100"
           >
             Purchase Now
-          </Link>
+          </button>
         ) : (
           <>
             <p className="text-neutral-content">
