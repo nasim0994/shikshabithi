@@ -9,13 +9,11 @@ import { useGetAcademyClassesQuery } from "../../../Redux/api/academy/classApi";
 import { useGetAcademySubjectsQuery } from "../../../Redux/api/academy/subjectApi";
 import { useGetAcademyMCQQuery } from "../../../Redux/api/academy/mcqApi";
 import { useGetAcademyWrittenQuery } from "../../../Redux/api/academy/writtenApi";
-import { useGetAdmissionModelTestQuery } from "../../../Redux/api/admission/admissionModelTestApi";
-import { useGetExamModelTestQuery } from "../../../Redux/api/academy/academyModelTestApi";
-import { useGetJobModelTestQuery } from "../../../Redux/api/job/jobModelTestApi";
 import { useGetBoardMcqsQuery } from "../../../Redux/api/board/boardMcqApi";
 import { useGetBoardWrittensQuery } from "../../../Redux/api/board/boardWrittenApi";
 import { useGetBlogsQuery } from "../../../Redux/api/blogsApi";
 import { useGetAllUsersQuery } from "../../../Redux/api/user/userApi";
+import { useGetModelTestQuery } from "../../../Redux/api/modelTestApi";
 
 export default function Dashboard() {
   const { data: feature } = useGetFeatureQuery();
@@ -26,16 +24,13 @@ export default function Dashboard() {
   const { data: subject } = useGetAcademySubjectsQuery();
   const { data: mcq } = useGetAcademyMCQQuery();
   const { data: written } = useGetAcademyWrittenQuery();
-  const { data: admission } = useGetAdmissionModelTestQuery();
-  const { data: academy } = useGetExamModelTestQuery();
-  const { data: job } = useGetJobModelTestQuery();
+  const { data: modeltest } = useGetModelTestQuery();
   const { data: boardMcq } = useGetBoardMcqsQuery();
   const { data: boardWritten } = useGetBoardWrittensQuery();
   const { data: blogs } = useGetBlogsQuery();
   const { data: user } = useGetAllUsersQuery();
 
-  const totalExam =
-    admission?.data?.length + academy?.data?.length + job?.data?.length;
+  const totalExam = modeltest?.data?.length;
 
   return (
     <div>
