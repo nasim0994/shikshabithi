@@ -9,6 +9,7 @@ const {
   recoverPassword,
   getAll,
   gettAllUsers,
+  downloadHandnote,
 } = require("../controllers/userController");
 
 router.get("/all", getAll);
@@ -19,5 +20,7 @@ router.post("/login", loginUser);
 router.post("/forgotPassword", forgotPassword);
 router.post("/recoverPassword", recoverPassword);
 router.get("/loggedUser", verifyToken, getMe);
+
+router.put("/download/handnote", verifyToken, downloadHandnote);
 
 module.exports = router;

@@ -44,33 +44,33 @@ export default function HandNotes() {
     }
   }, [active, navigate]);
 
-  useEffect(() => {
-    // Disable right-click
-    const handleContextMenu = (e) => {
-      e.preventDefault();
-    };
+  // useEffect(() => {
+  //   // Disable right-click
+  //   const handleContextMenu = (e) => {
+  //     e.preventDefault();
+  //   };
 
-    // Disable specific key combinations
-    const handleKeyDown = (e) => {
-      if (
-        (e.ctrlKey && e.shiftKey && e.key === "I") || // Ctrl+Shift+I
-        (e.ctrlKey && e.shiftKey && e.key === "J") || // Ctrl+Shift+J
-        (e.ctrlKey && e.key === "U") || // Ctrl+U
-        e.key === "F12" // F12
-      ) {
-        e.preventDefault();
-      }
-    };
+  //   // Disable specific key combinations
+  //   const handleKeyDown = (e) => {
+  //     if (
+  //       (e.ctrlKey && e.shiftKey && e.key === "I") || // Ctrl+Shift+I
+  //       (e.ctrlKey && e.shiftKey && e.key === "J") || // Ctrl+Shift+J
+  //       (e.ctrlKey && e.key === "U") || // Ctrl+U
+  //       e.key === "F12" // F12
+  //     ) {
+  //       e.preventDefault();
+  //     }
+  //   };
 
-    document.addEventListener("contextmenu", handleContextMenu);
-    document.addEventListener("keydown", handleKeyDown);
+  //   document.addEventListener("contextmenu", handleContextMenu);
+  //   document.addEventListener("keydown", handleKeyDown);
 
-    // Cleanup event listeners on unmount
-    return () => {
-      document.removeEventListener("contextmenu", handleContextMenu);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  //   // Cleanup event listeners on unmount
+  //   return () => {
+  //     document.removeEventListener("contextmenu", handleContextMenu);
+  //     document.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
 
   return (
     <div>

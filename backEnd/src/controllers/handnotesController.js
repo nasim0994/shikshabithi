@@ -2,6 +2,7 @@ const Model = require("../models/handnotesModel");
 const fs = require("fs");
 const { calculatePagination } = require("../utils/calculatePagination");
 const { pick } = require("../utils/pick");
+const User = require("../models/userModel");
 
 const PDFDocument = require("pdfkit");
 
@@ -343,6 +344,7 @@ exports.toggleStatus = async (req, res) => {
 
 exports.download = async (req, res) => {
   const id = req?.params?.id;
+  const userId = req?.user?._id;
 
   try {
     const handNote = await Model.findById(id);
@@ -378,7 +380,7 @@ exports.download = async (req, res) => {
       });
 
       if (index < handNote.images.length - 1) {
-        pdf.addPage(); // Only add page break after each image except the last one
+        pdf.addPage();
       }
     });
 

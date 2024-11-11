@@ -27,7 +27,7 @@ router.get("/", get);
 router.get("/byuser", verifyToken, getByUser);
 router.post("/add", verifyToken, upload, add);
 
-router.get("/download/:id", download);
+router.get("/download/:id", verifyToken, download);
 
 router.get("/:id", getSingle);
 router.patch("/toggle-status/:id", verifyToken, toggleStatus);

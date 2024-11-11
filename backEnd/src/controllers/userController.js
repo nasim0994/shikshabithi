@@ -291,3 +291,30 @@ exports.recoverPassword = async (req, res) => {
 
   res.send({ success: "Password reset successfully" });
 };
+
+// update downlaodhandnote
+exports.downloadHandnote = async (req, res) => {
+  const userId = req.user._id;
+  console.log(userId);
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    user.downloadhandnotes += 1;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "Download handnote success",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};

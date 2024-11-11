@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Profile",
     },
+    downloadhandnotes: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
