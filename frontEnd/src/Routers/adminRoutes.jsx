@@ -150,15 +150,6 @@ const EditJobQuesSet = lazy(() =>
 );
 const JobMCQ = lazy(() => import("../Pages/Admin/Job/JobMCQ/JobMCQ.jsx"));
 const AddJobMCQ = lazy(() => import("../Pages/Admin/Job/JobMCQ/AddJobMCQ.jsx"));
-const JobModelTest = lazy(() =>
-  import("../Pages/Admin/Job/JobModelTest/JobModelTest.jsx")
-);
-const AddJobModelTest = lazy(() =>
-  import("../Pages/Admin/Job/JobModelTest/AddJobModelTest.jsx")
-);
-const EditJobModelTest = lazy(() =>
-  import("../Pages/Admin/Job/JobModelTest/EditJobModelTest.jsx")
-);
 
 // Admin Board
 const Boards = lazy(() => import("../Pages/Admin/Board/Boards/Boards.jsx"));
@@ -210,29 +201,6 @@ const AddSubSubChapter = lazy(() =>
 );
 const EditSubSubChapter = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubSubChapters/EditSubSubChapter")
-);
-// const AllModelTest = lazy(() =>
-//   import("../Pages/Admin/Academy/ModelTest/AllModelTest")
-// );
-const AddModelTest = lazy(() =>
-  import("../Pages/Admin/Academy/ModelTest/AddModelTest/AddModelTest")
-);
-const EditModeltest = lazy(() =>
-  import("../Pages/Admin/Academy/ModelTest/EditModeltest/EditModeltest")
-);
-const AdmissionModelTest = lazy(() =>
-  import("../Pages/Admin/Admission/AdmissionModelTest/AdmissionModelTest")
-);
-const AddAdmissionModelTest = lazy(() =>
-  import(
-    "../Pages/Admin/Admission/AdmissionModelTest/AddAdmissionModelTest/AddAdmissionModelTest"
-  )
-);
-
-const EditAdmissionModelTest = lazy(() =>
-  import(
-    "../Pages/Admin/Admission/AdmissionModelTest/EditAdmissionModeltest/EditAdmissionModeltest.jsx"
-  )
 );
 
 const FounderSpeech = lazy(() =>
@@ -300,15 +268,7 @@ export const adminRoutes = {
     { path: "academy/writtens", element: <Writtens /> },
     { path: "academy/written/add", element: <AddWritten /> },
     { path: "academy/written/edit/:id", element: <EditWritten /> },
-    // { path: "academy/modeltest/all", element: <AllModelTest /> },
-    { path: "academy/modeltest/add", element: <AddModelTest /> },
-    { path: "academy/modeltest/edit/:id", element: <EditModeltest /> },
-    { path: "admission/modeltest/all", element: <AdmissionModelTest /> },
-    { path: "admission/modeltest/add", element: <AddAdmissionModelTest /> },
-    {
-      path: "admission/modeltest/edit/:id",
-      element: <EditAdmissionModelTest />,
-    },
+
     { path: "job/institutes", element: <Institutes /> },
     { path: "job/institutes/add", element: <AddInstitute /> },
     { path: "job/institutes/edit/:id", element: <EditInstitute /> },
@@ -317,9 +277,7 @@ export const adminRoutes = {
     { path: "job/question-set/edit/:id", element: <EditJobQuesSet /> },
     { path: "job/mcq", element: <JobMCQ /> },
     { path: "job/mcq/add", element: <AddJobMCQ /> },
-    { path: "job/modelTest/all", element: <JobModelTest /> },
-    { path: "job/modelTest/add", element: <AddJobModelTest /> },
-    { path: "job/modelTest/edit/:id", element: <EditJobModelTest /> },
+
     { path: "board-exam/board", element: <Boards /> },
     { path: "board-exam/add", element: <AddBoard /> },
     { path: "board-exam/edit/:id", element: <EditBoard /> },

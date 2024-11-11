@@ -5,9 +5,7 @@ import { useGetBannerQuery } from "../../../Redux/api/bannerApi";
 import { useGetAcademyMCQQuery } from "../../../Redux/api/academy/mcqApi";
 import { useGetAcademyWrittenQuery } from "../../../Redux/api/academy/writtenApi";
 import { useGetAllUsersOnlyQuery } from "../../../Redux/api/user/userApi";
-import { useGetAdmissionModelTestQuery } from "../../../Redux/api/admission/admissionModelTestApi";
-import { useGetExamModelTestQuery } from "../../../Redux/api/academy/academyModelTestApi";
-import { useGetJobModelTestQuery } from "../../../Redux/api/job/jobModelTestApi";
+import { useGetModelTestQuery } from "../../../Redux/api/modelTestApi";
 
 export default function Hero() {
   const { data, isLoading } = useGetBannerQuery();
@@ -18,15 +16,12 @@ export default function Hero() {
 
   const { data: user } = useGetAllUsersOnlyQuery();
 
-  const { data: admission } = useGetAdmissionModelTestQuery();
-  const { data: academy } = useGetExamModelTestQuery();
-  const { data: job } = useGetJobModelTestQuery();
+  const { data: modeltest } = useGetModelTestQuery();
 
   const totalMcq = mcq?.data?.length;
   const totalWritten = written?.data?.length;
 
-  const totalExam =
-    admission?.data?.length + academy?.data?.length + job?.data?.length;
+  const totalExam = modeltest?.data?.length;
 
   if (isLoading)
     return <div className="w-full h-[40vh] md:h-[60vh] bg-black/90"></div>;

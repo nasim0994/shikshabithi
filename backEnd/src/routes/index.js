@@ -88,7 +88,6 @@ const contentRoutes = require("./academy/content.routes");
 const mcqRouters = require("./academy/mcq.routes");
 const writtenRouters = require("./academy/written.routes");
 const onDemandTestRouters = require("./academy/onDemandTest.routes");
-const examModelTest = require("./academy/academyModelTestRoute");
 
 router.use("/academy/category", categoryRoutes);
 router.use("/academy/class", classRoutes);
@@ -102,20 +101,16 @@ router.use("/academy/mcq", mcqRouters);
 router.use("/academy/written", writtenRouters);
 router.use("/academy/ondemandtest", onDemandTestRouters);
 
-router.use("/examModelTest", examModelTest);
-
 //------------------------------------------------------------------------------
 // Admission Routes
 //------------------------------------------------------------------------------
 const universityRoutes = require("./admission/university.routes");
 const questionSetRoutes = require("./admission/questionSet.routes");
 const admissionMCQRoutes = require("./admission/admissionMCQ.routes");
-const admissionModeltest = require("./admission/admissionModelTestRoute");
 
 router.use("/admission/university", universityRoutes);
 router.use("/admission/questionSet", questionSetRoutes);
 router.use("/admission/mcq", admissionMCQRoutes);
-router.use("/admission/modelTest", admissionModeltest);
 
 //------------------------------------------------------------------------------
 // Job Routes
@@ -123,12 +118,10 @@ router.use("/admission/modelTest", admissionModeltest);
 const institute = require("./job/instituteRoutes");
 const jobQuesSet = require("./job/jobQuesSetRoutes");
 const jobMcq = require("./job/jobMCQRoutes");
-const jobModeltest = require("./job/jobModelTestRoute");
 
 router.use("/job/institute", institute);
 router.use("/job/questionSet", jobQuesSet);
 router.use("/job/mcq", jobMcq);
-router.use("/job/modelTest", jobModeltest);
 
 //------------------------------------------------------------------------------
 // Board Routes

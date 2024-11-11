@@ -59,10 +59,6 @@ const adminSidebarItems = [
         title: "Contents",
         path: "/admin/academy/contents",
       },
-      {
-        title: "Model Test",
-        path: "/admin/academy/modeltest/all",
-      },
     ],
   },
 
@@ -82,10 +78,6 @@ const adminSidebarItems = [
         title: "Admission MCQ",
         path: "/admin/admission/mcq",
       },
-      {
-        title: "Model Test",
-        path: "/admin/admission/modeltest/all",
-      },
     ],
   },
 
@@ -104,10 +96,6 @@ const adminSidebarItems = [
       {
         title: "Job MCQ",
         path: "/admin/job/mcq",
-      },
-      {
-        title: "Job ModelTest",
-        path: "/admin/job/modelTest/all",
       },
     ],
   },
