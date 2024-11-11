@@ -130,7 +130,7 @@ export default function Login() {
 
         <div className="mt-2 text-xs text-neutral text-center">
           <p>
-            New to Top Study Zone?{" "}
+            New to Smart Sikon?{" "}
             <Link
               to="/signup"
               className="text-primary hover:text-green-700 duration-200"

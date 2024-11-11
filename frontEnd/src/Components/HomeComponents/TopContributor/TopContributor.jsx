@@ -59,7 +59,7 @@ export default function TopContributor() {
                     Md Saiful Islam
                   </h2>
                   <p className="text-neutral-content text-sm">
-                    Founder Of Top Study Zone
+                    Founder Of Smart Sikon
                   </p>
                 </div>
 

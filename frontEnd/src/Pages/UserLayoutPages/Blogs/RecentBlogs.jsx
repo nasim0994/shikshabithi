@@ -23,8 +23,9 @@ export default function RecentBlogs() {
             {blog?.img && (
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${blog?.image}`}
-                alt=""
+                alt="blog"
                 className="w-7 h-7 rounded"
+                loading="lazy"
               />
             )}
             <h2>

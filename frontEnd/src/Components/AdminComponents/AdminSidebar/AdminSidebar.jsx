@@ -307,7 +307,7 @@ export default function AdminSidebar() {
         <nav className="admin_siderbar">
           <Link to="/admin/dashboard" className="py-3 block">
             {isLoading ? (
-              "Top Study Zone"
+              "Smart Sikon"
             ) : (
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/logo/${

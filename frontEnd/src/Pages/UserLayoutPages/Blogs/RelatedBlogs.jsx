@@ -1,16 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useGetBlogsQuery } from "../../../Redux/api/blogsApi";
 
-export default function RelatedBlogs({ activeCategory, selectedSubject }) {
+export default function RelatedBlogs({ selectedSubject }) {
+  const { category } = useParams();
+
   let query = {};
-  query["category"] =
-    activeCategory == 1
-      ? "academy"
-      : activeCategory == 2
-      ? "admission"
-      : activeCategory == 3
-      ? "job"
-      : "others";
+  query["category"] = category;
   query["subject"] = selectedSubject;
   query["limit"] = 5;
   query["status"] = "active";
@@ -33,8 +28,9 @@ export default function RelatedBlogs({ activeCategory, selectedSubject }) {
             {blog?.image && (
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${blog?.image}`}
-                alt=""
+                alt="blog"
                 className="w-7 h-7 rounded"
+                loading="lazy"
               />
             )}
             <h2>

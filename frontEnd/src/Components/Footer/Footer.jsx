@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 pb-14">
           <div className="md:col-span-2">
             {isLoading ? (
-              "Top Study Zone"
+              "Smart Sikon"
             ) : (
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
@@ -74,7 +74,7 @@ export default function Footer() {
         <div className="border-t border-neutral-content pt-5">
           <div className="sm:flex justify-between items-center">
             <p className="text-neutral/90 text-sm font-light">
-              Copyright © 2024 Top Study Zone, All rights reserved. develop by{" "}
+              Copyright © 2024 Smart Sikon, All rights reserved. develop by{" "}
               <Link
                 to="https://emanagerit.com"
                 target="_blank"

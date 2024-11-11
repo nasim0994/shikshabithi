@@ -39,7 +39,7 @@ export default function UserLayoutHeader({ setUserSidebar }) {
               </li>
 
               <li>
-                <NavLink to="/blogs">Blogs</NavLink>
+                <NavLink to="/blogs/academy">Blogs</NavLink>
               </li>
 
               <li>

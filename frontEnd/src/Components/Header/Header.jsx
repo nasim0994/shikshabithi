@@ -37,7 +37,7 @@ export default function Header() {
         <div className="flex justify-between items-center">
           <Link to="/">
             {isLoading ? (
-              "Top Study Zone"
+              "Smart Sikon"
             ) : (
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
@@ -78,9 +78,9 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/blogs" className="py-0">
+                  <NavLink to="/blogs/academy" className="py-0">
                     Blogs
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="relative">
                   <button

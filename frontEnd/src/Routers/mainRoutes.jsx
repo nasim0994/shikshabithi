@@ -4,6 +4,7 @@ import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home/Home";
 import Spinner from "../Components/Loader/Spinner/Spinner";
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
+import BlogLayout from "../Layout/BlogLayout";
 const BlogDetails = lazy(() =>
   import("../Pages/UserLayoutPages/BlogDetails/BlogDetails")
 );
@@ -30,7 +31,25 @@ export const mainRoutes = {
     },
     {
       path: "blogs",
-      element: <Blogs />,
+      element: <BlogLayout />,
+      children: [
+        {
+          path: "/blogs/:category",
+          element: <Blogs />,
+        },
+        // {
+        //   path: "/blogs/admission",
+        //   element: <Blogs />,
+        // },
+        // {
+        //   path: "/blogs/job",
+        //   element: <Blogs />,
+        // },
+        // {
+        //   path: "/blogs/others",
+        //   element: <Blogs />,
+        // },
+      ],
     },
     {
       path: "blog/:id",

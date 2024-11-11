@@ -67,7 +67,7 @@ export default function UserSidebarLists() {
         </li>
 
         <li>
-          <NavLink to="/blogs">
+          <NavLink to="/blogs/academy">
             <BiCategory />
             Blog Content
           </NavLink>

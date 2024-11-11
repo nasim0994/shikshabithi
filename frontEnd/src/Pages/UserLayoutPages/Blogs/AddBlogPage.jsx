@@ -79,7 +79,7 @@ export default function AddBlogPage() {
 
     if (res?.data?.success) {
       toast.success("Blog add success");
-      navigate(`/blogs?active=${selectedCategory}`);
+      navigate(`/blogs/${category}`);
     } else {
       toast.error("something went wrong!");
       console.log(res);
@@ -219,7 +219,7 @@ export default function AddBlogPage() {
 
             <div className="mt-4 flex gap-3 text-sm justify-center">
               <Link
-                to="/blogs"
+                to="/blogs/academy"
                 className="px-4 py-1.5 rounded bg-gray-200 cursor-pointer"
               >
                 Cancel

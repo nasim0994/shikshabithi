@@ -51,7 +51,7 @@ export default function Feature() {
     <section className="relative z-40 bg-[#F2F7FD]">
       <div className="container py-5 sm:py-10">
         <h2 className="text-2xl sm:text-3xl font-bold text-primary text-center section_line">
-          টপ স্টাডি ফিচার্স
+          স্মার্ট শিখন ফিচার্স
         </h2>
 
         <div className="mt-5 sm:mt-10 grid sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-6">
