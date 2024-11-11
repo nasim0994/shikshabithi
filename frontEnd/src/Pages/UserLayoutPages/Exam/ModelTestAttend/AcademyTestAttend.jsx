@@ -19,15 +19,15 @@ import ModelTestSubmitModal from "./ModelTestSubmitModal";
 import ModelTestSkeleton from "../../../../Components/Skeleton/ModelTestSkeleton";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { useGetSingleExamModelTestQuery } from "../../../../Redux/api/academy/academyModelTestApi";
 import { useAddModelTestAttendMutation } from "../../../../Redux/api/modelTestAttendApi";
+import { useGetSingleModelTestQuery } from "../../../../Redux/api/modelTestApi";
 
 export default function AcademyTestAttend() {
   let { id } = useParams();
   const navigate = useNavigate();
   const { loggedUser } = useSelector((store) => store.user);
 
-  const { data, isLoading } = useGetSingleExamModelTestQuery(id);
+  const { data, isLoading } = useGetSingleModelTestQuery(id);
   let modelTest = data?.data;
 
   let duration = modelTest?.duration;

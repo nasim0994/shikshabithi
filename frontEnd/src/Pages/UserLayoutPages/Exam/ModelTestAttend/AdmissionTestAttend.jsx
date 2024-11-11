@@ -17,17 +17,17 @@ import { IoIosTime } from "react-icons/io";
 import { GrCheckboxSelected } from "react-icons/gr";
 import ModelTestSubmitModal from "./ModelTestSubmitModal";
 import ModelTestSkeleton from "../../../../Components/Skeleton/ModelTestSkeleton";
-import { useGetSingleAdmissionModelTestQuery } from "../../../../Redux/api/admission/admissionModelTestApi";
 import { useAddModelTestAttendMutation } from "../../../../Redux/api/modelTestAttendApi";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import { useGetSingleModelTestQuery } from "../../../../Redux/api/modelTestApi";
 
 export default function AdmissionTestAttend() {
   const navigate = useNavigate();
   let { id } = useParams();
   const { loggedUser } = useSelector((store) => store.user);
 
-  const { data, isLoading } = useGetSingleAdmissionModelTestQuery(id);
+  const { data, isLoading } = useGetSingleModelTestQuery(id);
   let modelTest = data?.data;
 
   let duration = modelTest?.duration;

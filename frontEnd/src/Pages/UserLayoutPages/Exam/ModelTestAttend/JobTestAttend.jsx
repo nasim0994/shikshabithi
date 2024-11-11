@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleJobModelTestQuery } from "../../../../Redux/api/job/jobModelTestApi";
 import { useEffect, useState } from "react";
 import perser from "html-react-parser";
 import {
@@ -21,13 +20,14 @@ import ModelTestSkeleton from "../../../../Components/Skeleton/ModelTestSkeleton
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useAddModelTestAttendMutation } from "../../../../Redux/api/modelTestAttendApi";
+import { useGetSingleModelTestQuery } from "../../../../Redux/api/modelTestApi";
 
 export default function JobTestAttend() {
   let { id } = useParams();
   let navigate = useNavigate();
   const { loggedUser } = useSelector((store) => store.user);
 
-  const { data, isLoading } = useGetSingleJobModelTestQuery(id);
+  const { data, isLoading } = useGetSingleModelTestQuery(id);
   let modelTest = data?.data;
 
   let duration = modelTest?.duration;
