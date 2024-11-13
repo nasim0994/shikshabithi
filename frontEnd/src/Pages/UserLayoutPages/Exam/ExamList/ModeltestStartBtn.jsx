@@ -6,10 +6,11 @@ export default function ModeltestStartBtn({
   packageData,
   modelTestAttendLength,
   modelTest,
-  category,
 }) {
   const [modelModal, setModelModal] = useState(false);
   const [selectedModel, setSelectedModel] = useState({});
+
+  const category = modelTest?.mainCategory;
 
   const handleStart = (model) => {
     if (!packageData?.package && model?.examType == "paid") {

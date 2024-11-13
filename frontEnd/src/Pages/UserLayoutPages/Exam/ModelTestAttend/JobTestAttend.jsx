@@ -264,7 +264,7 @@ export default function JobTestAttend() {
               key={mcq?._id}
             >
               <h2 className="bg-primary/20 font-medium p-3 flex items-start gap-1">
-                {i + 1}. {perser(mcq?.question)}
+                {i + 1}. {mcq?.question && perser(mcq?.question)}
               </h2>
 
               <div className="p-3 grid grid-cols-2 gap-2 text-[15px]">

@@ -101,12 +101,11 @@ export default function ExamCard({ modelTest, i, packageData }) {
           packageData={packageData}
           modelTestAttendLength={modelTestAttendLength}
           modelTest={modelTest}
-          category="academy"
         />
 
         <div className="flex gap-2 items-center">
           <Link
-            to={`/exam-list/academy/${modelTest?._id}`}
+            to={`/exam/modeltest/${modelTest?._id}`}
             className="flex items-center gap-2 bg-primary/15 px-3 py-2 rounded"
           >
             <FaEye className="text-sm" />

@@ -1,14 +1,19 @@
+const { default: mongoose } = require("mongoose");
 const Model = require("../models/modelTestAttendModel");
+const ModelTest = require("../models/modelTestModel");
 const { calculatePagination } = require("../utils/calculatePagination");
 const { pick } = require("../utils/pick");
 
 exports.insert = async (req, res) => {
   try {
     const data = req?.body;
-
     const result = await Model.create(data);
 
     if (result?._id) {
+      const modelTest = await ModelTest.findById(data?.modelTest);
+      modelTest.participated = modelTest.participated + 1;
+      await modelTest.save();
+
       res.status(200).json({
         success: true,
         message: "Model Test add success",
@@ -35,14 +40,39 @@ exports.get = async (req, res) => {
 
   try {
     let query = {};
-    query.user = user;
-    query.modelTestType = modelTestType;
+    if (user) query.user = new mongoose.Types.ObjectId(user);
+    if (modelTestType) query.modelTestType = modelTestType;
 
-    const result = await Model.find(query)
-      .skip(skip)
-      .limit(limit)
-      .sort({ _id: -1 })
-      .populate("modelTest mcqs.mcq");
+    // const result = await Model.find(query)
+    //   .skip(skip)
+    //   .limit(limit)
+    //   .sort({ _id: -1 })
+    //   .populate("user mcqs.mcq modelTest");
+
+    const result = await Model.aggregate([
+      { $match: query },
+      { $sort: { _id: -1 } },
+      { $skip: skip },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: "mcqs",
+          localField: "mcqs.mcq",
+          foreignField: "_id",
+          as: "mcqs.mcq",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "modeltests",
+          localField: "modelTest",
+          foreignField: "_id",
+          as: "modelTest",
+        },
+      },
+      { $unwind: "$modelTest" },
+    ]);
 
     const total = await Model.countDocuments(query).sort({ _id: -1 });
     const pages = Math.ceil(parseInt(total) / parseInt(limit));
@@ -69,11 +99,33 @@ exports.get = async (req, res) => {
 exports.getSingle = async (req, res) => {
   const id = req?.params?.id;
   try {
-    const result = await Model.findById(id).populate("modelTest mcqs.mcq");
+    // const result = await Model.findById(id).populate("mcqs.mcq");
+    const result = await Model.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(id) } },
+      {
+        $lookup: {
+          from: "mcqs",
+          localField: "mcqs.mcq",
+          foreignField: "_id",
+          as: "mcqs",
+        },
+      },
+
+      {
+        $lookup: {
+          from: "modeltests",
+          localField: "modelTest",
+          foreignField: "_id",
+          as: "modelTest",
+        },
+      },
+      { $unwind: "$modelTest" },
+    ]);
+
     res.status(200).json({
       success: true,
       message: "Model Test get success",
-      data: result,
+      data: result?.length > 0 ? result[0] : {},
     });
   } catch (err) {
     res.json({

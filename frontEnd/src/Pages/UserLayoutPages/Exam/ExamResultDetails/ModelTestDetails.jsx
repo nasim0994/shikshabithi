@@ -108,8 +108,8 @@ export default function ModelTestDetails() {
       </div>
 
       <div className="mt-2 grid sm:grid-cols-2 gap-4">
-        {mcqs?.map((question, i) => (
-          <MCQ key={question?._id} i={i} question={question} />
+        {mcqs?.map((mcq, i) => (
+          <MCQ key={mcq?._id} i={i} mcq={mcq} />
         ))}
       </div>
     </div>

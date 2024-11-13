@@ -9,9 +9,8 @@ import { MdArrowRight, MdOutlineClose } from "react-icons/md";
 import { CgEditBlackPoint } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa6";
 
-export default function MCQ({ question, i }) {
+export default function MCQ({ mcq, i }) {
   const [explan, setExplan] = useState();
-  const mcq = question?.mcq;
 
   const createdAt = mcq?.createdAt;
   const updatedAt = mcq?.updatedAt;
@@ -37,7 +36,7 @@ export default function MCQ({ question, i }) {
         <div className="grid grid-cols-2 gap-2 text-[15px]">
           {mcq?.points?.map((point, i) => (
             <div key={i} className="flex items-center gap-2">
-              {point?.name == question?.selectedAns ? (
+              {point?.name == mcq?.selectedAns ? (
                 <FaCheckCircle className="text-sm" />
               ) : (
                 <CgEditBlackPoint className="text-base" />
@@ -47,8 +46,8 @@ export default function MCQ({ question, i }) {
                 <span className="text-green-500">
                   {point?.title && perser(point?.title)}
                 </span>
-              ) : point?.name == question?.selectedAns &&
-                question?.selectedAns != mcq?.ans ? (
+              ) : point?.name == mcq?.selectedAns &&
+                mcq?.selectedAns != mcq?.ans ? (
                 <span className="text-red-500">
                   {point?.title && perser(point?.title)}
                 </span>
@@ -56,12 +55,12 @@ export default function MCQ({ question, i }) {
                 <span>{point?.title && perser(point?.title)}</span>
               )}
 
-              {point?.name == question?.selectedAns &&
-              question?.selectedAns == mcq?.ans ? (
+              {point?.name == mcq?.selectedAns &&
+              mcq?.selectedAns == mcq?.ans ? (
                 <FaCheck className="text-sm text-green-500" />
               ) : (
-                point?.name == question?.selectedAns &&
-                question?.selectedAns !== mcq?.ans && (
+                point?.name == mcq?.selectedAns &&
+                mcq?.selectedAns !== mcq?.ans && (
                   <MdOutlineClose className="text-base text-red-500" />
                 )
               )}

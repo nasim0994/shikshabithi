@@ -119,7 +119,6 @@ export default function ExamDetails() {
           packageData={packageData}
           modelTestAttendLength={modelTestAttendLength}
           modelTest={modelTest}
-          category="academy"
         />
       </div>
     </div>

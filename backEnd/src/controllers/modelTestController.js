@@ -71,7 +71,6 @@ exports.get = async (req, res) => {
       })
       .populate({
         path: "mcqs",
-        select: "name",
       })
       .populate({
         path: "vendor",
@@ -117,7 +116,6 @@ exports.getSingle = async (req, res) => {
       })
       .populate({
         path: "mcqs",
-        select: "name",
       })
       .populate({
         path: "vendor",
