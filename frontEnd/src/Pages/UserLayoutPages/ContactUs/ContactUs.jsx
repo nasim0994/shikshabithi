@@ -1,8 +1,14 @@
+import { BsWhatsapp } from "react-icons/bs";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdOutlineMail } from "react-icons/md";
+import { useGetContactQuery } from "../../../Redux/api/contactApi";
+import parse from "html-react-parser";
 
 export default function ContactUs() {
   window.scrollTo(0, 0);
+  const { data } = useGetContactQuery();
+  const contact = data?.data[0];
+
   return (
     <section className="py-6">
       <div className="container">
@@ -13,15 +19,9 @@ export default function ContactUs() {
         <div className="mt-4 bg-base-100 rounded shadow p-10">
           <div className="grid gap-8 md:grid-cols-2 md:gap-14">
             <div>
-              <h3 className="text-xl sm:text-2xl font-semibold text-neutral">
-                Contact Us
+              <h3 className="text-lg sm:text-xl font-medium text-neutral">
+                {contact?.title}
               </h3>
-
-              <p className="mt-1 text-sm text-neutral-content">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                Molestias ad accusamus, consequatur hic culpa provident
-                similique alias eius. Nihil, amet.
-              </p>
 
               <div className="mt-4 flex flex-col gap-1.5 text-neutral">
                 <div className="flex items-start gap-3 rounded border bg-base-100 p-4">
@@ -30,8 +30,19 @@ export default function ContactUs() {
                   </p>
 
                   <div>
-                    <p className="mb-2 text-lg font-medium">Phone</p>
-                    <p className="text-neutral-content">00000000000</p>
+                    <p className="text-lg font-medium">Phone</p>
+                    <p className="text-neutral-content">{contact?.phone}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 rounded border bg-base-100 p-4">
+                  <p>
+                    <BsWhatsapp className="mt-1.5 text-lg" />
+                  </p>
+
+                  <div>
+                    <p className="text-lg font-medium">whatsapp</p>
+                    <p className="text-neutral-content">{contact?.whatsapp}</p>
                   </div>
                 </div>
 
@@ -41,7 +52,7 @@ export default function ContactUs() {
                   </p>
                   <div>
                     <p className="text-lg font-medium">Email</p>
-                    <p className="text-neutral-content">email@gmail.com</p>
+                    <p className="text-neutral-content">{contact?.email}</p>
                   </div>
                 </div>
 
@@ -51,7 +62,7 @@ export default function ContactUs() {
                   </p>
                   <div>
                     <p className="text-lg font-medium">Address</p>
-                    <p className="text-neutral-content">Address</p>
+                    <p className="text-neutral-content">{contact?.address}</p>
                   </div>
                 </div>
               </div>
@@ -117,8 +128,8 @@ export default function ContactUs() {
           </div>
         </div>
 
-        <div className="mt-8 w-full">
-          {/* {contacts?.map && parse(contacts?.map)} */}
+        <div className="mt-8 w-full rounded overflow-hidden">
+          {contact?.map && parse(contact?.map)}
         </div>
       </div>
     </section>

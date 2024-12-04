@@ -250,6 +250,10 @@ const adminSidebarItems = [
     title: "Pages",
     subMenu: [
       {
+        title: "About",
+        path: "/admin/page/about",
+      },
+      {
         title: "Contact",
         path: "/admin/page/contact",
       },

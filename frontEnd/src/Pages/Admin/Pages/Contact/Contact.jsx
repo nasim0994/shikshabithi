@@ -32,6 +32,7 @@ export default function Contact() {
     const whatsapp = form.whatsapp.value;
     const email = form.email.value;
     const address = form.address.value;
+    const map = form.map.value;
 
     const contactInfo = {
       title,
@@ -40,6 +41,7 @@ export default function Contact() {
       email,
       address,
       socials,
+      map,
     };
 
     if (id) {
@@ -47,9 +49,7 @@ export default function Contact() {
       if (res?.data?.success) {
         toast.success("Contact updated successfully");
       } else {
-        toast.error(
-          res?.data?.message ? res?.data?.message : "Something went wrong"
-        );
+        toast.error(res?.data?.message || "Something went wrong");
         console.log(res);
       }
     } else {
@@ -57,9 +57,7 @@ export default function Contact() {
       if (res?.data?.success) {
         toast.success("Contact add successfully");
       } else {
-        toast.error(
-          res?.data?.message ? res?.data?.message : "Something went wrong"
-        );
+        toast.error(res?.data?.message || "Something went wrong");
         console.log(res);
       }
     }
@@ -123,6 +121,15 @@ export default function Contact() {
             name="address"
             rows="3"
             defaultValue={data?.data[0]?.address}
+          ></textarea>
+        </div>
+
+        <div>
+          <p className="text-neutral-content">Google Map</p>
+          <textarea
+            name="map"
+            rows="4"
+            defaultValue={data?.data[0]?.map}
           ></textarea>
         </div>
 

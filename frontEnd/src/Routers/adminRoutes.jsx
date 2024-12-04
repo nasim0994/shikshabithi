@@ -101,9 +101,8 @@ const Banner = lazy(() =>
   import("../Pages/Admin/FrontEndSetting/Banner/Banner")
 );
 
-const ContactUs = lazy(() =>
-  import("../Pages/Admin/FrontEndSetting/Contact/Contact")
-);
+const ContactUs = lazy(() => import("../Pages/Admin/Pages/Contact/Contact"));
+const About = lazy(() => import("../Pages/Admin/Pages/About/About"));
 
 const Profile = lazy(() =>
   import("../Pages/Admin/GeneralSetting/Profile/Profile")
@@ -184,6 +183,7 @@ import SEOSetting from "../Pages/Admin/SEOSetting/SEOSetting.jsx";
 import AllModelTest from "../Pages/Admin/ModelTest/AllModelTest.jsx";
 import AdminAddModelTest from "../Pages/Admin/ModelTest/Add/AdminAddModelTest.jsx";
 import AdminEditModelTest from "../Pages/Admin/ModelTest/Edit/AdminEditModelTest.jsx";
+
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
 );
@@ -316,6 +316,7 @@ export const adminRoutes = {
     { path: "front-end/faq/add", element: <AddFaq /> },
     { path: "front-end/faq/edit/:id", element: <EditFaq /> },
     { path: "page/contact", element: <ContactUs /> },
+    { path: "page/about", element: <About /> },
     { path: "page/privacy-policy", element: <PrivacyPolicy /> },
     { path: "general-setting/profile", element: <Profile /> },
     { path: "others/blog-all", element: <BlogList /> },

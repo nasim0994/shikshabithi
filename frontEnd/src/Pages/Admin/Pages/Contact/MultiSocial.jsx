@@ -25,15 +25,17 @@ export default function MultiSocial({
   socials: social,
   setSocials: setSocial,
 }) {
-  const handleInputChange = (index, event) => {
-    const values = [...social];
-    values[index].url = event.target.value;
+  const handleIconChange = (index, event) => {
+    const values = social.map((item, i) =>
+      i === index ? { ...item, icon: event.target.value } : item
+    );
     setSocial(values);
   };
 
-  const handleIconChange = (index, event) => {
-    const values = [...social];
-    values[index].icon = event.target.value;
+  const handleInputChange = (index, event) => {
+    const values = social.map((item, i) =>
+      i === index ? { ...item, url: event.target.value } : item
+    );
     setSocial(values);
   };
 
