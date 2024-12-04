@@ -52,7 +52,7 @@ exports.get = async (req, res) => {
     }
 
     const result = await Model.find(query)
-      .sort({ _id: -1 })
+      .sort({ createdAt: -1 })
       .populate({
         path: "category",
         select: "name",

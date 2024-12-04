@@ -90,7 +90,7 @@ exports.get = async (req, res) => {
       })
       .skip(skip)
       .limit(limit)
-      .sort({ _id: -1 });
+      .sort({ createdAt: -1 });
 
     const total = await Model.countDocuments(query);
     const pages = Math.ceil(parseInt(total) / parseInt(limit));

@@ -1,4 +1,4 @@
-const Model = require("../models/faq.model");
+const Model = require("../models/adminNoticeModel");
 
 exports.add = async (req, res) => {
   const data = req?.body;
@@ -8,7 +8,7 @@ exports.add = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "FAQ add success",
+      message: "Admin Notice add success",
       data: result,
     });
   } catch (err) {
@@ -26,16 +26,40 @@ exports.get = async (req, res) => {
     if (!result) {
       return res.status(404).json({
         success: false,
-        error: "FAQ not found",
+        error: "Admin Notice not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      message: "FAQ get success",
+      message: "Admin Notice get success",
       data: result,
     });
   } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
+  }
+};
+
+exports.getActive = async (req, res) => {
+  try {
+    const result = await Model.findOne({ isActive: true });
+
+    if (!result) {
+      return res.status(404).json({
+        success: false,
+        error: "Admin Notice not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Admin Notice get success",
+      data: result,
+    });
+  } catch (error) {
     res.status(500).json({
       success: false,
       error: err.message,
@@ -52,13 +76,13 @@ exports.getSingle = async (req, res) => {
     if (!result) {
       return res.status(404).json({
         success: false,
-        error: "FAQ not found",
+        error: "Admin Notice not found",
       });
     }
 
     res.status(200).json({
       success: true,
-      message: "FAQ get success",
+      message: "Admin Notice get success",
       data: result,
     });
   } catch (err) {
@@ -79,7 +103,7 @@ exports.update = async (req, res) => {
     if (!isExist) {
       return res.status(404).json({
         success: false,
-        error: "FAQ not found",
+        error: "Admin Notice not found",
       });
     }
 
@@ -90,13 +114,13 @@ exports.update = async (req, res) => {
     if (!result) {
       return res.status(404).json({
         success: false,
-        error: "FAQ not updated",
+        error: "Admin Notice not updated",
       });
     }
 
     res.status(200).json({
       success: true,
-      message: "FAQ updated success",
+      message: "Admin Notice updated success",
       data: result,
     });
   } catch (error) {
@@ -116,7 +140,7 @@ exports.destroy = async (req, res) => {
     if (!isExist) {
       return res.status(404).json({
         success: false,
-        error: "FAQ not found",
+        error: "Admin Notice not found",
       });
     }
 
@@ -124,7 +148,7 @@ exports.destroy = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "FAQ delete success",
+      message: "Admin Notice delete success",
       data: result,
     });
   } catch (err) {
@@ -132,5 +156,30 @@ exports.destroy = async (req, res) => {
       success: false,
       error: err.message,
     });
+  }
+};
+
+exports.updateStatus = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const adminNotice = await Model.findById(id);
+
+    if (!adminNotice) {
+      return res.status(404).json({
+        success: false,
+        message: "Admin Notice not found",
+      });
+    }
+
+    adminNotice.isActive = !adminNotice.isActive;
+    await adminNotice.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Notice updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };

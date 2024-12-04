@@ -33,7 +33,7 @@ export default function AllFAQ() {
       <div className="bg-base-100 rounded shadow">
         <div className="flex justify-between items-center border-b p-2 ">
           <h2 className="text-lg font-medium">All FAQ</h2>
-          <Link to="/admin/front-end/faq/add" className="primary_btn text-sm">
+          <Link to="/admin/page/faq/add" className="primary_btn text-sm">
             Add New
           </Link>
         </div>
@@ -61,7 +61,7 @@ export default function AllFAQ() {
                   <td>
                     <div className="flex gap-2">
                       <Link
-                        to={`/admin/front-end/faq/edit/${faq?._id}`}
+                        to={`/admin/page/faq/edit/${faq?._id}`}
                         className="text-blue-600"
                       >
                         <AiOutlineEdit className="hover:text-green-500 text-xl duration-200" />

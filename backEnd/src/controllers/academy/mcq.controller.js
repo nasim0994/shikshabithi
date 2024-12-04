@@ -71,7 +71,8 @@ exports.get = async (req, res) => {
       .limit(limit)
       .populate(
         "category class subject chapter subChapter subSubChapter tags sets"
-      ).sort({ _id: -1 });
+      )
+      .sort({ createdAt: -1 });
 
     const total = await AcademyMCQ.countDocuments(query);
     const pages = Math.ceil(parseInt(total) / parseInt(limit));

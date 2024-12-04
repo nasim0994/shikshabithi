@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Spinner from "./Components/Loader/Spinner/Spinner";
 import useAuthCheck from "./Hook/useAuthCheck";
@@ -8,7 +9,6 @@ import { userRoutes } from "./Routers/userRoutes";
 import { commonRoutes } from "./Routers/commonRoutes";
 import { adminRoutes } from "./Routers/adminRoutes";
 import { useGetSEOQuery } from "./Redux/api/seoApi";
-import { useEffect } from "react";
 
 export default function App() {
   const authChecked = useAuthCheck();

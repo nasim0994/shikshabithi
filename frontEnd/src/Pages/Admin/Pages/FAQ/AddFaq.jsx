@@ -21,7 +21,7 @@ export default function AddFaq() {
     let res = await addFaq(info);
     if (res?.data?.success) {
       toast.success("Faq add success");
-      navigate("/admin/front-end/faq");
+      navigate("/admin/page/faq");
     } else {
       toast.error("something went wrong!");
       console.log(res);

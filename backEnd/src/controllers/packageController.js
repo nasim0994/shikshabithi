@@ -21,7 +21,7 @@ exports.add = async (req, res) => {
 
 exports.get = async (req, res) => {
   try {
-    const result = await Model.find({}).sort({ _id: -1 });
+    const result = await Model.find({}).sort({ createdAt: -1 });
 
     if (!result) {
       return res.status(404).json({

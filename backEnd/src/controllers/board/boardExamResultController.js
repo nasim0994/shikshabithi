@@ -40,10 +40,10 @@ exports.get = async (req, res) => {
     const result = await Model.find(query)
       .skip(skip)
       .limit(limit)
-      .sort({ _id: -1 })
+      .sort({ createdAt: -1 })
       .populate("boardExam mcqs.mcq");
 
-    const total = await Model.countDocuments(query).sort({ _id: -1 });
+    const total = await Model.countDocuments(query).sort({ createdAt: -1 });
     const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({

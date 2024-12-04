@@ -43,7 +43,9 @@ exports.get = async (req, res) => {
       query.year = year;
     }
 
-    const result = await QuestionSet.find(query).populate("institute").sort({ _id: -1 });
+    const result = await QuestionSet.find(query)
+      .populate("institute")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

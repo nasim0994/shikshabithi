@@ -4,15 +4,19 @@ import * as FaIcons from "react-icons/fa";
 
 import { useGetLogoQuery } from "../../Redux/api/logoApi";
 import { useGetContactQuery } from "../../Redux/api/contactApi";
+import { useGetFeatureQuery } from "../../Redux/api/featureApi";
 
 export default function Footer() {
   const { data, isLoading } = useGetLogoQuery();
   const { data: contact } = useGetContactQuery();
 
+  const { data: fetaure } = useGetFeatureQuery();
+  let features = fetaure?.data;
+
   return (
     <footer className="bg-gray-100 pt-10 pb-5">
       <div className="container">
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 pb-14">
+        <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-10 pb-14">
           <div className="md:col-span-2">
             {isLoading ? (
               "Smart Sikon"
@@ -25,6 +29,19 @@ export default function Footer() {
                 className="w-32 sm:w-48"
               />
             )}
+          </div>
+
+          <div>
+            <h2 className="text-neutral text-xl font-medium">Features</h2>
+            <ul className="text-neutral/80 font-light mt-2 flex flex-col gap-1 text-[15px]">
+              {features?.map((feature) => (
+                <li key={feature?._id}>
+                  <Link to="/about-us" className="hover:underline">
+                    {feature?.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div>
@@ -87,10 +104,10 @@ export default function Footer() {
             <ul className="flex items-center gap-2">
               {contact?.data[0]?.socials?.map((social, i) => (
                 <Link
-                  key={i}
                   to={social?.url}
                   target="_blank"
-                  className="text-xl text-neutral duration-300 hover:text-primary"
+                  key={i}
+                  className="w-7 h-7 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-translate-y-1 duration-200"
                 >
                   {React.createElement(FaIcons[social?.icon])}
                 </Link>

@@ -32,12 +32,14 @@ exports.get = async (req, res) => {
     // let query = {};
     // query.question = question;
 
-    const result = await Model.find({ question }).populate({
-      path: "user",
-      populate: {
-        path: "profile",
-      },
-    }).sort({ _id: -1 })
+    const result = await Model.find({ question })
+      .populate({
+        path: "user",
+        populate: {
+          path: "profile",
+        },
+      })
+      .sort({ createdAt: -1 });
     res.status(200).json({
       success: true,
       message: "get success",

@@ -239,8 +239,8 @@ const adminSidebarItems = [
         path: "/admin/front-end/founder-speech",
       },
       {
-        title: "FAQ",
-        path: "/admin/front-end/faq",
+        title: "Admin Notice",
+        path: "/admin/front-end/admin-notice/all",
       },
     ],
   },
@@ -256,6 +256,10 @@ const adminSidebarItems = [
       {
         title: "Contact",
         path: "/admin/page/contact",
+      },
+      {
+        title: "FAQ",
+        path: "/admin/page/faq",
       },
       {
         title: "Privacy Policy",

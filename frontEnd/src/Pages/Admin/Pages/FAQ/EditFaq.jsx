@@ -28,7 +28,7 @@ export default function EditFaq() {
     let res = await updateFaq({ id, info });
     if (res?.data?.success) {
       toast.success("Faq edit success");
-      navigate("/admin/front-end/faq");
+      navigate("/admin/page/faq");
     } else {
       toast.error("something went wrong!");
       console.log(res);

@@ -33,9 +33,9 @@ exports.get = async (req, res) => {
       query.institute = institute;
     if (set && set !== "undefined" && set !== null) query.questionSet = set;
 
-    const result = await Model.find(query).populate(
-      "institute questionSet subjects.subject subjects.mcqs"
-    ).sort({ _id: -1 });
+    const result = await Model.find(query)
+      .populate("institute questionSet subjects.subject subjects.mcqs")
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

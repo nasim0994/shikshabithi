@@ -7,8 +7,6 @@ export default function BlogsHome() {
   const { data, isLoading } = useGetIsHomeBlogQuery();
   const blogs = data?.data;
 
-  console.log(blogs);
-
   if (isLoading) return <AcademySkeleton />;
 
   return (

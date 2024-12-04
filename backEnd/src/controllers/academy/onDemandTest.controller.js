@@ -34,9 +34,11 @@ exports.get = async (req, res) => {
       .skip(skip)
       .limit(limit)
       .populate("subject mcqs.mcq")
-      .sort({ _id: -1 });
+      .sort({ createdAt: -1 });
 
-    const total = await OnDemandTest.countDocuments(query).sort({ _id: -1 });
+    const total = await OnDemandTest.countDocuments(query).sort({
+      createAt: -1,
+    });
     const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({

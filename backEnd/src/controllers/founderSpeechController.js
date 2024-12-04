@@ -43,7 +43,7 @@ exports.add = async (req, res) => {
 
 exports.get = async (req, res) => {
   try {
-    const result = await Model.findOne({}).sort({ _id: -1 });
+    const result = await Model.findOne({}).sort({ createdAt: -1 });
 
     if (!result?._id) {
       return res.status(202).json({

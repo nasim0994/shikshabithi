@@ -46,7 +46,7 @@ exports.get = async (req, res) => {
           path: "profile",
         },
       })
-      .sort({ _id: -1 });
+      .sort({ createdAt: -1 });
 
     const total = await Model.countDocuments({ blog });
     const pages = Math.ceil(parseInt(total) / parseInt(limit));

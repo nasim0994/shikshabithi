@@ -19,6 +19,7 @@ const blogs = require("./blogsRoutes");
 const blogComment = require("./blogCommentRoutes");
 const handnotes = require("./handnotesRoutes");
 const notice = require("./noticeRoutes");
+const adminNotice = require("./adminNoticeRoutes");
 
 const admin = require("./adminRoutes");
 const user = require("./userRoutes");
@@ -58,6 +59,7 @@ router.use("/blogs", blogs);
 router.use("/blogComment", blogComment);
 router.use("/handnotes", handnotes);
 router.use("/notice", notice);
+router.use("/adminNotice", adminNotice);
 
 router.use("/admin", admin);
 router.use("/user", user);

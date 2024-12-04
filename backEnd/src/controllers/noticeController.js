@@ -70,7 +70,7 @@ exports.get = async (req, res) => {
         },
       })
       .skip(skip)
-      .sort({ _id: -1 })
+      .sort({ createdAt: -1 })
       .limit(limit);
 
     const total = await Model.countDocuments(query);
@@ -274,11 +274,7 @@ exports.toggleStatus = async (req, res) => {
 
     const newStatus = notice.status === "active" ? "pending" : "active";
 
-    await Model.findByIdAndUpdate(
-      id,
-      { status: newStatus },
-      { new: true }
-    );
+    await Model.findByIdAndUpdate(id, { status: newStatus }, { new: true });
 
     res.status(200).json({
       success: true,

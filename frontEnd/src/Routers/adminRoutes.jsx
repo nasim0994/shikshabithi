@@ -96,20 +96,44 @@ const EditFeature = lazy(() => import("../Pages/Admin/Features/EditFeature"));
 const Admins = lazy(() => import("../Pages/Admin/Admins/Admins"));
 const AddAdmin = lazy(() => import("../Pages/Admin/Admins/AddAdmin"));
 
+// -----------------FrontEnd Setting
 const Logo = lazy(() => import("../Pages/Admin/FrontEndSetting/Logo/Logo"));
 const Banner = lazy(() =>
   import("../Pages/Admin/FrontEndSetting/Banner/Banner")
 );
+const FounderSpeech = lazy(() =>
+  import("../Pages/Admin/FrontEndSetting/FounderSpeech/FounderSpeech")
+);
 
+const AllAdminNotice = lazy(() =>
+  import("../Pages/Admin/FrontEndSetting/AdminNotice/AllAdminNotice")
+);
+const AddAdminNotice = lazy(() =>
+  import("../Pages/Admin/FrontEndSetting/AdminNotice/AddAdminNotice")
+);
+const EditAdminNotice = lazy(() =>
+  import("../Pages/Admin/FrontEndSetting/AdminNotice/EditAdminNotice")
+);
+
+// -----------------pages
 const ContactUs = lazy(() => import("../Pages/Admin/Pages/Contact/Contact"));
 const About = lazy(() => import("../Pages/Admin/Pages/About/About"));
+const PrivacyPolicy = lazy(() =>
+  import("../Pages/Admin/Pages/PrivacyPolicy/PrivacyPolicy.jsx")
+);
+const AllFAQ = lazy(() => import("../Pages/Admin/Pages/FAQ/AllFAQ"));
+const AddFaq = lazy(() => import("../Pages/Admin/Pages/FAQ/AddFaq"));
+const EditFaq = lazy(() => import("../Pages/Admin/Pages/FAQ/EditFaq"));
 
+// -----------------General Setting
 const Profile = lazy(() =>
   import("../Pages/Admin/GeneralSetting/Profile/Profile")
 );
 
+// -----------------Others
 const BlogList = lazy(() => import("../Pages/Admin/Others/Blogs/AllBlogs.jsx"));
 const ViewBlog = lazy(() => import("../Pages/Admin/Others/Blogs/ViewBlog.jsx"));
+
 const QuestionList = lazy(() =>
   import("../Pages/Admin/Others/Questions/AllQuestions.jsx")
 );
@@ -175,7 +199,7 @@ import CurrentAffairs from "../Pages/Admin/CurrentAffairs/CurrentAffairs.jsx";
 import AddCurrentAffairs from "../Pages/Admin/CurrentAffairs/AddCurrentAffairs.jsx";
 import EditCurrentAffairs from "../Pages/Admin/CurrentAffairs/EditCurrentAffairs.jsx";
 import EditAdmin from "../Pages/Admin/Admins/EditAdmin.jsx";
-import PrivacyPolicy from "../Pages/Admin/Pages/PrivacyPolicy/PrivacyPolicy.jsx";
+
 import PaymentInstruction from "../Pages/Admin/Pricing/PaymentInstruction/PaymentInstruction.jsx";
 import PaymentRequest from "../Pages/Admin/Pricing/PaymentRequest/PaymentRequest.jsx";
 import Users from "../Pages/Admin/Users/Users.jsx";
@@ -203,14 +227,6 @@ const EditSubSubChapter = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubSubChapters/EditSubSubChapter")
 );
 
-const FounderSpeech = lazy(() =>
-  import("../Pages/Admin/FrontEndSetting/FounderSpeech/FounderSpeech")
-);
-const AllFAQ = lazy(() => import("../Pages/Admin/FrontEndSetting/FAQ/AllFAQ"));
-const AddFaq = lazy(() => import("../Pages/Admin/FrontEndSetting/FAQ/AddFaq"));
-const EditFaq = lazy(() =>
-  import("../Pages/Admin/FrontEndSetting/FAQ/EditFaq")
-);
 const Tags = lazy(() => import("../Pages/Admin/Tags/Tags.jsx"));
 const AddTag = lazy(() => import("../Pages/Admin/Tags/AddTag.jsx"));
 const EditTag = lazy(() => import("../Pages/Admin/Tags/EditTag.jsx"));
@@ -309,15 +325,21 @@ export const adminRoutes = {
     { path: "admins", element: <Admins /> },
     { path: "admins/add", element: <AddAdmin /> },
     { path: "admins/edit/:id", element: <EditAdmin /> },
+
     { path: "front-end/logo", element: <Logo /> },
     { path: "front-end/banner", element: <Banner /> },
     { path: "front-end/founder-speech", element: <FounderSpeech /> },
-    { path: "front-end/faq", element: <AllFAQ /> },
-    { path: "front-end/faq/add", element: <AddFaq /> },
-    { path: "front-end/faq/edit/:id", element: <EditFaq /> },
+    { path: "front-end/admin-notice/all", element: <AllAdminNotice /> },
+    { path: "front-end/admin-notice/add", element: <AddAdminNotice /> },
+    { path: "front-end/admin-notice/edit/:id", element: <EditAdminNotice /> },
+
+    { path: "page/faq", element: <AllFAQ /> },
+    { path: "page/faq/add", element: <AddFaq /> },
+    { path: "page/faq/edit/:id", element: <EditFaq /> },
     { path: "page/contact", element: <ContactUs /> },
     { path: "page/about", element: <About /> },
     { path: "page/privacy-policy", element: <PrivacyPolicy /> },
+
     { path: "general-setting/profile", element: <Profile /> },
     { path: "others/blog-all", element: <BlogList /> },
     { path: "others/view-blog/:id", element: <ViewBlog /> },

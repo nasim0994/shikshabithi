@@ -25,7 +25,7 @@ exports.get = async (req, res) => {
       path: "user",
       populate: {
         path: "profile",
-      }.sort({ _id: -1 }),
+      }.sort({ createdAt: -1 }),
     });
 
     if (!result) {

@@ -8,6 +8,7 @@ import ModelTestResult from "../Pages/UserLayoutPages/Exam/ExamResult/ModelTestR
 import OnDemandTestResult from "../Pages/UserLayoutPages/Exam/ExamResult/OnDemandTestResult.jsx";
 import BoardExamResult from "../Pages/UserLayoutPages/Exam/ExamResult/BoardExamResult.jsx";
 import ExamDetails from "../Pages/UserLayoutPages/Exam/ExamDetails/ExamDetails.jsx";
+import MainRootLayout from "../Layout/MainRootLayout.jsx";
 
 const ProfileLayout = lazy(() => import("../Layout/ProfileLayout"));
 const UserLayout = lazy(() => import("../Layout/UserLayout"));
@@ -166,263 +167,269 @@ const Admission = lazy(() =>
 
 export const userRoutes = {
   path: "/",
-  element: (
-    <Suspense fallback={<Spinner />}>
-      <UserLayout />
-    </Suspense>
-  ),
+  element: <MainRootLayout />,
   children: [
     {
-      path: "/profile",
+      path: "/",
       element: (
-        <PrivateRoute>
-          <ProfileLayout />
-        </PrivateRoute>
+        <Suspense fallback={<Spinner />}>
+          <UserLayout />
+        </Suspense>
       ),
       children: [
         {
           path: "/profile",
-          element: <Overview />,
+          element: (
+            <PrivateRoute>
+              <ProfileLayout />
+            </PrivateRoute>
+          ),
+          children: [
+            {
+              path: "/profile",
+              element: <Overview />,
+            },
+            {
+              path: "/profile/setting",
+              element: <Setting />,
+            },
+            {
+              path: "/profile/subscription",
+              element: <Subscription />,
+            },
+          ],
         },
         {
-          path: "/profile/setting",
-          element: <Setting />,
+          path: "/academy",
+          element: <Academy />,
         },
         {
-          path: "/profile/subscription",
-          element: <Subscription />,
+          path: "/academy/:classId/subjects",
+          element: <SubjectsF />,
+        },
+        {
+          path: "academy/:subjectId/chapters",
+          element: <ChaptersF />,
+        },
+        {
+          path: "academy/:chapterId/content",
+          element: <Content />,
+        },
+        {
+          path: "academy/board-exam/mcq",
+          element: <BoardMcqF />,
+        },
+        {
+          path: "academy/board-exam/mcqExam/:id",
+          element: <BoardMcqExamAttend />,
+        },
+        {
+          path: "academy/board-exam/written",
+          element: <BoardWrittenF />,
+        },
+        {
+          path: "academy/board-exam/mcq/:id",
+          element: <BoardMcqDetails />,
+        },
+        {
+          path: "academy/board-exam/written/:id",
+          element: <BoardWrittenDetails />,
+        },
+        {
+          path: "academy/mcq",
+          element: <McqF />,
+        },
+        {
+          path: "academy/mcq/:id",
+          element: <McqDetails />,
+        },
+        {
+          path: "academy/written",
+          element: <WrittenF />,
+        },
+        {
+          path: "academy/test",
+          element: <OnDemandTest />,
+        },
+        {
+          path: "admission",
+          element: <Admission />,
+        },
+        {
+          path: "admission/question-bank/:id",
+          element: <QuestionBankDetails />,
+        },
+        {
+          path: "job-assistant",
+          element: <Job />,
+        },
+        {
+          path: "job-assistant/question-bank/:id",
+          element: <JobQuesSetDetails />,
+        },
+        {
+          path: "exam-list",
+          element: <ExamList />,
+        },
+        {
+          path: "/modeltest/add",
+          element: (
+            <PrivateRoute>
+              <AddModelTest />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "exam/modeltest/:id",
+          element: <ExamDetails />,
+        },
+
+        {
+          path: "job/model-test/attend/:id",
+          element: <JobTestAttend />,
+        },
+        {
+          path: "academy/model-test/attend/:id",
+          element: <AcademyTestAttend />,
+        },
+        {
+          path: "admission/model-test/attend/:id",
+          element: <AdmissionTestAttend />,
+        },
+
+        //-------------Result
+        {
+          path: "exam/result/ondemandtest",
+          element: <OnDemandTestResult />,
+        },
+        {
+          path: "exam/result/modeltest",
+          element: <ModelTestResult />,
+        },
+        {
+          path: "exam/result/boardexam",
+          element: <BoardExamResult />,
+        },
+
+        // {
+        //   path: "exam-result",
+        //   element: <ExamResult />,
+        // },
+
+        {
+          path: "exam-result/details/ondemandtest/:id",
+          element: <ExamResultDetails />,
+        },
+        {
+          path: "exam-result/details/modeltest/:id",
+          element: <ModelTestDetails />,
+        },
+        {
+          path: "exam-result/details/boardexam/:id",
+          element: <BoardExamResultDetails />,
+        },
+
+        {
+          path: "faqs",
+          element: <Faqs />,
+        },
+        {
+          path: "feedback",
+          element: <Feedbacks />,
+        },
+        {
+          path: "packages",
+          element: <PackagesU />,
+        },
+        {
+          path: "package/checkout/:id",
+          element: (
+            <PrivateRoute>
+              <PackageCheckout />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "current-affairs",
+          element: <CurrentAffairsU />,
+        },
+        {
+          path: "current-affairs/:id",
+          element: <CurrentAffairsDetails />,
+        },
+        {
+          path: "discussions",
+          element: <AskQuestion />,
+        },
+        {
+          path: "discussion/:id",
+          element: <AskQuestionDetails />,
+        },
+        {
+          path: "ask-question/add",
+          element: (
+            <PrivateRoute>
+              <AddAskQuestionPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "ask-question/edit/:id",
+          element: (
+            <PrivateRoute>
+              <EditAskQuestionPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "handnotes",
+          element: <HandNotes />,
+        },
+        {
+          path: "handnotes/:id",
+          element: <HandNoteDetails />,
+        },
+        {
+          path: "handnote/add",
+          element: (
+            <PrivateRoute>
+              <AddHandNotePage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "handnote/edit/:id",
+          element: (
+            <PrivateRoute>
+              <EditHandNotePage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "notices",
+          element: <Notices />,
+        },
+        {
+          path: "notices/:id",
+          element: <NoticeDetails />,
+        },
+        {
+          path: "notices/add",
+          element: (
+            <PrivateRoute>
+              <AddNoticesPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "notices/edit/:id",
+          element: (
+            <PrivateRoute>
+              <EditNoticesPage />
+            </PrivateRoute>
+          ),
         },
       ],
-    },
-    {
-      path: "/academy",
-      element: <Academy />,
-    },
-    {
-      path: "/academy/:classId/subjects",
-      element: <SubjectsF />,
-    },
-    {
-      path: "academy/:subjectId/chapters",
-      element: <ChaptersF />,
-    },
-    {
-      path: "academy/:chapterId/content",
-      element: <Content />,
-    },
-    {
-      path: "academy/board-exam/mcq",
-      element: <BoardMcqF />,
-    },
-    {
-      path: "academy/board-exam/mcqExam/:id",
-      element: <BoardMcqExamAttend />,
-    },
-    {
-      path: "academy/board-exam/written",
-      element: <BoardWrittenF />,
-    },
-    {
-      path: "academy/board-exam/mcq/:id",
-      element: <BoardMcqDetails />,
-    },
-    {
-      path: "academy/board-exam/written/:id",
-      element: <BoardWrittenDetails />,
-    },
-    {
-      path: "academy/mcq",
-      element: <McqF />,
-    },
-    {
-      path: "academy/mcq/:id",
-      element: <McqDetails />,
-    },
-    {
-      path: "academy/written",
-      element: <WrittenF />,
-    },
-    {
-      path: "academy/test",
-      element: <OnDemandTest />,
-    },
-    {
-      path: "admission",
-      element: <Admission />,
-    },
-    {
-      path: "admission/question-bank/:id",
-      element: <QuestionBankDetails />,
-    },
-    {
-      path: "job-assistant",
-      element: <Job />,
-    },
-    {
-      path: "job-assistant/question-bank/:id",
-      element: <JobQuesSetDetails />,
-    },
-    {
-      path: "exam-list",
-      element: <ExamList />,
-    },
-    {
-      path: "/modeltest/add",
-      element: (
-        <PrivateRoute>
-          <AddModelTest />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "exam/modeltest/:id",
-      element: <ExamDetails />,
-    },
-
-    {
-      path: "job/model-test/attend/:id",
-      element: <JobTestAttend />,
-    },
-    {
-      path: "academy/model-test/attend/:id",
-      element: <AcademyTestAttend />,
-    },
-    {
-      path: "admission/model-test/attend/:id",
-      element: <AdmissionTestAttend />,
-    },
-
-    //-------------Result
-    {
-      path: "exam/result/ondemandtest",
-      element: <OnDemandTestResult />,
-    },
-    {
-      path: "exam/result/modeltest",
-      element: <ModelTestResult />,
-    },
-    {
-      path: "exam/result/boardexam",
-      element: <BoardExamResult />,
-    },
-
-    // {
-    //   path: "exam-result",
-    //   element: <ExamResult />,
-    // },
-
-    {
-      path: "exam-result/details/ondemandtest/:id",
-      element: <ExamResultDetails />,
-    },
-    {
-      path: "exam-result/details/modeltest/:id",
-      element: <ModelTestDetails />,
-    },
-    {
-      path: "exam-result/details/boardexam/:id",
-      element: <BoardExamResultDetails />,
-    },
-
-    {
-      path: "faqs",
-      element: <Faqs />,
-    },
-    {
-      path: "feedback",
-      element: <Feedbacks />,
-    },
-    {
-      path: "packages",
-      element: <PackagesU />,
-    },
-    {
-      path: "package/checkout/:id",
-      element: (
-        <PrivateRoute>
-          <PackageCheckout />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "current-affairs",
-      element: <CurrentAffairsU />,
-    },
-    {
-      path: "current-affairs/:id",
-      element: <CurrentAffairsDetails />,
-    },
-    {
-      path: "discussions",
-      element: <AskQuestion />,
-    },
-    {
-      path: "discussion/:id",
-      element: <AskQuestionDetails />,
-    },
-    {
-      path: "ask-question/add",
-      element: (
-        <PrivateRoute>
-          <AddAskQuestionPage />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "ask-question/edit/:id",
-      element: (
-        <PrivateRoute>
-          <EditAskQuestionPage />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "handnotes",
-      element: <HandNotes />,
-    },
-    {
-      path: "handnotes/:id",
-      element: <HandNoteDetails />,
-    },
-    {
-      path: "handnote/add",
-      element: (
-        <PrivateRoute>
-          <AddHandNotePage />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "handnote/edit/:id",
-      element: (
-        <PrivateRoute>
-          <EditHandNotePage />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "notices",
-      element: <Notices />,
-    },
-    {
-      path: "notices/:id",
-      element: <NoticeDetails />,
-    },
-    {
-      path: "notices/add",
-      element: (
-        <PrivateRoute>
-          <AddNoticesPage />
-        </PrivateRoute>
-      ),
-    },
-    {
-      path: "notices/edit/:id",
-      element: (
-        <PrivateRoute>
-          <EditNoticesPage />
-        </PrivateRoute>
-      ),
     },
   ],
 };

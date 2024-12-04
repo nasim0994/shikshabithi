@@ -69,7 +69,7 @@ exports.get = async (req, res) => {
       .populate({
         path: "chapter",
       })
-      .sort({ _id: -1 });
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

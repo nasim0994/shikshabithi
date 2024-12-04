@@ -10,7 +10,7 @@ export default function UserLayoutHeader({ setUserSidebar }) {
   const [profileDropdown, setProfileDropdown] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 py-3 px-6 bg-base-100 text-neutral shadow">
+    <header className="sticky top-0 z-40 py-3 px-6 bg-base-100 text-neutral shadow">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           <button
