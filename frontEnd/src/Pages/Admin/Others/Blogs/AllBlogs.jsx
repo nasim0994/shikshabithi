@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import {
   useDeleteBlogMutation,
   useGetBlogsQuery,
+  useToggleBlogHomeStatusMutation,
   useToggleBlogStatusMutation,
 } from "../../../../Redux/api/blogsApi";
 import { useEffect, useState } from "react";
@@ -37,6 +38,7 @@ export default function AllBlogs() {
     }
   }, [blogs, activeBlogs, active, pendingBlogs]);
 
+  const [selectedBlog, setSelectedBlog] = useState(null);
   const [deleteBlog] = useDeleteBlogMutation();
   const [toggleBlog] = useToggleBlogStatusMutation();
 
@@ -60,6 +62,24 @@ export default function AllBlogs() {
       } else {
         toast.error("something went wrong!");
       }
+    }
+  };
+
+  const [toggleBlogHomeStatus, { isLoading: uIsHomeLoading }] =
+    useToggleBlogHomeStatusMutation();
+
+  const handleUpdateIsHome = async (id) => {
+    setSelectedBlog(id);
+
+    console.log(id);
+
+    const res = await toggleBlogHomeStatus(id);
+
+    if (res?.data?.success) {
+      toast.success("updated success");
+    } else {
+      toast.error(res?.data?.message || "Something went wrong!");
+      console.log(res);
     }
   };
 
@@ -109,8 +129,9 @@ export default function AllBlogs() {
           <thead>
             <tr>
               <th>SL</th>
-              <th>Title</th>
               <th>Image</th>
+              <th>Title</th>
+              <th>Home</th>
               <th className="text-center">Status</th>
               <th>Action</th>
             </tr>
@@ -120,7 +141,6 @@ export default function AllBlogs() {
               targetedBlogs?.map((blog, i) => (
                 <tr key={blog?._id}>
                   <td>{i + 1}</td>
-                  <td>{blog?.title}</td>
                   <td>
                     <img
                       className="w-12 rounded-sm"
@@ -133,6 +153,23 @@ export default function AllBlogs() {
                       }`}
                       alt="Blog Image"
                     />
+                  </td>
+                  <td>{blog?.title}</td>
+                  <td>
+                    {uIsHomeLoading && selectedBlog === blog?._id ? (
+                      <p>Loading..</p>
+                    ) : (
+                      <label className="relative inline-flex cursor-pointer items-center">
+                        <input
+                          checked={blog?.isHome && blog?.isHome}
+                          type="checkbox"
+                          value={blog?.isHome}
+                          className="peer sr-only"
+                          onChange={() => handleUpdateIsHome(blog?._id)}
+                        />
+                        <div className="peer h-[23px] w-11 rounded-full bg-gray-200 after:absolute after:start-[1px] after:top-[1.5px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white rtl:peer-checked:after:-translate-x-full"></div>
+                      </label>
+                    )}
                   </td>
                   <td className="text-center">
                     <button

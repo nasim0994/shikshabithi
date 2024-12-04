@@ -36,6 +36,14 @@ export const blogsApi = baseApi.injectEndpoints({
       providesTags: ["blogs"],
     }),
 
+    getIsHomeBlog: builder.query({
+      query: () => ({
+        url: `api/blogs/home`,
+        method: "GET",
+      }),
+      providesTags: ["blogs"],
+    }),
+
     addBlog: builder.mutation({
       query: (formData) => ({
         url: `api/blogs/add`,
@@ -71,6 +79,14 @@ export const blogsApi = baseApi.injectEndpoints({
       invalidatesTags: ["blogs"],
     }),
 
+    toggleBlogHomeStatus: builder.mutation({
+      query: (id) => ({
+        url: `api/blogs/toggle-isHome/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["blogs"],
+    }),
+
     deleteBlog: builder.mutation({
       query: (id) => ({
         url: `api/blogs/delete/${id}`,
@@ -91,4 +107,6 @@ export const {
   useGetBlogQuery,
   useGetBlogsQuery,
   useGetByViewersQuery,
+  useToggleBlogHomeStatusMutation,
+  useGetIsHomeBlogQuery,
 } = blogsApi;

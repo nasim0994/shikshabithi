@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import moment from "moment";
 import AcademySkeleton from "../../../Components/Skeleton/AcademySkeleton";
-import { useGetBlogsQuery } from "../../../Redux/api//blogsApi";
+import { useGetIsHomeBlogQuery } from "../../../Redux/api//blogsApi";
 
 export default function BlogsHome() {
-  let query = {};
-  query["limit"] = 3;
-  query["page"] = 1;
-  const { data, isLoading } = useGetBlogsQuery(query);
+  const { data, isLoading } = useGetIsHomeBlogQuery();
   const blogs = data?.data;
 
   if (isLoading) return <AcademySkeleton />;
@@ -40,8 +37,9 @@ export default function BlogsHome() {
                       src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
                         blog?.image
                       }`}
-                      alt=""
+                      alt="blog"
                       className="rounded-t w-full h-32 sm:h-44"
+                      loading="lazy"
                     />
                   </Link>
                 )}
@@ -75,7 +73,7 @@ export default function BlogsHome() {
                     to={`/blog/${blog?._id}`}
                     className="text-neutral hover:text-primary duration-200 inline-block"
                   >
-                    <h2 className="font-medium">{blog?.title}</h2>
+                    <h2 className="font-medium text-xl">{blog?.title}</h2>
                   </Link>
 
                   <p className="text-xs text-neutral-content mt-1">

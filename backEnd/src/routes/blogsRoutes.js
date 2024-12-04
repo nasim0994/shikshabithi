@@ -12,12 +12,15 @@ const {
   toggleStatus,
   addBlogView,
   getByViewers,
+  toggleIsHome,
+  getHomeBlogs,
 } = require("../controllers/blogsController");
 
 let upload = singleUploder("./uploads/blogs", 1000 * 1024, "image");
 
 router.get("/", get);
 router.get("/get-byview", getByViewers);
+router.get("/home", getHomeBlogs);
 router.post("/add-blogview", addBlogView);
 router.get("/byuser", verifyToken, getByUser);
 
@@ -35,6 +38,7 @@ router.post("/add", verifyToken, (req, res, next) => {
 
 router.get("/:id", getSingle);
 router.patch("/toggle-status/:id", verifyToken, toggleStatus);
+router.patch("/toggle-isHome/:id", verifyToken, toggleIsHome);
 
 router.patch("/update/:id", verifyToken, (req, res, next) => {
   upload(req, res, (err) => {

@@ -95,7 +95,7 @@ exports.get = async (req, res) => {
       })
       .skip(skip)
       .limit(limit)
-      .sort({ _id: -1 });
+      .sort({ createdAt: -1 });
 
     const total = await Model.countDocuments(query);
     const pages = Math.ceil(parseInt(total) / parseInt(limit));
@@ -431,5 +431,78 @@ exports.addBlogView = async (req, res) => {
     res.status(201).json({ message: "View added successfully" });
   } catch (error) {
     res.status(500).json({ message: "Failed to add view", error });
+  }
+};
+
+exports.toggleIsHome = async (req, res) => {
+  const id = req?.params?.id;
+
+  try {
+    const blog = await Model.findById(id);
+
+    if (!blog) {
+      return res.status(404).json({
+        success: false,
+        error: "Blog not found",
+      });
+    }
+
+    const newStatus = !blog.isHome;
+
+    await Model.findByIdAndUpdate(id, { isHome: newStatus }, { new: true });
+
+    res.status(200).json({
+      success: true,
+      message: "Home status updated successfully",
+      data: { id, isHome: newStatus },
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update status",
+      error: error.message,
+    });
+  }
+};
+
+exports.getHomeBlogs = async (req, res) => {
+  try {
+    const result = await Model.find({ isHome: true, status: "active" })
+      .populate({
+        path: "user",
+        select: "profile package",
+        populate: {
+          path: "profile",
+          select: "name image",
+        },
+      })
+      .populate({
+        path: "subject",
+        select: "name class",
+        populate: {
+          path: "class",
+          select: "name",
+        },
+      })
+      .populate({
+        path: "chapter",
+        select: "name",
+      })
+      .populate({
+        path: "tags",
+      })
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      message: "get success",
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+      error: error,
+    });
   }
 };

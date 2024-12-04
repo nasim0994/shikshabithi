@@ -48,6 +48,10 @@ const blogsSchema = new mongoose.Schema(
         },
       },
     ],
+    isHome: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
