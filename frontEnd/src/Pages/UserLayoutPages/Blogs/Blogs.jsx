@@ -1,4 +1,4 @@
-import { Link, useOutletContext, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import moment from "moment";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import {
@@ -34,7 +34,10 @@ import Comments from "../../../Components/Comments/Comments";
 
 export default function Blogs() {
   const { category } = useParams();
-  const { selectedSubject } = useOutletContext();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const searchSubject = queryParams.get("subject");
 
   const { loggedUser } = useSelector((store) => store.user);
   const [optionDropdown, setOptionDropdown] = useState(null);
@@ -75,18 +78,18 @@ export default function Blogs() {
     setSubject("");
     setChapter("");
     setTag("");
-  }, [selectedSubject]);
+  }, [searchSubject]);
 
   let blogLimit = 10;
   const [blogCurrentPage, setBlogCurrentPage] = useState(1);
 
   useEffect(() => {
     window.scroll(0, 0);
-  }, [blogCurrentPage, subject, chapter, tag, selectedSubject]);
+  }, [blogCurrentPage, subject, chapter, tag, searchSubject]);
 
   let query = {};
   query["category"] = category;
-  query["subject"] = subject ? subject : selectedSubject;
+  query["subject"] = searchSubject || "";
   query["chapter"] = chapter;
   query["tag"] = tag;
   query["chapter"] = chapter;
@@ -213,14 +216,12 @@ export default function Blogs() {
               <div className="p-2 pt-0">
                 <div className="flex gap-2">
                   {blog?.subject && (
-                    <p
-                      onClick={() => {
-                        setSubject(blog?.subject?._id);
-                      }}
+                    <Link
+                      to={`/blogs/${blog?.category}?subject=${blog?.subject?._id}`}
                       className="cursor-pointer px-2 py-[3px] bg-primary/5 text-[10px] rounded"
                     >
                       {blog?.subject?.name}
-                    </p>
+                    </Link>
                   )}
 
                   {blog?.chapter && (

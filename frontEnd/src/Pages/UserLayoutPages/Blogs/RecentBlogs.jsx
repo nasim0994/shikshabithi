@@ -3,7 +3,7 @@ import { useGetByViewersQuery } from "../../../Redux/api/blogsApi.js";
 
 export default function RecentBlogs() {
   let query = {};
-  query["limit"] = 5;
+  query["limit"] = 10;
   query["status"] = "active";
   const { data } = useGetByViewersQuery({ ...query });
   const blogs = data?.data;

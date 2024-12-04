@@ -1,13 +1,16 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useGetBlogsQuery } from "../../../Redux/api/blogsApi";
 
-export default function RelatedBlogs({ selectedSubject }) {
+export default function RelatedBlogs() {
   const { category } = useParams();
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const searchSubject = queryParams.get("subject");
 
   let query = {};
   query["category"] = category;
-  query["subject"] = selectedSubject;
-  query["limit"] = 5;
+  query["subject"] = searchSubject || "all";
+  query["limit"] = 10;
   query["status"] = "active";
 
   const { data } = useGetBlogsQuery({ ...query });

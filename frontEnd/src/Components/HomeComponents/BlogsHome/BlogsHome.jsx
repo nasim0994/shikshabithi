@@ -7,6 +7,8 @@ export default function BlogsHome() {
   const { data, isLoading } = useGetIsHomeBlogQuery();
   const blogs = data?.data;
 
+  console.log(blogs);
+
   if (isLoading) return <AcademySkeleton />;
 
   return (
@@ -92,9 +94,12 @@ export default function BlogsHome() {
                 </div>
 
                 <div className="border-t p-2 flex gap-2">
-                  <p className="px-2 py-[3px] bg-primary/5 text-[10px] rounded">
+                  <Link
+                    to={`/blogs/${blog?.category}?subject=${blog?.subject?._id}`}
+                    className="px-2 py-[3px] bg-primary/5 text-[10px] rounded"
+                  >
                     {blog?.subject?.name}
-                  </p>
+                  </Link>
 
                   {blog?.chapter && (
                     <p className="px-2 py-[3px] bg-primary/5 text-[10px] rounded">

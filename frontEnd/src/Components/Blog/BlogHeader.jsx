@@ -3,7 +3,7 @@ import { HiBuildingLibrary } from "react-icons/hi2";
 import { PiBagFill } from "react-icons/pi";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { MdOutlineClearAll } from "react-icons/md";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useGetAcademySubjectsQuery } from "../../Redux/api/academy/subjectApi";
 
 const categories = [
@@ -33,8 +33,12 @@ const categories = [
   },
 ];
 
-export default function BlogHeader({ selectedSubject, setSelectedSubject }) {
-  const { pathname } = useLocation();
+export default function BlogHeader() {
+  const { pathname, search } = useLocation();
+  const navigate = useNavigate();
+
+  const queryParams = new URLSearchParams(search);
+  const searchSubject = queryParams.get("subject");
 
   let query = {};
   if (pathname == "/blogs/admission") query["classuuid"] = 200;
@@ -71,12 +75,17 @@ export default function BlogHeader({ selectedSubject, setSelectedSubject }) {
         ))}
 
         <select
-          onChange={(e) => setSelectedSubject(e.target.value)}
+          onChange={(e) => {
+            if (e.target.value === "all") {
+              navigate(`${pathname}`);
+            } else {
+              navigate(`${pathname}?subject=${e.target.value}`);
+            }
+          }}
           className="w-28 text-xs rounded-xl border-gray-200 cursor-pointer"
-          value={selectedSubject}
+          value={searchSubject || "all"}
         >
-          <option value="">Filter Subject</option>
-          <option value="all">All</option>
+          <option value="all">All Subject</option>
           {subjects?.map((s) => (
             <option key={s?._id} value={s?._id}>
               {s?.name}-({s?.class?.name})
