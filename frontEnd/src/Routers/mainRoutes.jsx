@@ -5,6 +5,8 @@ import Home from "../Pages/Home/Home";
 import Spinner from "../Components/Loader/Spinner/Spinner";
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 import BlogLayout from "../Layout/BlogLayout";
+import ContactUs from "../Pages/UserLayoutPages/ContactUs/ContactUs";
+import AboutUs from "../Pages/UserLayoutPages/AboutUS/AboutUS";
 const BlogDetails = lazy(() =>
   import("../Pages/UserLayoutPages/BlogDetails/BlogDetails")
 );
@@ -19,19 +21,35 @@ const PrivateRoute = lazy(() => import("../PrivateRoute/PrivateRoute"));
 
 export const mainRoutes = {
   path: "/",
-  element: (
-    <Suspense fallback={<Spinner />}>
-      <MainLayout />
-    </Suspense>
-  ),
+  element: <MainLayout />,
   children: [
     {
       path: "/",
       element: <Home />,
     },
     {
+      path: "/contact-us",
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <ContactUs />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/about-us",
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <AboutUs />
+        </Suspense>
+      ),
+    },
+    {
       path: "blogs",
-      element: <BlogLayout />,
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <BlogLayout />
+        </Suspense>
+      ),
       children: [
         {
           path: "/blogs/:category",
@@ -53,26 +71,38 @@ export const mainRoutes = {
     },
     {
       path: "blog/:id",
-      element: <BlogDetails />,
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <BlogDetails />
+        </Suspense>
+      ),
     },
     {
       path: "/privacy-policy",
-      element: <PrivacyPolicy />,
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <PrivacyPolicy />
+        </Suspense>
+      ),
     },
     {
       path: "blog/add",
       element: (
-        <PrivateRoute>
-          <AddBlogPage />
-        </PrivateRoute>
+        <Suspense fallback={<Spinner />}>
+          <PrivateRoute>
+            <AddBlogPage />
+          </PrivateRoute>
+        </Suspense>
       ),
     },
     {
       path: "blog/edit/:id",
       element: (
-        <PrivateRoute>
-          <EditBlogPage />
-        </PrivateRoute>
+        <Suspense fallback={<Spinner />}>
+          <PrivateRoute>
+            <EditBlogPage />
+          </PrivateRoute>
+        </Suspense>
       ),
     },
   ],
