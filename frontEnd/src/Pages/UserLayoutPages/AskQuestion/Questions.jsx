@@ -5,8 +5,7 @@ import {
 import { useEffect, useState } from "react";
 import { MdArrowRight } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { FaPlusSquare, FaShareAlt } from "react-icons/fa";
-import AddAnsModal from "./AddAnsModal";
+import { FaShareAlt } from "react-icons/fa";
 import moment from "moment";
 import { useGetAskAnsQuery } from "../../../Redux/api/askAnsApi";
 import perser from "html-react-parser";
@@ -29,8 +28,13 @@ import {
   FaWhatsappSquare,
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
+import AddAskQuestion from "../../../Components/UserLayoutComponents/AskQuestion/AddAskQuestion";
 
-export default function Questions({ activeCategory, selectedSubject }) {
+export default function Questions({
+  activeCategory,
+  selectedSubject,
+  searchSubject,
+}) {
   const { loggedUser } = useSelector((store) => store.user);
   const [optionDropdown, setOptionDropdown] = useState(null);
   const [shareDropdown, setShareDropdown] = useState(null);
@@ -43,22 +47,24 @@ export default function Questions({ activeCategory, selectedSubject }) {
   };
 
   let questionquery = {};
-  questionquery["category"] =
-    activeCategory == 1
-      ? "academy"
-      : activeCategory == 2
-      ? "admission"
-      : activeCategory == 3
-      ? "job"
-      : "others";
-  questionquery["subject"] = selectedSubject;
+  if (activeCategory)
+    questionquery["category"] =
+      activeCategory == 1
+        ? "academy"
+        : activeCategory == 2
+        ? "admission"
+        : activeCategory == 3
+        ? "job"
+        : "others";
+  if (selectedSubject || searchSubject)
+    questionquery["subject"] = selectedSubject || searchSubject;
   questionquery["status"] = "active";
 
   const { data, isLoading } = useGetAskQuestionsQuery({ ...questionquery });
   const questions = data?.data;
 
   const [ans, setAns] = useState(null);
-  const [modal, setModal] = useState(false);
+
   const [selectedQuestion, setSelectedQuestion] = useState("");
 
   const handelToggleAns = (i) => {
@@ -179,9 +185,7 @@ export default function Questions({ activeCategory, selectedSubject }) {
                 to={`/discussion/${question?._id}`}
                 className="text-neutral hover:text-primary duration-200 inline-block"
               >
-                <h2 className="text-[13px] font-semibold">
-                  {question?.question}
-                </h2>
+                <h2 className="text-xl font-semibold">{question?.question}</h2>
               </Link>
 
               {question?.image && (
@@ -197,9 +201,12 @@ export default function Questions({ activeCategory, selectedSubject }) {
               )}
 
               <div className="mt-2 flex gap-2">
-                <p className="px-2 py-[3px] bg-primary/5 text-[10px] rounded">
+                <Link
+                  to={`/discussions?subject=${question?.subject?._id}`}
+                  className="px-2 py-[3px] bg-primary/5 text-[10px] rounded"
+                >
                   {question?.subject?.name}
-                </p>
+                </Link>
 
                 {question?.chapter && (
                   <p className="px-2 py-[3px] bg-primary/5 text-[10px] rounded">
@@ -209,6 +216,7 @@ export default function Questions({ activeCategory, selectedSubject }) {
               </div>
             </div>
 
+            {/* Ans */}
             <div>
               <div className="px-4 py-2 flex justify-between items-center">
                 <div className="text-xs font-semibold text-primary flex items-center gap-1">
@@ -222,6 +230,7 @@ export default function Questions({ activeCategory, selectedSubject }) {
                     See Answers <MdArrowRight className="text-lg" />
                   </button>
                 </div>
+
                 <div className="text-sm relative">
                   <button
                     onClick={() => {
@@ -282,15 +291,11 @@ export default function Questions({ activeCategory, selectedSubject }) {
               {ans == i && (
                 <div className="border-t w-full px-3 py-2">
                   <div className="mb-4">
-                    <button
-                      onClick={() => {
-                        setModal(true);
-                        setSelectedQuestion(question?._id);
-                      }}
-                      className="flex items-center gap-2 rounded px-2 py-1.5 bg-primary text-base-100 duration-300 text-xs"
-                    >
-                      <FaPlusSquare /> Answer
-                    </button>
+                    <AddAskQuestion
+                      setSelectedQuestion={setSelectedQuestion}
+                      selectedQuestion={selectedQuestion}
+                      id={question?._id}
+                    />
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -325,12 +330,6 @@ export default function Questions({ activeCategory, selectedSubject }) {
                       </p>
                     )}
                   </div>
-
-                  <AddAnsModal
-                    question={selectedQuestion}
-                    modal={modal}
-                    setModal={setModal}
-                  />
                 </div>
               )}
             </div>

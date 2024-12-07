@@ -1,3 +1,4 @@
+import { AiOutlineSmallDash } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaBookReader } from "react-icons/fa";
@@ -10,8 +11,10 @@ import { MdOutlineClearAll } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useGetAskQuestionLengthByUserQuery } from "../../../Redux/api/askQuestionApi";
 import { toast } from "react-toastify";
+import AdmissionSet from "../../../Components/Skeleton/AdmissionSet";
 
 let categories = [
+  { _id: 0, name: "All", icon: <AiOutlineSmallDash /> },
   { _id: 1, name: "Academy", icon: <HiBuildingLibrary /> },
   { _id: 2, name: "Admission", icon: <FaBookReader className="text-xs" /> },
   { _id: 3, name: "Job", icon: <PiBagFill className="text-sm" /> },
@@ -21,14 +24,15 @@ let categories = [
 export default function AskQuestion() {
   const { loggedUser } = useSelector((state) => state.user);
   const user = loggedUser?.data;
-  const { data } = useGetAskQuestionLengthByUserQuery();
+  const { data, isLoading, isFetching } = useGetAskQuestionLengthByUserQuery();
 
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   let active = queryParams.get("active");
+  let searchSubject = queryParams.get("subject");
 
-  const [activeCategory, setActiveCategory] = useState(1);
+  const [activeCategory, setActiveCategory] = useState(0);
   const [selectedSubject, setSelectedSubject] = useState("");
 
   let query = {};
@@ -38,8 +42,7 @@ export default function AskQuestion() {
 
   useEffect(() => {
     if (!active) {
-      navigate("/discussions?active=academy");
-      setActiveCategory(1);
+      setActiveCategory(0);
     } else if (active == "academy") {
       setActiveCategory(1);
     } else if (active == "admission") {
@@ -49,7 +52,7 @@ export default function AskQuestion() {
     } else if (active == "others") {
       setActiveCategory(4);
     }
-  }, [active, navigate]);
+  }, [active]);
 
   const handleAddAskQuestion = () => {
     const askQuestionLength = data?.data;
@@ -96,6 +99,7 @@ export default function AskQuestion() {
               onClick={() => {
                 setActiveCategory(category?._id);
                 setSelectedSubject("");
+                if (category?._id === 0) return navigate(`/discussions`);
                 navigate(
                   `/discussions?active=${category?.name.toLocaleLowerCase()}`
                 );
@@ -131,10 +135,15 @@ export default function AskQuestion() {
         </div>
       </div>
 
-      <Questions
-        activeCategory={activeCategory}
-        selectedSubject={selectedSubject}
-      />
+      {isLoading || isFetching ? (
+        <AdmissionSet />
+      ) : (
+        <Questions
+          activeCategory={activeCategory}
+          selectedSubject={selectedSubject}
+          searchSubject={searchSubject}
+        />
+      )}
     </div>
   );
 }

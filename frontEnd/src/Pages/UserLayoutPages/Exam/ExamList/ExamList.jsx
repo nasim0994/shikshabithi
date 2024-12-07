@@ -118,10 +118,7 @@ export default function ExamList() {
               key={category?._id}
               onClick={() => {
                 setActiveCategory(category?._id);
-                if (category?._id === 0) {
-                  navigate(`/exam-list`);
-                  return;
-                }
+                if (category?._id === 0) return navigate(`/exam-list`);
                 navigate(
                   `/exam-list?active=${category?.name.toLocaleLowerCase()}`
                 );

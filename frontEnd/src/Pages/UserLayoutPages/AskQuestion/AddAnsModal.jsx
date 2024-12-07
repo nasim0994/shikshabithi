@@ -35,6 +35,7 @@ export default function AddAnsModal({ question, modal, setModal }) {
     if (res?.data?.success) {
       toast.success("ans add success");
       setModal(false);
+      setDetails("");
     } else {
       toast.error("something went wrong!");
       console.log(res);
