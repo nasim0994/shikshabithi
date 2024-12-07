@@ -60,6 +60,11 @@ export default function McqF() {
   const totalLength = length?.data;
 
   const handleOnDemandTest = () => {
+    if (!loggedUser) {
+      toast.error("You need to login first");
+      return;
+    }
+
     if (!packageData?.package && totalLength >= 5) {
       toast.error("You have reached the limit of free exams");
       return;
