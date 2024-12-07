@@ -8,7 +8,7 @@ import Spinner from "../Components/Loader/Spinner/Spinner";
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 import BlogLayout from "../Layout/BlogLayout";
 import ContactUs from "../Pages/UserLayoutPages/ContactUs/ContactUs";
-import AboutUs from "../Pages/UserLayoutPages/AboutUS/AboutUS";
+import AboutUs from "../Pages/UserLayoutPages/AboutUs/AboutUs";
 
 const BlogDetails = lazy(() =>
   import("../Pages/UserLayoutPages/BlogDetails/BlogDetails")
