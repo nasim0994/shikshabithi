@@ -5,9 +5,8 @@
 @tailwind utilities;
 
 :root {
-  --primary: #2e236c;
-  --secondary: #e53838;
-  --third: #00c000;
+  --primary: #1b8daa;
+  --secondary: #ff3131;
 }
 
 @font-face {
@@ -75,7 +74,7 @@ nav a:hover {
 }
 
 .primary_text {
-  background: -webkit-linear-gradient(60deg, #2e236cd5, #2e236c, #f03449);
+  background: -webkit-linear-gradient(60deg, #1b8daa, #1b8daa, #f03449);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -135,7 +134,7 @@ nav a:hover {
   transform: translateX(-50%);
   width: 80%;
   height: 1.5px;
-  background: linear-gradient(90deg, #e7eae8, #2e236c, #dee2df);
+  background: linear-gradient(90deg, #e7eae8, #1b8daa, #dee2df);
 }
 
 /* ------------------Modal---------------- */

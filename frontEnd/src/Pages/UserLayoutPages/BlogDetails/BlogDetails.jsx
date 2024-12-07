@@ -128,7 +128,7 @@ export default function BlogDetails() {
             <div className="mt-2 bg-base-100 shadow rounded ">
               <div className="p-3 border-b flex justify-between items-center">
                 <Link
-                  to={`/blog/${blog?.category}`}
+                  to={`/blogs/${blog?.category}`}
                   className="text-sm text-neutral-content hover:underline"
                 >
                   {blog?.category}

@@ -1,6 +1,6 @@
-import QuestionCountdown from "/src/assets/images/banner/question_countdown.png";
-import StudentCountdown from "/src/assets/images/banner/student_countdown.png";
-import ExamCountdown from "/src/assets/images/banner/exam_countdown.png";
+import QuestionCountdown from "/src/assets/images/banner/exam.png";
+import StudentCountdown from "/src/assets/images/banner/user.png";
+import ExamCountdown from "/src/assets/images/banner/content.png";
 import {
   useGetBannerCountQuery,
   useGetBannerQuery,
@@ -42,11 +42,13 @@ export default function Hero() {
           {/* Counter */}
           <div className="md:mt-10 w-[90%] lg:w-1/2 bg-primary/5 rounded-lg mx-auto py-6 md:py-10 px-2 md:px-4 grid grid-cols-3 gap-6">
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
-              <img
-                src={QuestionCountdown}
-                alt="QuestionCountdown"
-                className="w-7 h-7 md:w-10 md:h-9 rounded-full"
-              />
+              <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-primary flex justify-center items-center">
+                <img
+                  src={QuestionCountdown}
+                  alt="QuestionCountdown"
+                  className="w-[90%] h-[90%] object-cover"
+                />
+              </div>
               <div>
                 <h2 className="md:text-xl font-bold text-base-100">
                   {totalQuestion >= 1000
@@ -59,11 +61,13 @@ export default function Hero() {
             </div>
 
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
-              <img
-                src={StudentCountdown}
-                alt="Student Countdown"
-                className="w-7 h-7 md:w-10 md:h-9 rounded-full"
-              />
+              <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-primary flex justify-center items-center">
+                <img
+                  src={StudentCountdown}
+                  alt="Student Countdown"
+                  className="w-[90%] h-[90%] object-cover"
+                />
+              </div>
               <div>
                 <h2 className="md:text-xl font-bold text-base-100">
                   {totalUser}+
@@ -75,11 +79,13 @@ export default function Hero() {
             </div>
 
             <div className="flex items-center justify-center gap-1 md:gap-3">
-              <img
-                src={ExamCountdown}
-                alt="Exam Countdown"
-                className="w-7 h-7 md:w-10 md:h-9 rounded-full"
-              />
+              <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-primary flex justify-center items-center">
+                <img
+                  src={ExamCountdown}
+                  alt="Exam Countdown"
+                  className="w-[90%] h-[90%] object-cover"
+                />
+              </div>
               <div>
                 <h2 className="md:text-xl font-bold text-base-100">
                   {totalContent >= 1000

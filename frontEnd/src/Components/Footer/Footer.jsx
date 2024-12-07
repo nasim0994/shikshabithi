@@ -14,7 +14,7 @@ export default function Footer() {
   let features = fetaure?.data;
 
   return (
-    <footer className="bg-gray-100 pt-10 pb-5">
+    <footer className="bg-[#13263C] pt-10 pb-5">
       <div className="container">
         <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-10 pb-14">
           <div className="md:col-span-2">
@@ -32,8 +32,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h2 className="text-neutral text-xl font-medium">Features</h2>
-            <ul className="text-neutral/80 font-light mt-2 flex flex-col gap-1 text-[15px]">
+            <h2 className="text-gray-200 text-xl font-medium">Features</h2>
+            <ul className="text-gray-300 font-light mt-2 flex flex-col gap-1 text-[15px]">
               {features?.map((feature) => (
                 <li key={feature?._id}>
                   <Link to="/about-us" className="hover:underline">
@@ -45,8 +45,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h2 className="text-neutral text-xl font-medium">Quick Link</h2>
-            <ul className="text-neutral/80 font-light mt-2 flex flex-col gap-1 text-[15px]">
+            <h2 className="text-gray-200 text-xl font-medium">Quick Link</h2>
+            <ul className="text-gray-300 font-light mt-2 flex flex-col gap-1 text-[15px]">
               <li>
                 <Link to="/about-us" className="hover:underline">
                   About Us
@@ -72,9 +72,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h2 className="text-neutral text-xl font-medium">Contact</h2>
+            <h2 className="text-gray-200 text-xl font-medium">Contact</h2>
 
-            <ul className="mt-2 text-[15px] text-neutral-content">
+            <ul className="mt-2 text-[15px] text-gray-300">
               <li>
                 <p>{contact?.data[0]?.phone}</p>
               </li>
@@ -90,7 +90,7 @@ export default function Footer() {
 
         <div className="border-t border-neutral-content pt-5">
           <div className="sm:flex justify-between items-center">
-            <p className="text-neutral/90 text-sm font-light">
+            <p className="text-gray-300 text-sm font-light">
               Copyright © 2024 Smart Sikon, All rights reserved. develop by{" "}
               <Link
                 to="https://emanagerit.com"
@@ -107,7 +107,7 @@ export default function Footer() {
                   to={social?.url}
                   target="_blank"
                   key={i}
-                  className="w-7 h-7 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-translate-y-1 duration-200"
+                  className="w-8 h-8 rounded-full bg-primary flex justify-center items-center text-base-100 hover:-translate-y-1 duration-200"
                 >
                   {React.createElement(FaIcons[social?.icon])}
                 </Link>
