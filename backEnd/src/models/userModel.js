@@ -45,6 +45,14 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    status: {
+      type: String,
+      enum: ["active", "ban"],
+      default: "active",
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
   },
   { timestamps: true }
 );

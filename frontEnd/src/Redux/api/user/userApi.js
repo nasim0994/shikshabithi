@@ -18,9 +18,10 @@ export const userApi = baseApi.injectEndpoints({
     }),
 
     getAllUsersOnly: builder.query({
-      query: () => ({
+      query: (query) => ({
         url: "/api/user/all/user",
         method: "GET",
+        params: query,
       }),
       providesTags: ["user"],
     }),
@@ -33,6 +34,14 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+
+    updateUserStatus: builder.mutation({
+      query: (id) => ({
+        url: `/api/user/update-status/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -41,4 +50,5 @@ export const {
   useGetAllUsersOnlyQuery,
   useAllCustomersQuery,
   useEditUserInfoMutation,
+  useUpdateUserStatusMutation,
 } = userApi;

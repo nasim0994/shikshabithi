@@ -1,5 +1,7 @@
 const User = require("../models/userModel");
 const Profile = require("../models/profileModel");
+const { pick } = require("../utils/pick");
+const { calculatePagination } = require("../utils/calculatePagination");
 
 exports.addAdmin = async (req, res) => {
   try {
@@ -50,8 +52,19 @@ exports.addAdmin = async (req, res) => {
 };
 
 exports.getAll = async (req, res) => {
+  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const { page, limit, skip } = calculatePagination(paginationOptions);
+  const { search } = req.query;
+
   try {
-    const result = await User.find({ role: "admin" }, { password: 0 })
+    let query = {};
+    query.role = "admin";
+
+    if (search && search !== "undefined" && search !== null) {
+      query.$or = [{ email: { $regex: search, $options: "i" } }];
+    }
+
+    const result = await User.find(query, { password: 0 })
       .populate({
         path: "package.package",
         model: "Package",
@@ -59,11 +72,23 @@ exports.getAll = async (req, res) => {
       .populate({
         path: "profile",
         model: "Profile",
-      });
+      })
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    const total = await User.countDocuments(query);
+    const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({
       success: true,
       message: "User get success",
+      meta: {
+        total,
+        pages,
+        page,
+        limit,
+      },
       data: result,
     });
   } catch (err) {

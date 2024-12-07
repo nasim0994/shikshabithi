@@ -5,6 +5,8 @@ const User = require("../models/userModel");
 const Profile = require("../models/profileModel");
 const { emailSend, verifyEmailSend } = require("../utils/emailSend");
 const jwt = require("jsonwebtoken");
+const { pick } = require("../utils/pick");
+const { calculatePagination } = require("../utils/calculatePagination");
 const frontendURL = process.env.FRONTEND_URL;
 
 // exports.registerUser = async (req, res) => {
@@ -42,12 +44,28 @@ const frontendURL = process.env.FRONTEND_URL;
 // };
 
 exports.getAll = async (req, res) => {
+  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const { page, limit, skip } = calculatePagination(paginationOptions);
+
   try {
-    const result = await User.find({}).populate("profile", "name");
+    const result = await User.find({ password: 0 })
+      .populate("profile", "name")
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    const total = await User.countDocuments(query);
+    const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({
       success: true,
       message: "User get success",
+      meta: {
+        total,
+        pages,
+        page,
+        limit,
+      },
       data: result,
     });
   } catch (err) {
@@ -59,8 +77,19 @@ exports.getAll = async (req, res) => {
 };
 
 exports.gettAllUsers = async (req, res) => {
+  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const { page, limit, skip } = calculatePagination(paginationOptions);
+  const { search } = req.query;
+
   try {
-    const result = await User.find({ role: "user" })
+    let query = {};
+    query.role = "user";
+
+    if (search && search !== "undefined" && search !== null) {
+      query.$or = [{ email: { $regex: search, $options: "i" } }];
+    }
+
+    const result = await User.find(query, { password: 0 })
       .populate({
         path: "package.package",
         model: "Package",
@@ -68,11 +97,23 @@ exports.gettAllUsers = async (req, res) => {
       .populate({
         path: "profile",
         model: "Profile",
-      });
+      })
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+    const total = await User.countDocuments(query);
+    const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({
       success: true,
       message: "User get success",
+      meta: {
+        total,
+        pages,
+        page,
+        limit,
+      },
       data: result,
     });
   } catch (err) {
@@ -178,6 +219,13 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({
         success: false,
         error: "User not found",
+      });
+    }
+
+    if (user.status === "ban") {
+      return res.status(401).json({
+        success: false,
+        error: "Your account has been banned. Please contact admin",
       });
     }
 
@@ -310,6 +358,32 @@ exports.downloadHandnote = async (req, res) => {
     res.json({
       success: true,
       message: "Download handnote success",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+exports.updateUserStatus = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
+    }
+
+    user.status = user.status === "active" ? "ban" : "active";
+
+    await user.save();
+
+    res.json({
+      success: true,
+      message: "User status updated",
     });
   } catch (error) {
     res.status(400).json({

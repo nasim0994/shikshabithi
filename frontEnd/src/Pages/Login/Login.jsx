@@ -10,6 +10,9 @@ import { useSelector } from "react-redux";
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const [error, setError] = useState("");
+  const [showPass, setShowPass] = useState(false);
+
   const { loggedUser } = useSelector((store) => store.user);
   const from = location.state?.from?.pathname || "/";
   if (loggedUser?.success) {
@@ -19,9 +22,6 @@ export default function Login() {
       navigate(from, { replace: true });
     }
   }
-
-  const [error, setError] = useState("");
-  const [showPass, setShowPass] = useState(false);
 
   const [login, { isLoading }] = useLoginMutation();
 
@@ -44,11 +44,7 @@ export default function Login() {
       toast.success("Login Success");
       setError("");
     } else {
-      setError(
-        res?.error?.data?.error
-          ? res?.error?.data?.error
-          : "something went wrong!"
-      );
+      setError(res?.error?.data?.error || "something went wrong!");
       console.log(res);
     }
   };
