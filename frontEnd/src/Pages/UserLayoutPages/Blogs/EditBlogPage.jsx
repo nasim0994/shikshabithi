@@ -2,7 +2,7 @@ import { AiFillDelete } from "react-icons/ai";
 import ImageUploading from "react-images-uploading";
 import { useEffect, useRef, useState } from "react";
 import JoditEditor from "jodit-react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   useGetBlogQuery,
   useUpdateBlogMutation,
@@ -11,10 +11,15 @@ import { toast } from "react-toastify";
 import { useGetAcademySubjectsQuery } from "../../../Redux/api/academy/subjectApi.js";
 import { useGetAcademyChaptersQuery } from "../../../Redux/api/academy/chapterApi.js";
 import { useSelector } from "react-redux";
+import Select from "react-dropdown-select";
+import { useGetTagsQuery } from "../../../Redux/api/tagApi.js";
 
 export default function EditBlogPage() {
   const editor = useRef(null);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  console.log(pathname);
+
   const { loggedUser } = useSelector((store) => store.user);
   const [images, setImages] = useState([]);
   const [details, setDetails] = useState("");
@@ -26,12 +31,18 @@ export default function EditBlogPage() {
   const [selectedSubject, setSelectedSubject] = useState("");
   const [selectedChapter, setSelectedChapter] = useState("");
 
+  //-------------------tags
+  const [selectedTags, setSelectedTags] = useState([]);
+  const { data: tag } = useGetTagsQuery({});
+  let tags = tag?.data;
+
   useEffect(() => {
     if (data?.success) {
       setDetails(data?.data?.details);
       setSelectedCategory(data?.data?.category);
       setSelectedSubject(data?.data?.subject?._id);
       setSelectedChapter(data?.data?.chapter?._id);
+      setSelectedTags(data?.data?.tags);
     }
   }, [data]);
 
@@ -66,6 +77,10 @@ export default function EditBlogPage() {
     formData.append("category", category);
     formData.append("details", details);
     formData.append("user", loggedUser?.data?._id);
+    formData.append(
+      "tags",
+      JSON.stringify(selectedTags?.map((tag) => tag?._id))
+    );
 
     if (selectedCategory !== "others") {
       formData.append("subject", subject);
@@ -78,7 +93,11 @@ export default function EditBlogPage() {
 
     if (res?.data?.success) {
       toast.success("Blog update success");
-      navigate(`/blogs?active=${selectedCategory}`);
+      if (pathname.startsWith("/admin")) {
+        navigate("/admin/others/blog-all");
+      } else {
+        navigate(`/blogs?active=${selectedCategory}`);
+      }
     } else {
       toast.error("something went wrong!");
       console.log(res);
@@ -172,7 +191,7 @@ export default function EditBlogPage() {
                     src={`${import.meta.env.VITE_BACKEND_URL}/blogs/${
                       blog?.image
                     }`}
-                    alt=""
+                    alt="blog"
                     className="w-full h-32 sm:h-40 rounded"
                   />
                 )}
@@ -228,6 +247,18 @@ export default function EditBlogPage() {
                   </div>
                 </>
               )}
+
+              <div>
+                <p className="text-xs font-semibold mb-1">Tags</p>
+                <Select
+                  multi
+                  options={tags}
+                  labelField="name"
+                  valueField="name"
+                  values={selectedTags}
+                  onChange={(values) => setSelectedTags(values)}
+                />
+              </div>
             </div>
 
             <div className="mt-4 flex gap-3 text-sm justify-center">

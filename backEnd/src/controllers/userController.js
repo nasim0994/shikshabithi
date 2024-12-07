@@ -43,7 +43,7 @@ const frontendURL = process.env.FRONTEND_URL;
 
 exports.getAll = async (req, res) => {
   try {
-    const result = await User.find({});
+    const result = await User.find({}).populate("profile", "name");
 
     res.status(200).json({
       success: true,

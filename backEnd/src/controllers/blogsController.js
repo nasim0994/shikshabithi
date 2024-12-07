@@ -12,7 +12,7 @@ exports.add = async (req, res) => {
     const info = {
       ...data,
       image,
-      tags: JSON.parse(data?.tags),
+      tags: data?.tags ? JSON.parse(data?.tags) : [],
       subject: data?.subject ? data?.subject : undefined,
       chapter: data?.chapter ? data?.chapter : undefined,
     };
@@ -49,7 +49,7 @@ exports.get = async (req, res) => {
   try {
     const paginationOptions = pick(req.query, ["page", "limit"]);
     const { page, limit, skip } = calculatePagination(paginationOptions);
-    const { subject, category, status, chapter, tag } = req.query;
+    const { subject, category, status, chapter, tag, user, search } = req.query;
 
     let query = {};
     if (category && category !== "undefined" && category !== null)
@@ -68,6 +68,12 @@ exports.get = async (req, res) => {
       query.status = status;
 
     if (tag && tag != "undefined" && tag != "null") query["tags"] = tag;
+
+    if (user && user !== "undefined" && user !== null) query.user = user;
+
+    if (search && search !== "undefined" && search !== null) {
+      query.$or = [{ title: { $regex: search, $options: "i" } }];
+    }
 
     const result = await Model.find(query)
       .populate({
@@ -293,44 +299,29 @@ exports.update = async (req, res) => {
 
     const data = req.body;
 
-    if (image) {
+    const newData = {
+      ...data,
+      tags: data?.tags ? JSON.parse(data?.tags) : [],
+      subject: data?.subject ? data?.subject : undefined,
+      chapter: data?.chapter ? data?.chapter : undefined,
+      image: image ? image : isExist?.image,
+    };
+
+    const result = await Model.findByIdAndUpdate(id, newData, { new: true });
+
+    res.status(200).json({
+      success: true,
+      message: "updated success",
+      data: result,
+    });
+
+    if (image && isExist?.image) {
       fs.unlink(`./uploads/blogs/${isExist?.image}`, (err) => {
         if (err) {
           console.log(err);
         }
       });
-
-      await Model.findByIdAndUpdate(
-        id,
-        {
-          ...data,
-          image,
-          subject: data?.subject ? data?.subject : undefined,
-          chapter: data?.chapter ? data?.chapter : undefined,
-        },
-        {
-          new: true,
-        }
-      );
-    } else {
-      await Model.findByIdAndUpdate(
-        id,
-        {
-          ...data,
-          image: isExist?.image,
-          subject: data?.subject ? data?.subject : undefined,
-          chapter: data?.chapter ? data?.chapter : undefined,
-        },
-        {
-          new: true,
-        }
-      );
     }
-
-    res.status(200).json({
-      success: true,
-      message: "updated success",
-    });
   } catch (error) {
     res.status(500).json({
       success: false,

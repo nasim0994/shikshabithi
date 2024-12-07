@@ -26,9 +26,9 @@ export default function AddBlogPage() {
   const { data: subjectData } = useGetAcademySubjectsQuery({ ...subjectQuery });
 
   //-------------------tags
+  const [selectedTags, setSelectedTags] = useState([]);
   const { data: tag } = useGetTagsQuery({});
   let tags = tag?.data;
-  const [selectedTags, setSelectedTags] = useState([]);
 
   useEffect(() => {
     if (subjectData?.data?.length > 0) {

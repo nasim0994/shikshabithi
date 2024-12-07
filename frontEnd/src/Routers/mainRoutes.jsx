@@ -62,18 +62,6 @@ export const mainRoutes = {
               path: "/blogs/:category",
               element: <Blogs />,
             },
-            // {
-            //   path: "/blogs/admission",
-            //   element: <Blogs />,
-            // },
-            // {
-            //   path: "/blogs/job",
-            //   element: <Blogs />,
-            // },
-            // {
-            //   path: "/blogs/others",
-            //   element: <Blogs />,
-            // },
           ],
         },
         {

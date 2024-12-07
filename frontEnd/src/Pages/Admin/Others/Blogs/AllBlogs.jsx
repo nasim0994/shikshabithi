@@ -1,3 +1,4 @@
+import { AiFillEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -13,23 +14,40 @@ import {
 import { useEffect, useState } from "react";
 import Pagination from "../../../../Components/Pagination/Pagination";
 import TableSkeleton from "../../../../Components/Skeleton/TableSkeleton";
+import { useGetAllUsersQuery } from "../../../../Redux/api/user/userApi";
 
 export default function AllBlogs() {
   let [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearch(e.target[0].value);
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedUser, search]);
+
   let limit = 10;
   let query = {};
   query["limit"] = limit;
   query["page"] = currentPage;
+  if (search) query["search"] = search;
+  if (selectedUser) query["user"] = selectedUser;
   const { data, isLoading, isFetching } = useGetBlogsQuery({ ...query });
   let blogs = data?.data;
 
   let [targetedBlogs, setTargetedBlogs] = useState([]);
   let [active, setActive] = useState(0);
+
+  const { data: user } = useGetAllUsersQuery();
+  const users = user?.data;
 
   const pendingBlogs = blogs?.filter((blog) => blog?.status == "pending");
   const activeBlogs = blogs?.filter((blog) => blog?.status == "active");
@@ -92,50 +110,66 @@ export default function AllBlogs() {
 
   return (
     <div>
-      <div className="bg-base-100 p-4 rounded shadow flex gap-2 text-sm">
-        <button
-          onClick={() => setActive(0)}
-          className={`flex items-center gap-2 border rounded px-2.5 py-1.5 duration-300 ${
-            active == 0 && "text-white bg-primary"
-          }`}
-        >
-          All Blog
-        </button>
-        <button
-          onClick={() => setActive(1)}
-          className={`flex items-center gap-2 border rounded px-2.5 py-1.5 duration-300 ${
-            active == 1 && "text-white bg-primary"
-          }`}
-        >
-          Active Blog
-        </button>
-        <button
-          onClick={() => setActive(2)}
-          className={`flex items-center gap-2 border rounded px-2.5 py-1.5 duration-300 ${
-            active == 2 && "text-white bg-primary"
-          }`}
-        >
-          Pending Blog
-        </button>
+      <div className="sm:flex items-center justify-between bg-base-100 p-4 rounded shadow">
+        <div className="flex gap-2 text-sm">
+          <button
+            onClick={() => setActive(0)}
+            className={`flex items-center gap-2 border rounded px-2.5 py-1.5 duration-300 ${
+              active == 0 && "text-white bg-primary"
+            }`}
+          >
+            All Blog
+          </button>
+          <button
+            onClick={() => setActive(1)}
+            className={`flex items-center gap-2 border rounded px-2.5 py-1.5 duration-300 ${
+              active == 1 && "text-white bg-primary"
+            }`}
+          >
+            Active Blog
+          </button>
+          <button
+            onClick={() => setActive(2)}
+            className={`flex items-center gap-2 border rounded px-2.5 py-1.5 duration-300 ${
+              active == 2 && "text-white bg-primary"
+            }`}
+          >
+            Pending Blog
+          </button>
+        </div>
+
+        <div className="mt-2 sm:mt-0 flex items-center gap-4">
+          <form onSubmit={handleSearch}>
+            <input
+              type="text"
+              defaultValue={search}
+              placeholder="search blog..."
+              className="text-sm placeholder:font-light px-3 py-1.5 min-w-60"
+            />
+          </form>
+          <select
+            onChange={(e) => setSelectedUser(e.target.value)}
+            className="text-sm text-neutral"
+            value={selectedUser}
+          >
+            <option value="">Filter User</option>
+            {users?.map((user) => (
+              <option key={user?._id} value={user?._id}>
+                {user?.profile?.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <div className="flex justify-between items-center p-3">
-        {active === 0 ? (
-          <h3>All Blog</h3>
-        ) : active === 1 ? (
-          <h3>Active Blogs</h3>
-        ) : (
-          <h3>Pending Blogs</h3>
-        )}
-      </div>
-
-      <div className="relative overflow-x-auto shadow bg-base-100 rounded">
+      <div className="mt-2 relative overflow-x-auto shadow bg-base-100 rounded">
         <table>
           <thead>
             <tr>
               <th>SL</th>
               <th>Image</th>
               <th>Title</th>
+              <th>User</th>
               <th>Home</th>
               <th className="text-center">Status</th>
               <th>Action</th>
@@ -159,7 +193,8 @@ export default function AllBlogs() {
                       alt="Blog Image"
                     />
                   </td>
-                  <td>{blog?.title}</td>
+                  <td className="w-[50%]">{blog?.title}</td>
+                  <td>{blog?.user?.profile?.name}</td>
                   <td>
                     {uIsHomeLoading && selectedBlog === blog?._id ? (
                       <p>Loading..</p>
@@ -189,19 +224,26 @@ export default function AllBlogs() {
                     </button>
                   </td>
                   <td>
-                    <div className="flex items-center gap-2 text-lg">
+                    <div className="flex items-center gap-2">
                       <Link
-                        to={`/admin/others/view-blog/${blog?._id}`}
-                        className="hover:text-primary"
+                        to={`/admin/blog/view/${blog?._id}`}
+                        className="text-blue-500"
                       >
                         <FaEye />
                       </Link>
 
+                      <Link
+                        to={`/admin/blog/edit/${blog?._id}`}
+                        className="text-primary"
+                      >
+                        <AiFillEdit />
+                      </Link>
+
                       <button
                         onClick={() => handleDelete(blog?._id)}
-                        className="hover:text-red-500"
+                        className="text-red-500"
                       >
-                        <MdDelete className="text-xl" />
+                        <MdDelete className="text-lg" />
                       </button>
                     </div>
                   </td>

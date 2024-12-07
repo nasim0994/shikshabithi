@@ -208,6 +208,7 @@ import AllModelTest from "../Pages/Admin/ModelTest/AllModelTest.jsx";
 import AdminAddModelTest from "../Pages/Admin/ModelTest/Add/AdminAddModelTest.jsx";
 import AdminEditModelTest from "../Pages/Admin/ModelTest/Edit/AdminEditModelTest.jsx";
 import FeatureImage from "../Pages/Admin/Features/FeatureImage.jsx";
+import EditBlogPage from "../Pages/UserLayoutPages/Blogs/EditBlogPage.jsx";
 
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
@@ -347,7 +348,8 @@ export const adminRoutes = {
 
     { path: "general-setting/profile", element: <Profile /> },
     { path: "others/blog-all", element: <BlogList /> },
-    { path: "others/view-blog/:id", element: <ViewBlog /> },
+    { path: "blog/view/:id", element: <ViewBlog /> },
+    { path: "blog/edit/:id", element: <EditBlogPage /> },
     { path: "others/question-all", element: <QuestionList /> },
     { path: "others/view-question/:id", element: <ViewQuestion /> },
     { path: "others/handnote-all", element: <HandNoteList /> },
