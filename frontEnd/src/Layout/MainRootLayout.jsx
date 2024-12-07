@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import CircularProgress from "../Components/ProgressScroll/ProgressScroll";
 // import AdminNotice from "../Components/AdminNotice/AdminNotice";
 
 export default function MainRootLayout() {
@@ -7,6 +8,7 @@ export default function MainRootLayout() {
       <Outlet />
 
       {/* <AdminNotice /> */}
+      <CircularProgress />
     </>
   );
 }
