@@ -2,7 +2,6 @@ const Model = require("../models/handnotesModel");
 const fs = require("fs");
 const { calculatePagination } = require("../utils/calculatePagination");
 const { pick } = require("../utils/pick");
-const User = require("../models/userModel");
 
 const PDFDocument = require("pdfkit");
 
@@ -21,6 +20,7 @@ exports.add = async (req, res) => {
     const info = {
       ...data,
       images,
+      tags: data?.tags ? JSON.parse(data?.tags) : [],
       subject: data?.subject ? data?.subject : undefined,
       chapter: data?.chapter ? data?.chapter : undefined,
     };
@@ -88,6 +88,9 @@ exports.get = async (req, res) => {
       .populate({
         path: "chapter",
       })
+      .populate({
+        path: "tags",
+      })
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 });
@@ -132,7 +135,11 @@ exports.getSingle = async (req, res) => {
       })
       .populate({
         path: "chapter",
+      })
+      .populate({
+        path: "tags",
       });
+
     if (!result?._id) {
       return res.status(202).json({
         success: false,
@@ -210,10 +217,23 @@ exports.update = async (req, res) => {
     }
 
     const data = req.body;
+    const newData = {
+      ...data,
+      tags: data?.tags ? JSON.parse(data?.tags) : [],
+      subject: data?.subject ? data?.subject : undefined,
+      chapter: data?.chapter ? data?.chapter : undefined,
+      images: images?.length > 0 ? images : isExist?.images,
+    };
 
-    if (images && images.length > 0) {
-      const imagePaths = isExist?.images;
-      imagePaths.forEach((imagePath) => {
+    const result = await Model.findByIdAndUpdate(id, newData, { new: true });
+
+    res.status(200).json({
+      success: true,
+      message: "updated success",
+    });
+
+    if (result && images.length > 0) {
+      isExist?.images?.forEach((imagePath) => {
         const fullPath = `./uploads/handnotes/${imagePath}`;
         fs.unlink(fullPath, (err) => {
           if (err) {
@@ -221,38 +241,7 @@ exports.update = async (req, res) => {
           }
         });
       });
-
-      await Model.findByIdAndUpdate(
-        id,
-        {
-          ...data,
-          images,
-          subject: data?.subject ? data?.subject : undefined,
-          chapter: data?.chapter ? data?.chapter : undefined,
-        },
-        {
-          new: true,
-        }
-      );
-    } else {
-      await Model.findByIdAndUpdate(
-        id,
-        {
-          ...data,
-          images: isExist?.images,
-          subject: data?.subject ? data?.subject : undefined,
-          chapter: data?.chapter ? data?.chapter : undefined,
-        },
-        {
-          new: true,
-        }
-      );
     }
-
-    res.status(200).json({
-      success: true,
-      message: "updated success",
-    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -283,25 +272,23 @@ exports.destroy = async (req, res) => {
       });
     }
 
-    if (isExist) {
-      const result = await Model.findByIdAndDelete(id);
+    const result = await Model.findByIdAndDelete(id);
 
-      if (result?._id) {
-        const imagePaths = isExist?.images;
-        imagePaths.forEach((imagePath) => {
-          const fullPath = `./uploads/handnotes/${imagePath}`;
-          fs.unlink(fullPath, (err) => {
-            if (err) {
-              console.error(err);
-            }
-          });
+    res.status(200).json({
+      success: true,
+      message: "Delete success",
+      data: result,
+    });
+
+    if (result?._id) {
+      const imagePaths = isExist?.images;
+      imagePaths.forEach((imagePath) => {
+        const fullPath = `./uploads/handnotes/${imagePath}`;
+        fs.unlink(fullPath, (err) => {
+          if (err) {
+            console.error(err);
+          }
         });
-      }
-
-      res.status(200).json({
-        success: true,
-        message: "Delete success",
-        data: result,
       });
     }
   } catch (error) {

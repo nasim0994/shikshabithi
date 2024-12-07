@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
 import { AiFillDelete } from "react-icons/ai";
+import Select from "react-dropdown-select";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useGetAcademySubjectsQuery } from "../../../Redux/api/academy/subjectApi";
 import { useGetAcademyChaptersQuery } from "../../../Redux/api/academy/chapterApi";
 import { useAddHandNoteMutation } from "../../../Redux/api/handnotesApi";
+import { useGetTagsQuery } from "../../../Redux/api/tagApi";
 
 export default function AddHandNotePage() {
   const navigate = useNavigate();
@@ -19,6 +21,11 @@ export default function AddHandNotePage() {
   let subjectQuery = {};
   if (selectedCategory == "admission") subjectQuery["classuuid"] = 200;
   const { data: subjectData } = useGetAcademySubjectsQuery({ ...subjectQuery });
+
+  //-------------------tags
+  const [selectedTags, setSelectedTags] = useState([]);
+  const { data: tag } = useGetTagsQuery({});
+  let tags = tag?.data;
 
   useEffect(() => {
     if (subjectData?.data?.length > 0) {
@@ -58,6 +65,10 @@ export default function AddHandNotePage() {
     images?.map((image) => {
       formData.append("images", image?.file);
     });
+    formData.append(
+      "tags",
+      JSON.stringify(selectedTags?.map((tag) => tag?._id))
+    );
 
     let res = await addHandNote(formData);
 
@@ -184,6 +195,18 @@ export default function AddHandNotePage() {
               </div>
             </>
           )}
+
+          <div>
+            <p className="text-xs font-semibold mb-1">Tags</p>
+            <Select
+              multi
+              options={tags}
+              labelField="name"
+              valueField="name"
+              values={selectedTags}
+              onChange={(values) => setSelectedTags(values)}
+            />
+          </div>
         </div>
 
         <div className="mt-4 flex gap-3 text-sm justify-center">

@@ -9,6 +9,7 @@ exports.add = async (req, res) => {
     const info = {
       ...data,
       image,
+      tags: data?.tags ? JSON.parse(data?.tags) : [],
       subject: data?.subject ? data?.subject : undefined,
       chapter: data?.chapter ? data?.chapter : undefined,
     };
@@ -69,6 +70,9 @@ exports.get = async (req, res) => {
       .populate({
         path: "chapter",
       })
+      .populate({
+        path: "tags",
+      })
       .sort({ createdAt: -1 });
 
     res.status(200).json({
@@ -102,6 +106,9 @@ exports.getSingle = async (req, res) => {
       })
       .populate({
         path: "chapter",
+      })
+      .populate({
+        path: "tags",
       });
     if (!result?._id) {
       return res.status(202).json({
@@ -141,6 +148,9 @@ exports.getByUser = async (req, res) => {
       })
       .populate({
         path: "chapter",
+      })
+      .populate({
+        path: "tags",
       });
 
     res.status(200).json({
@@ -170,39 +180,22 @@ exports.update = async (req, res) => {
     }
 
     const data = req.body;
+    const newData = {
+      ...data,
+      tags: data?.tags ? JSON.parse(data?.tags) : [],
+      subject: data?.subject ? data?.subject : undefined,
+      chapter: data?.chapter ? data?.chapter : undefined,
+      image: image ? image : isExist?.image,
+    };
 
-    if (image) {
+    const result = await Model.findByIdAndUpdate(id, newData, { new: true });
+
+    if (result && image) {
       fs.unlink(`./uploads/askQuestion/${isExist?.image}`, (err) => {
         if (err) {
           console.log(err);
         }
       });
-
-      await Model.findByIdAndUpdate(
-        id,
-        {
-          ...data,
-          image,
-          subject: data?.subject ? data?.subject : undefined,
-          chapter: data?.chapter ? data?.chapter : undefined,
-        },
-        {
-          new: true,
-        }
-      );
-    } else {
-      await Model.findByIdAndUpdate(
-        id,
-        {
-          ...data,
-          image: isExist?.image,
-          subject: data?.subject ? data?.subject : undefined,
-          chapter: data?.chapter ? data?.chapter : undefined,
-        },
-        {
-          new: true,
-        }
-      );
     }
 
     res.status(200).json({

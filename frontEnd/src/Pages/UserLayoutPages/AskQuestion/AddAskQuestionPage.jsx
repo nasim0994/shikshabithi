@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { useGetAcademySubjectsQuery } from "../../../Redux/api/academy/subjectApi";
 import { useGetAcademyChaptersQuery } from "../../../Redux/api/academy/chapterApi";
 import { useSelector } from "react-redux";
+import Select from "react-dropdown-select";
+import { useGetTagsQuery } from "../../../Redux/api/tagApi";
 
 export default function AddAskQuestionPage() {
   const editor = useRef(null);
@@ -40,6 +42,11 @@ export default function AddAskQuestionPage() {
     },
   };
 
+  //-------------------tags
+  const [selectedTags, setSelectedTags] = useState([]);
+  const { data: tag } = useGetTagsQuery({});
+  let tags = tag?.data;
+
   const [addAskQuestion, { isLoading }] = useAddAskQuestionMutation();
 
   const handleAdd = async (e) => {
@@ -65,6 +72,10 @@ export default function AddAskQuestionPage() {
     }
 
     if (images?.length > 0) formData.append("image", images[0]?.file);
+    formData.append(
+      "tags",
+      JSON.stringify(selectedTags?.map((tag) => tag?._id))
+    );
 
     let res = await addAskQuestion(formData);
 
@@ -193,6 +204,18 @@ export default function AddAskQuestionPage() {
               </div>
             </>
           )}
+
+          <div>
+            <p className="text-xs font-semibold mb-1">Tags</p>
+            <Select
+              multi
+              options={tags}
+              labelField="name"
+              valueField="name"
+              values={selectedTags}
+              onChange={(values) => setSelectedTags(values)}
+            />
+          </div>
         </div>
 
         <div className="mt-4 flex gap-3 text-sm justify-center">

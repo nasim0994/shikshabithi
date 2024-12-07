@@ -10,6 +10,8 @@ import {
   useGetHandNoteQuery,
   useUpdateHandNoteMutation,
 } from "../../../Redux/api/handnotesApi";
+import { useGetTagsQuery } from "../../../Redux/api/tagApi";
+import Select from "react-dropdown-select";
 
 export default function EditHandNotePage() {
   const navigate = useNavigate();
@@ -24,11 +26,17 @@ export default function EditHandNotePage() {
   const { data } = useGetHandNoteQuery(id);
   const handnote = data?.data;
 
+  //-------------------tags
+  const [selectedTags, setSelectedTags] = useState([]);
+  const { data: tag } = useGetTagsQuery({});
+  let tags = tag?.data;
+
   useEffect(() => {
     if (data?.success) {
       setSelectedCategory(data?.data?.category);
       setSelectedSubject(data?.data?.subject?._id);
       setSelectedChapter(data?.data?.chapter?._id);
+      setSelectedTags(data?.data?.tags);
     }
   }, [data]);
 
@@ -66,6 +74,11 @@ export default function EditHandNotePage() {
       images?.map((image) => {
         formData.append("images", image?.file);
       });
+
+    formData.append(
+      "tags",
+      JSON.stringify(selectedTags?.map((tag) => tag?._id))
+    );
 
     let res = await updateHandNote({ id, formData });
 
@@ -221,6 +234,18 @@ export default function EditHandNotePage() {
               </div>
             </>
           )}
+
+          <div>
+            <p className="text-xs font-semibold mb-1">Tags</p>
+            <Select
+              multi
+              options={tags}
+              labelField="name"
+              valueField="name"
+              values={selectedTags}
+              onChange={(values) => setSelectedTags(values)}
+            />
+          </div>
         </div>
 
         <div className="mt-4 flex gap-3 text-sm justify-center">

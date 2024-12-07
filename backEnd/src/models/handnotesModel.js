@@ -36,6 +36,12 @@ const handnotesSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Chapter",
     },
+    tags: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "Tags",
+      },
+    ],
   },
   {
     timestamps: true,
