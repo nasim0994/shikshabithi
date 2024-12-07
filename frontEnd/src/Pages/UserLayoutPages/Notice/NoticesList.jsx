@@ -153,12 +153,10 @@ export default function NoticesList({ activeCategory, selectedSubject }) {
                 to={`/notices/${notice?._id}`}
                 className="text-neutral hover:text-primary duration-200 inline-block"
               >
-                <h2 className="text-[13px] font-semibold">{notice?.title}</h2>
+                <h2 className="text-xl font-semibold">{notice?.title}</h2>
               </Link>
 
-              <p className="text-xs text-neutral-content">
-                {notice?.description}
-              </p>
+              <p className="text-neutral-content">{notice?.description}</p>
 
               <div>
                 {notice?.image && (

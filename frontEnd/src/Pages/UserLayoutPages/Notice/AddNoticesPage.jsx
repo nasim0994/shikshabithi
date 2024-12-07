@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ImageUploading from "react-images-uploading";
+import JoditEditor from "jodit-react";
 import { AiFillDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -8,12 +9,21 @@ import { useGetAcademySubjectsQuery } from "../../../Redux/api/academy/subjectAp
 import { useAddNoticeMutation } from "../../../Redux/api/noticeApi";
 
 export default function AddNoticesPage() {
+  const editor = useRef(null);
   const navigate = useNavigate();
   const { loggedUser } = useSelector((store) => store.user);
   const [images, setImages] = useState([]);
+  const [details, setDetails] = useState("");
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
+
+  const config = {
+    uploader: {
+      insertImageAsBase64URI: true,
+      imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+    },
+  };
 
   let subjectQuery = {};
   if (selectedCategory == "admission") subjectQuery["classuuid"] = 200;
@@ -32,14 +42,13 @@ export default function AddNoticesPage() {
 
     const form = e.target;
     const title = form.title.value;
-    const description = form.description.value;
     const url = form.url.value;
     const category = form.category.value;
     const subject = form.subject ? form.subject.value : "";
 
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("description", description);
+    formData.append("description", details);
     formData.append("url", url);
     formData.append("category", category);
     formData.append("user", loggedUser?.data?._id);
@@ -82,7 +91,12 @@ export default function AddNoticesPage() {
 
         <div className="jodit_200">
           <p className="text-xs font-semibold mb-1">Description</p>
-          <textarea name="description"></textarea>
+          <JoditEditor
+            ref={editor}
+            value={details}
+            onBlur={(text) => setDetails(text)}
+            config={config}
+          />
         </div>
 
         <div className="jodit_200">

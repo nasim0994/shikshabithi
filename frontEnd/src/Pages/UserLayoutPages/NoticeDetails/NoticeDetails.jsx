@@ -65,8 +65,8 @@ export default function NoticeDetails() {
             </Link>
           </div>
           <div className="p-3">
-            <h2 className="font-medium">{note?.title}</h2>
-            <p className="text-xs text-neutral-content">{note?.description}</p>
+            <h2 className="font-medium text-xl">{note?.title}</h2>
+            <p className="text-neutral-content">{note?.description}</p>
 
             {note?.image && (
               <img
@@ -79,7 +79,7 @@ export default function NoticeDetails() {
             )}
 
             <div className="mt-2 flex items-center justify-between">
-              <div>
+              <div className="flex items-center gap-2">
                 <img
                   src={
                     note?.user?.profile?.image
@@ -88,14 +88,17 @@ export default function NoticeDetails() {
                         }`
                       : `/images/demo_user.png`
                   }
-                  alt=""
+                  alt="user"
                   className="w-9 h-9 rounded-full"
                 />
                 <div>
                   <p className="text-neutral-content text-xs">Post by</p>
-                  <h2 className="text-neutral">{note?.user?.profile?.name}</h2>
+                  <h2 className="text-neutral -mt-1">
+                    {note?.user?.profile?.name}
+                  </h2>
                 </div>
               </div>
+
               <div className="text-base relative">
                 <button
                   onClick={() => setShareDropdown(!shareDropdown)}

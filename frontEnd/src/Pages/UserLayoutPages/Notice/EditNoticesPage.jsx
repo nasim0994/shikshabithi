@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { AiFillDelete } from "react-icons/ai";
 import ImageUploading from "react-images-uploading";
+import JoditEditor from "jodit-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useGetAcademySubjectsQuery } from "../../../Redux/api/academy/subjectApi";
 import {
@@ -11,12 +12,21 @@ import {
 } from "../../../Redux/api/noticeApi";
 
 export default function EditNoticesPage() {
+  const editor = useRef(null);
   const navigate = useNavigate();
   const { loggedUser } = useSelector((store) => store.user);
   const [images, setImages] = useState([]);
+  const [details, setDetails] = useState("");
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
+
+  const config = {
+    uploader: {
+      insertImageAsBase64URI: true,
+      imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+    },
+  };
 
   const { id } = useParams();
   const { data } = useGetNoticeQuery(id);
@@ -26,6 +36,7 @@ export default function EditNoticesPage() {
     if (data?.success) {
       setSelectedCategory(data?.data?.category);
       setSelectedSubject(data?.data?.subject?._id);
+      setDetails(data?.data?.description);
     }
   }, [data]);
 
@@ -95,10 +106,12 @@ export default function EditNoticesPage() {
 
         <div>
           <p className="text-xs font-semibold mb-1">Question Details</p>
-          <textarea
-            name="description"
-            defaultValue={notice?.description}
-          ></textarea>
+          <JoditEditor
+            ref={editor}
+            value={details}
+            onBlur={(text) => setDetails(text)}
+            config={config}
+          />
         </div>
 
         <div>
