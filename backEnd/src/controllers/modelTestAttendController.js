@@ -39,6 +39,14 @@ exports.get = async (req, res) => {
   const { user, modelTestType } = req.query;
 
   try {
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User query parameter is required.",
+        data: [],
+      });
+    }
+
     let query = {};
     if (user) query.user = new mongoose.Types.ObjectId(user);
     if (modelTestType) query.modelTestType = modelTestType;

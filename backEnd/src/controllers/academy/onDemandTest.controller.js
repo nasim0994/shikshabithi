@@ -26,6 +26,14 @@ exports.get = async (req, res) => {
   const { subject, user } = req.query;
 
   try {
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User query parameter is required.",
+        data: [],
+      });
+    }
+
     let query = {};
     if (subject && subject !== "undefined") query.subject = subject;
     query.user = user;

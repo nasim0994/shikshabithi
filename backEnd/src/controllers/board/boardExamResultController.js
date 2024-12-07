@@ -34,8 +34,15 @@ exports.get = async (req, res) => {
   const { user } = req.query;
 
   try {
-    let query = {};
-    query.user = user;
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User query parameter is required.",
+        data: [],
+      });
+    }
+
+    const query = { user };
 
     const result = await Model.find(query)
       .skip(skip)

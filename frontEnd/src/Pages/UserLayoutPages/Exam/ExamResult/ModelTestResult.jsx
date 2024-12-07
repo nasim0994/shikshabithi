@@ -30,8 +30,6 @@ export default function ModelTestResult() {
   });
   const results = data?.data;
 
-  console.log(data);
-
   let content = null;
 
   if (isLoading || isFetching) {
