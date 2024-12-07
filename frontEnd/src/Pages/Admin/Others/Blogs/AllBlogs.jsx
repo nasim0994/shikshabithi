@@ -17,7 +17,7 @@ import TableSkeleton from "../../../../Components/Skeleton/TableSkeleton";
 import { useGetAllUsersQuery } from "../../../../Redux/api/user/userApi";
 
 export default function AllBlogs() {
-  let [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
 
@@ -179,7 +179,7 @@ export default function AllBlogs() {
             {targetedBlogs?.length > 0 ? (
               targetedBlogs?.map((blog, i) => (
                 <tr key={blog?._id}>
-                  <td>{i + 1}</td>
+                  <td>{(currentPage - 1) * limit + i + 1}</td>
                   <td>
                     <img
                       className="w-12 rounded-sm"

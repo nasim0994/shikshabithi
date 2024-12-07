@@ -1,4 +1,6 @@
 const Model = require("../models/currentAffairs");
+const { calculatePagination } = require("../utils/calculatePagination");
+const { pick } = require("../utils/pick");
 
 exports.add = async (req, res) => {
   try {
@@ -27,6 +29,9 @@ exports.add = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
+  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const { page, limit, skip } = calculatePagination(paginationOptions);
+
   try {
     const { category } = req.query;
 
@@ -41,11 +46,22 @@ exports.get = async (req, res) => {
           path: "profile",
         },
       })
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Model.countDocuments(query);
+    const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({
       success: true,
       message: "get success",
+      meta: {
+        total,
+        pages,
+        page,
+        limit,
+      },
       data: result,
     });
   } catch (error) {

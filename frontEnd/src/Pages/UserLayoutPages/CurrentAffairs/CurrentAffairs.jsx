@@ -3,6 +3,8 @@ import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { useGetCurrentAffairsQuery } from "../../../Redux/api/currentAffairsApi";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Pagination from "../../../Components/Pagination/Pagination";
+import AcademySkeleton from "../../../Components/Skeleton/AcademySkeleton";
 
 let categories = [
   { _id: 1, name: "Bangladesh" },
@@ -11,12 +13,18 @@ let categories = [
 ];
 
 export default function CurrentAffairsU() {
+  window.scrollTo(0, 0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [activeCategory, setActiveCategory] = useState(1);
 
   let query = {};
   query["category"] = activeCategory;
+  query["page"] = currentPage;
+  query["limit"] = 10;
 
-  const { data } = useGetCurrentAffairsQuery({ ...query });
+  const { data, isLoading, isFetching } = useGetCurrentAffairsQuery({
+    ...query,
+  });
   const currentAffairs = data?.data;
 
   return (
@@ -49,7 +57,9 @@ export default function CurrentAffairsU() {
       </div>
 
       <div className="mt-2 flex flex-col gap-2">
-        {currentAffairs?.length > 0 ? (
+        {isLoading || isFetching ? (
+          <AcademySkeleton />
+        ) : currentAffairs?.length > 0 ? (
           currentAffairs?.map((affairs, i) => {
             const timeAgoCreatedAt = moment(affairs?.createdAt).fromNow();
             const timeAgoUpdatedAt = moment(affairs?.updatedAt).fromNow();
@@ -58,7 +68,7 @@ export default function CurrentAffairsU() {
               <div key={affairs?._id} className="bg-base-100 rounded shadow">
                 <div className="px-3 py-2 border-b">
                   <Link to={`/current-affairs/${affairs?._id}`}>
-                    <h2 className=" hover:text-blue-500 duration-300">
+                    <h2 className="text-xl hover:text-blue-500 duration-300">
                       {i + 1}. {affairs?.question}
                     </h2>
                   </Link>
@@ -67,8 +77,9 @@ export default function CurrentAffairsU() {
                   </p>
                 </div>
 
-                <div className="p-3">
-                  <p className="text-primary pl-5 text-sm">
+                <div className="py-2">
+                  <p className="text-primary pl-5 font-medium">
+                    Ans:{" "}
                     {affairs?.ans?.length > 80
                       ? affairs?.ans.slice(0, 80) + "..."
                       : affairs?.ans}
@@ -89,6 +100,14 @@ export default function CurrentAffairsU() {
           <p className="text-red-500 text-xs">No Question Available</p>
         )}
       </div>
+
+      {data?.meta?.pages > 1 && (
+        <Pagination
+          pages={data?.meta?.pages}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

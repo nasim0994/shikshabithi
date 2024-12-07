@@ -15,6 +15,7 @@ import { useUpdateUserStatusMutation } from "../../../Redux/api/user/userApi";
 export default function Admins() {
   const [search, setSearch] = useState("");
   let [currentPage, setCurrentPage] = useState(1);
+  let limit = 10;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -23,7 +24,7 @@ export default function Admins() {
 
   let query = {};
   if (search) query.search = search;
-  query.limit = 10;
+  query.limit = limit;
   query.page = currentPage;
 
   const { loggedUser } = useSelector((state) => state.user);
@@ -106,7 +107,7 @@ export default function Admins() {
           <tbody>
             {admins?.map((admin, i) => (
               <tr key={admin?._id}>
-                <td>{i + 1}</td>
+                <td>{(currentPage - 1) * limit + i + 1}</td>
                 <td>
                   <div className="flex items-center gap-2">
                     {admin?.profile?.name}

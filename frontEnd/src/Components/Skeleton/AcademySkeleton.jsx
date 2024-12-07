@@ -1,7 +1,7 @@
 export default function AcademySkeleton() {
   return (
     <div className="mt-2 grid md:grid-cols-3 items-start gap-6">
-      <div className="md:col-span-2 rounded overflow-hidden shadow">
+      <div className="md:col-span-3 rounded overflow-hidden shadow">
         <div className="bg-base-100 py-8 rounded mb-4">
           <div className="bg-gray-100 h-3 w-36 rounded mx-auto"></div>
         </div>

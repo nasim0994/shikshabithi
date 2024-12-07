@@ -10,6 +10,7 @@ import TableSkeleton from "../../../Components/Skeleton/TableSkeleton";
 export default function Users() {
   const [search, setSearch] = useState("");
   let [currentPage, setCurrentPage] = useState(1);
+  let limit = 10;
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -18,7 +19,7 @@ export default function Users() {
 
   let query = {};
   if (search) query.search = search;
-  query.limit = 10;
+  query.limit = limit;
   query.page = currentPage;
 
   const { data, isLoading, isFetching } = useGetAllUsersOnlyQuery(query);
@@ -76,7 +77,7 @@ export default function Users() {
           <tbody>
             {users?.map((user, i) => (
               <tr key={user?._id}>
-                <td>{i + 1}</td>
+                <td>{(currentPage - 1) * limit + i + 1}</td>
                 <td>
                   <div className="flex items-center gap-2">
                     {user?.profile?.name}

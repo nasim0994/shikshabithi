@@ -18,7 +18,7 @@ export default function EditBlogPage() {
   const editor = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log(pathname);
+  const isAdmin = pathname.startsWith("/admin");
 
   const { loggedUser } = useSelector((store) => store.user);
   const [images, setImages] = useState([]);
@@ -82,6 +82,9 @@ export default function EditBlogPage() {
       JSON.stringify(selectedTags?.map((tag) => tag?._id))
     );
 
+    if (loggedUser?.data?.role !== "admin")
+      formData.append("status", "pending");
+
     if (selectedCategory !== "others") {
       formData.append("subject", subject);
       formData.append("chapter", chapter);
@@ -93,7 +96,7 @@ export default function EditBlogPage() {
 
     if (res?.data?.success) {
       toast.success("Blog update success");
-      if (pathname.startsWith("/admin")) {
+      if (isAdmin) {
         navigate("/admin/others/blog-all");
       } else {
         navigate(`/blogs?active=${selectedCategory}`);
