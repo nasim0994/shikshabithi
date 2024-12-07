@@ -5,6 +5,7 @@ import Spinner from "../Components/Loader/Spinner/Spinner";
 import Signup from "../Pages/Signup/Signup";
 import RecoverPassword from "../Pages/RecoverPassword/RecoverPassword";
 import ForgotPassword from "../Pages/ForgotPassword/ForgotPassword";
+import RegisterSuccess from "../Pages/Signup/RegisterSuccess";
 
 export const commonRoutes = {
   children: [
@@ -25,6 +26,14 @@ export const commonRoutes = {
       element: (
         <Suspense fallback={<Spinner />}>
           <Signup />
+        </Suspense>
+      ),
+    },
+    {
+      path: "/register/success",
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <RegisterSuccess />
         </Suspense>
       ),
     },

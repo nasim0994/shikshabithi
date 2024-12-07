@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdEmail } from "react-icons/md";
 import { FaLock, FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 // import { FcGoogle } from "react-icons/fc";
@@ -7,8 +7,7 @@ import { useRegisterMutation } from "../../Redux/api/user/authApi";
 import { toast } from "react-toastify";
 
 export default function Signup() {
- 
-
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [showPass, setShowPass] = useState(false);
 
@@ -40,12 +39,13 @@ export default function Signup() {
 
     let res = await register(info);
 
-
     if (res?.data?.success) {
       toast.success("Resgister success, Please Login Now");
-      form.reset()
+      form.reset();
+      navigate("/register/success");
     } else {
-      toast.error("Something went wrong!");
+      toast.error(res?.error?.data?.message || "Something went wrong!");
+      setError(res?.error?.data?.message || "Something went wrong!");
       console.log(res);
     }
   };
