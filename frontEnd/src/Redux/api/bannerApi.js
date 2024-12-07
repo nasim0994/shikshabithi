@@ -2,6 +2,14 @@ import { baseApi } from "./baseApi";
 
 export const bannerApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getBannerCount: builder.query({
+      query: () => ({
+        url: `api/banner-count/all`,
+        method: "GET",
+      }),
+      providesTags: ["banner"],
+    }),
+
     getBanner: builder.query({
       query: () => ({
         url: `api/banner`,
@@ -34,4 +42,6 @@ export const {
   useGetBannerQuery,
   useAddBannerMutation,
   useUpdateBannerMutation,
+
+  useGetBannerCountQuery,
 } = bannerApi;

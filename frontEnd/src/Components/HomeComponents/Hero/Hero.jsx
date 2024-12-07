@@ -1,27 +1,20 @@
 import QuestionCountdown from "/src/assets/images/banner/question_countdown.png";
 import StudentCountdown from "/src/assets/images/banner/student_countdown.png";
 import ExamCountdown from "/src/assets/images/banner/exam_countdown.png";
-import { useGetBannerQuery } from "../../../Redux/api/bannerApi";
-import { useGetAcademyMCQQuery } from "../../../Redux/api/academy/mcqApi";
-import { useGetAcademyWrittenQuery } from "../../../Redux/api/academy/writtenApi";
-import { useGetAllUsersOnlyQuery } from "../../../Redux/api/user/userApi";
-import { useGetModelTestQuery } from "../../../Redux/api/modelTestApi";
+import {
+  useGetBannerCountQuery,
+  useGetBannerQuery,
+} from "../../../Redux/api/bannerApi";
 
 export default function Hero() {
   const { data, isLoading } = useGetBannerQuery();
   const banner = data?.data;
 
-  const { data: mcq } = useGetAcademyMCQQuery();
-  const { data: written } = useGetAcademyWrittenQuery();
-
-  const { data: user } = useGetAllUsersOnlyQuery();
-
-  const { data: modeltest } = useGetModelTestQuery();
-
-  const totalMcq = mcq?.data?.length;
-  const totalWritten = written?.data?.length;
-
-  const totalExam = modeltest?.data?.length;
+  const { data: count } = useGetBannerCountQuery();
+  const bannerCount = count?.data;
+  const totalQuestion = bannerCount?.totalQuestion || 0;
+  const totalUser = bannerCount?.totalUser || 0;
+  const totalContent = bannerCount?.totalContent || 0;
 
   if (isLoading)
     return <div className="w-full h-[40vh] md:h-[60vh] bg-black/90"></div>;
@@ -51,19 +44,20 @@ export default function Hero() {
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <img
                 src={QuestionCountdown}
-                alt=""
+                alt="QuestionCountdown"
                 className="w-7 h-7 md:w-10 md:h-9 rounded-full"
               />
               <div>
                 <h2 className="md:text-xl font-bold text-base-100">
-                  {totalMcq + totalWritten >= 1000
-                    ? (totalMcq + totalWritten / 1000).toFixed(1) + "K"
-                    : totalMcq + totalWritten}
+                  {totalQuestion >= 1000
+                    ? (totalQuestion / 1000).toFixed(1) + "K"
+                    : totalQuestion}
                   +
                 </h2>
                 <h3 className="text-xs md:text-sm text-base-100/40">প্রশ্ন</h3>
               </div>
             </div>
+
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <img
                 src={StudentCountdown}
@@ -72,13 +66,14 @@ export default function Hero() {
               />
               <div>
                 <h2 className="md:text-xl font-bold text-base-100">
-                  {user?.data?.length}+
+                  {totalUser}+
                 </h2>
                 <h3 className="text-xs md:text-sm text-base-100/40">
                   শিক্ষার্থী
                 </h3>
               </div>
             </div>
+
             <div className="flex items-center justify-center gap-1 md:gap-3">
               <img
                 src={ExamCountdown}
@@ -87,12 +82,12 @@ export default function Hero() {
               />
               <div>
                 <h2 className="md:text-xl font-bold text-base-100">
-                  {totalExam >= 1000
-                    ? (totalExam / 1000).toFixed(1) + "K"
-                    : totalExam}
+                  {totalContent >= 1000
+                    ? (totalContent / 1000).toFixed(1) + "K"
+                    : totalContent}
                   +
                 </h2>
-                <h3 className="text-xs md:text-sm text-base-100/40">মডেল</h3>
+                <h3 className="text-xs md:text-sm text-base-100/40">কনটেন্ট</h3>
               </div>
             </div>
           </div>

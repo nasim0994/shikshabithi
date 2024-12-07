@@ -7,6 +7,7 @@ const router = express.Router();
 const logo = require("./logoRoutes");
 const favicon = require("./faviconRoutes");
 const banner = require("./bannerRoutes");
+const bannerCount = require("./bannerCountRoute");
 
 const package = require("./packageRoutes");
 const faq = require("./faqRoutes");
@@ -48,6 +49,7 @@ router.use("/modeltest-attend", allModeltestAttend);
 router.use("/logo", logo);
 router.use("/favicon", favicon);
 router.use("/banner", banner);
+router.use("/banner-count", bannerCount);
 
 router.use("/package", package);
 router.use("/faq", faq);
