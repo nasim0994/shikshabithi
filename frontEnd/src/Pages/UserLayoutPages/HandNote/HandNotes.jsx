@@ -1,3 +1,4 @@
+import { AiOutlineSmallDash } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaBookReader } from "react-icons/fa";
@@ -9,6 +10,7 @@ import Notes from "./Notes";
 import { MdOutlineClearAll } from "react-icons/md";
 
 let categories = [
+  { _id: 0, name: "All", icon: <AiOutlineSmallDash /> },
   { _id: 1, name: "Academy", icon: <HiBuildingLibrary /> },
   { _id: 2, name: "Admission", icon: <FaBookReader className="text-xs" /> },
   { _id: 3, name: "Job", icon: <PiBagFill className="text-sm" /> },
@@ -20,9 +22,14 @@ export default function HandNotes() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   let active = queryParams.get("active");
+  let searchSubject = queryParams.get("subject");
 
-  const [activeCategory, setActiveCategory] = useState(1);
+  const [activeCategory, setActiveCategory] = useState(0);
   const [selectedSubject, setSelectedSubject] = useState("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [searchSubject]);
 
   let query = {};
   if (active == "admission") query["classuuid"] = 200;
@@ -31,8 +38,7 @@ export default function HandNotes() {
 
   useEffect(() => {
     if (!active) {
-      navigate("/handnotes?active=academy");
-      setActiveCategory(1);
+      setActiveCategory(0);
     } else if (active == "academy") {
       setActiveCategory(1);
     } else if (active == "admission") {
@@ -42,35 +48,7 @@ export default function HandNotes() {
     } else if (active == "others") {
       setActiveCategory(4);
     }
-  }, [active, navigate]);
-
-  // useEffect(() => {
-  //   // Disable right-click
-  //   const handleContextMenu = (e) => {
-  //     e.preventDefault();
-  //   };
-
-  //   // Disable specific key combinations
-  //   const handleKeyDown = (e) => {
-  //     if (
-  //       (e.ctrlKey && e.shiftKey && e.key === "I") || // Ctrl+Shift+I
-  //       (e.ctrlKey && e.shiftKey && e.key === "J") || // Ctrl+Shift+J
-  //       (e.ctrlKey && e.key === "U") || // Ctrl+U
-  //       e.key === "F12" // F12
-  //     ) {
-  //       e.preventDefault();
-  //     }
-  //   };
-
-  //   document.addEventListener("contextmenu", handleContextMenu);
-  //   document.addEventListener("keydown", handleKeyDown);
-
-  //   // Cleanup event listeners on unmount
-  //   return () => {
-  //     document.removeEventListener("contextmenu", handleContextMenu);
-  //     document.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, []);
+  }, [active]);
 
   return (
     <div>
@@ -89,9 +67,13 @@ export default function HandNotes() {
               onClick={() => {
                 setActiveCategory(category?._id);
                 setSelectedSubject("");
-                navigate(
-                  `/handnotes?active=${category?.name.toLocaleLowerCase()}`
-                );
+                if (category?._id === 0) {
+                  navigate(`/handnotes`);
+                } else {
+                  navigate(
+                    `/handnotes?active=${category?.name.toLocaleLowerCase()}`
+                  );
+                }
               }}
               className={`flex items-center gap-2 border rounded-xl px-2.5 py-1.5 duration-300 ${
                 activeCategory === category._id
@@ -110,8 +92,14 @@ export default function HandNotes() {
             <select
               name="subject"
               className="w-28 text-xs rounded-xl border-gray-200 cursor-pointer"
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              value={selectedSubject}
+              onChange={(e) => {
+                if (e.target.value) {
+                  navigate(`/handnotes?subject=${e.target.value}`);
+                } else {
+                  navigate(`/handnotes`);
+                }
+              }}
+              value={searchSubject || selectedSubject}
             >
               <option value="">All Subjects</option>
               {subjects?.map((s) => (
@@ -127,6 +115,7 @@ export default function HandNotes() {
       <Notes
         activeCategory={activeCategory}
         selectedSubject={selectedSubject}
+        searchSubject={searchSubject}
       />
     </div>
   );

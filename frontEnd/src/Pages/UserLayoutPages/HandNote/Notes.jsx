@@ -4,7 +4,11 @@ import { useGetHandNotesQuery } from "../../../Redux/api/handnotesApi";
 import Note from "./Note";
 import Pagination from "../../../Components/Pagination/Pagination";
 
-export default function Notes({ activeCategory, selectedSubject }) {
+export default function Notes({
+  activeCategory,
+  selectedSubject,
+  searchSubject,
+}) {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -12,15 +16,17 @@ export default function Notes({ activeCategory, selectedSubject }) {
   }, [currentPage]);
 
   let query = {};
-  query["category"] =
-    activeCategory == 1
-      ? "academy"
-      : activeCategory == 2
-      ? "admission"
-      : activeCategory == 3
-      ? "job"
-      : "others";
-  query["subject"] = selectedSubject;
+  if (activeCategory !== 0)
+    query["category"] =
+      activeCategory == 1
+        ? "academy"
+        : activeCategory == 2
+        ? "admission"
+        : activeCategory == 3
+        ? "job"
+        : "others";
+  if (selectedSubject || searchSubject)
+    query["subject"] = selectedSubject || searchSubject;
   query["status"] = "active";
   query["page"] = currentPage;
   query["limit"] = 10;

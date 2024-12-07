@@ -244,9 +244,12 @@ export default function Note({ handnote, i }) {
 
         <div className="flex justify-between pt-4 pb-1 items-center">
           <div className=" flex gap-2">
-            <p className="px-2 py-[3px] bg-primary/5 text-[10px] rounded">
+            <Link
+              to={`/handnotes?subject=${handnote?.subject?._id}`}
+              className="px-2 py-[3px] bg-primary/5 text-[10px] rounded"
+            >
               {handnote?.subject?.name}
-            </p>
+            </Link>
 
             {handnote?.chapter && (
               <p className="px-2 py-[3px] bg-primary/5 text-[10px] rounded">
