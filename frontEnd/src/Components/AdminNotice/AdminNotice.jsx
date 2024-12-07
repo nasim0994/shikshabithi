@@ -13,7 +13,7 @@ export default function AdminNotice() {
     return (
       <>
         <div className="fixed top-0 left-0 w-full h-screen bg-black/60 z-40"></div>
-        <div className="z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[220px] bg-base-100 shadow rounded p-4">
+        <div className="z-50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] sm:w-[450px] sm:h-[220px] bg-base-100 shadow rounded p-4">
           <button
             onClick={() => setIsOpen(false)}
             className="absolute top-4 right-4"
