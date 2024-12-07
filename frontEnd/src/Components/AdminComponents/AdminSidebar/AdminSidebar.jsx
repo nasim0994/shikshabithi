@@ -185,7 +185,16 @@ const adminSidebarItems = [
   {
     icon: <MdFeaturedPlayList />,
     title: "Features",
-    path: "/admin/features",
+    subMenu: [
+      {
+        title: "Feature Image",
+        path: "/admin/features/image",
+      },
+      {
+        title: "All Features",
+        path: "/admin/features/all",
+      },
+    ],
   },
 
   {

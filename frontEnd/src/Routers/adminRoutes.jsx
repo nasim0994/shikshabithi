@@ -207,6 +207,7 @@ import SEOSetting from "../Pages/Admin/SEOSetting/SEOSetting.jsx";
 import AllModelTest from "../Pages/Admin/ModelTest/AllModelTest.jsx";
 import AdminAddModelTest from "../Pages/Admin/ModelTest/Add/AdminAddModelTest.jsx";
 import AdminEditModelTest from "../Pages/Admin/ModelTest/Edit/AdminEditModelTest.jsx";
+import FeatureImage from "../Pages/Admin/Features/FeatureImage.jsx";
 
 const SubChapters = lazy(() =>
   import("../Pages/Admin/Academy/Chapter/SubChapters/SubChapters")
@@ -318,9 +319,13 @@ export const adminRoutes = {
     { path: "packages", element: <Packsges /> },
     { path: "packages/add", element: <AddPackage /> },
     { path: "packages/edit/:id", element: <EditPackage /> },
-    { path: "features", element: <Features /> },
+
+    // Features
+    { path: "features/image", element: <FeatureImage /> },
+    { path: "features/all", element: <Features /> },
     { path: "features/add", element: <AddFeature /> },
     { path: "features/edit/:id", element: <EditFeature /> },
+
     { path: "users", element: <Users /> },
     { path: "admins", element: <Admins /> },
     { path: "admins/add", element: <AddAdmin /> },

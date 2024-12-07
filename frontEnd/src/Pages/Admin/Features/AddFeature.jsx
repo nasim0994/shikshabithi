@@ -30,7 +30,7 @@ export default function AddFeature() {
     let res = await addFeature(formData);
     if (res?.data?.success) {
       toast.success("Feature add success");
-      navigate("/admin/features");
+      navigate("/admin/features/all");
     } else {
       toast.error("something went wrong!");
       console.log(res);

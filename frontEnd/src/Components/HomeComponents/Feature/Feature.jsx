@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
 import { useGetFeatureQuery } from "../../../Redux/api/featureApi";
+import { useGetFeatureImageQuery } from "../../../Redux/api/featureImageApi";
 
 export default function Feature() {
+  const { data: fImage } = useGetFeatureImageQuery();
+  const featureImage = fImage?.data;
+
   const { data, isLoading } = useGetFeatureQuery();
   let features = data?.data;
 
@@ -30,7 +34,7 @@ export default function Feature() {
               src={`${import.meta.env.VITE_BACKEND_URL}/feature/${
                 feature?.icon
               }`}
-              alt=""
+              alt={feature?.title}
               className="w-8 sm:w-12"
             />
             <div>
@@ -61,8 +65,10 @@ export default function Feature() {
 
       <div>
         <img
-          src="/images/features/feature_bg.png"
-          alt=""
+          src={`${import.meta.env.VITE_BACKEND_URL}/feature/${
+            featureImage?.image
+          }`}
+          alt="feature bg"
           className="w-full h-28"
         />
       </div>

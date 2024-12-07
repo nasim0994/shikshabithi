@@ -36,7 +36,7 @@ export default function EditFeature() {
     let res = await updateFeature({ id, formData });
     if (res?.data?.success) {
       toast.success("Feature edit success");
-      navigate("/admin/features");
+      navigate("/admin/features/all");
     } else {
       toast.error("something went wrong!");
       console.log(res);
