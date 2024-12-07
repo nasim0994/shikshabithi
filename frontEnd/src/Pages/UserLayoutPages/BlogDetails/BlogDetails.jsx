@@ -127,6 +127,12 @@ export default function BlogDetails() {
 
             <div className="mt-2 bg-base-100 shadow rounded ">
               <div className="p-3 border-b flex justify-between items-center">
+                <Link
+                  to={`/blog/${blog?.category}`}
+                  className="text-sm text-neutral-content hover:underline"
+                >
+                  {blog?.category}
+                </Link>
                 <p className="mt-1 text-xs text-neutral-content">
                   Created: {timeAgoCreatedAt}
                 </p>
@@ -254,7 +260,7 @@ export default function BlogDetails() {
             </div>
           </div>
 
-          <div className="-mt-3">
+          <div className="-mt-3 md:sticky top-10">
             <RelatedBlogs
               activeCategory={
                 blog?.category == "academy"

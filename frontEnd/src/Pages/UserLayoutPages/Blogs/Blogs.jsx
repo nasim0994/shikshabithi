@@ -356,6 +356,7 @@ export default function Blogs() {
           <p className="text-xs text-red-500">No Available Blog</p>
         )}
       </div>
+
       {data?.meta?.pages > 1 && (
         <Pagination
           pages={data?.meta?.pages}

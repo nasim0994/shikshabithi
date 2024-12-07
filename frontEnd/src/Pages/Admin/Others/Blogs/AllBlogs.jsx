@@ -12,14 +12,20 @@ import {
 } from "../../../../Redux/api/blogsApi";
 import { useEffect, useState } from "react";
 import Pagination from "../../../../Components/Pagination/Pagination";
+import TableSkeleton from "../../../../Components/Skeleton/TableSkeleton";
 
 export default function AllBlogs() {
   let [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
+
   let limit = 10;
   let query = {};
   query["limit"] = limit;
   query["page"] = currentPage;
-  const { data, isLoading } = useGetBlogsQuery({ ...query });
+  const { data, isLoading, isFetching } = useGetBlogsQuery({ ...query });
   let blogs = data?.data;
 
   let [targetedBlogs, setTargetedBlogs] = useState([]);
@@ -53,6 +59,7 @@ export default function AllBlogs() {
       }
     }
   };
+
   let handleActive = async (id) => {
     let isConfirm = window.confirm("are you sure change the status?");
     if (isConfirm) {
@@ -71,8 +78,6 @@ export default function AllBlogs() {
   const handleUpdateIsHome = async (id) => {
     setSelectedBlog(id);
 
-    console.log(id);
-
     const res = await toggleBlogHomeStatus(id);
 
     if (res?.data?.success) {
@@ -83,7 +88,7 @@ export default function AllBlogs() {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading || isFetching) return <TableSkeleton />;
 
   return (
     <div>
@@ -117,7 +122,7 @@ export default function AllBlogs() {
       <div className="flex justify-between items-center p-3">
         {active === 0 ? (
           <h3>All Blog</h3>
-        ) : active === 0 ? (
+        ) : active === 1 ? (
           <h3>Active Blogs</h3>
         ) : (
           <h3>Pending Blogs</h3>
@@ -209,7 +214,7 @@ export default function AllBlogs() {
         </table>
       </div>
 
-      {blogs?.length >= limit && (
+      {data?.meta?.pages > 1 && (
         <Pagination
           pages={data?.meta?.pages}
           currentPage={currentPage}
