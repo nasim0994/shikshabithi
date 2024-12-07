@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { FcDownload } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { PhotoProvider, PhotoView } from "react-photo-view";
@@ -24,6 +23,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import moment from "moment";
 import { useDeleteHandNoteMutation } from "../../../Redux/api/handnotesApi";
 import { useSelector } from "react-redux";
+import HandNoteDownload from "../../../Components/UserLayoutComponents/HandNoteDownload/HandNoteDownload";
 
 export default function Note({ handnote, i }) {
   const { loggedUser } = useSelector((store) => store.user);
@@ -67,91 +67,89 @@ export default function Note({ handnote, i }) {
     }
   };
 
-  console.log(loggedUser?.data);
+  // const handleDownload = async (id) => {
+  //   const userId = loggedUser?.data?._id;
 
-  const handleDownload = async (id) => {
-    const userId = loggedUser?.data?._id;
+  //   if (!userId) {
+  //     return toast.error("Please login to download");
+  //   }
 
-    if (!userId) {
-      return toast.error("Please login to download");
-    }
+  //   const packageData = loggedUser?.data?.package;
 
-    const packageData = loggedUser?.data?.package;
+  //   if (!packageData?.package) {
+  //     return toast.error("Please subscribe to a package to download handnotes");
+  //   }
 
-    if (!packageData?.package) {
-      return toast.error("Please subscribe to a package to download handnotes");
-    }
+  //   if (packageData?.expires) {
+  //     const isExpired = new Date(packageData?.expires) < new Date();
+  //     if (isExpired) {
+  //       toast.error("Your package has expired");
+  //       return;
+  //     }
+  //   }
 
-    if (packageData?.expires) {
-      const isExpired = new Date(packageData?.expires) < new Date();
-      if (isExpired) {
-        toast.error("Your package has expired");
-        return;
-      }
-    }
+  //   const downloadLimit = parseInt(
+  //     packageData?.package?.feature?.downloadHandNote
+  //   );
+  //   const userDownloadCount = parseInt(loggedUser?.data?.downloadhandnotes);
+  //   if (userDownloadCount >= downloadLimit) {
+  //     toast.error(
+  //       "You have reached your download limit! please update package to download more"
+  //     );
+  //     return;
+  //   }
 
-    const downloadLimit = parseInt(
-      packageData?.package?.feature?.downloadHandNote
-    );
-    const userDownloadCount = parseInt(loggedUser?.data?.downloadhandnotes);
-    if (userDownloadCount >= downloadLimit) {
-      toast.error(
-        "You have reached your download limit! please update package to download more"
-      );
-      return;
-    }
+  //   const token = localStorage.getItem("token");
+  //   if (!token) {
+  //     return toast.error("Please login to download handnotes");
+  //   }
 
-    const token = localStorage.getItem("token");
-    if (!token) {
-      return toast.error("Please login to download handnotes");
-    }
+  //   try {
+  //     // Send GET request with the ID to download the PDF
+  //     const response = await fetch(
+  //       `${import.meta.env.VITE_BACKEND_URL}/api/handnotes/download/${id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-    try {
-      // Send GET request with the ID to download the PDF
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/handnotes/download/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  //     if (response.ok) {
+  //       const blob = await response.blob();
+  //       const url = window.URL.createObjectURL(blob);
+  //       const a = document.createElement("a");
+  //       a.href = url;
+  //       a.download = `${id}.pdf`;
+  //       a.click();
+  //       window.URL.revokeObjectURL(url);
 
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${id}.pdf`;
-        a.click();
-        window.URL.revokeObjectURL(url);
+  //       // Update the user download count
+  //       const result = await fetch(
+  //         `${import.meta.env.VITE_BACKEND_URL}/api/user/download/handnote`,
+  //         {
+  //           method: "PUT",
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
 
-        // Update the user download count
-        const result = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/user/download/handnote`,
-          {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (result.ok) {
-          toast.success("PDF downloaded successfully");
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
-        }
-      } else {
-        alert("Failed to generate PDF");
-      }
-    } catch (error) {
-      console.error("Error during download:", error);
-      alert("Error generating PDF");
-    }
-  };
+  //       if (result.ok) {
+  //         toast.success("PDF downloaded successfully");
+  //         setTimeout(() => {
+  //           window.location.reload();
+  //         }, 1000);
+  //       }
+  //     } else {
+  //       alert("Failed to generate PDF");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during download:", error);
+  //     alert("Error generating PDF");
+  //   }
+  // };
 
   return (
     <div className="bg-base-100 shadow rounded">
@@ -180,16 +178,11 @@ export default function Note({ handnote, i }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => handleDownload(handnote?._id)}
-            className="-mt-1"
-          >
-            <FcDownload />
-          </button>
+          <HandNoteDownload id={handnote?._id} />
 
           {loggedUser?.data?._id === handnote?.user?._id && (
             <div className="relative">
-              <button className="o_btn" onClick={() => handelToggle(i)}>
+              <button className="o_btn mt-1.5" onClick={() => handelToggle(i)}>
                 <BsThreeDotsVertical className="text-neutral text-lg bg-gray-100 p-1 rounded" />
               </button>
 
@@ -224,10 +217,12 @@ export default function Note({ handnote, i }) {
           to={`/handnotes/${handnote?._id}`}
           className="text-neutral hover:text-primary duration-200 inline-block"
         >
-          <h2 className="text-lg font-semibold">{handnote?.title}</h2>
+          <h2 className="text-2xl font-semibold">{handnote?.title}</h2>
         </Link>
 
-        <p className="text-xs text-neutral-content">{handnote?.description}</p>
+        <p className="text-base text-neutral-content">
+          {handnote?.description}
+        </p>
 
         <div className="grid sm:grid-cols-2 gap-4">
           <PhotoProvider>

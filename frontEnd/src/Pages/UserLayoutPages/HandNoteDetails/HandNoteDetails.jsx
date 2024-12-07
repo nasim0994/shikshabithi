@@ -2,7 +2,8 @@ import { Link, useParams } from "react-router-dom";
 import BackBtn from "../../../Components/BackBtn/BackBtn";
 import moment from "moment";
 import { useGetHandNoteQuery } from "../../../Redux/api/handnotesApi";
-
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 import {
   FacebookShareButton,
   TwitterShareButton,
@@ -19,8 +20,12 @@ import {
 } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { useEffect, useState } from "react";
+import HandNoteDownload from "../../../Components/UserLayoutComponents/HandNoteDownload/HandNoteDownload";
+import RelatedHandNote from "./RelatedHandNote";
 
 export default function HandNoteDetails() {
+  window.scrollTo(0, 0);
+
   const { id } = useParams();
   const { data } = useGetHandNoteQuery(id);
   const note = data?.data;
@@ -39,35 +44,54 @@ export default function HandNoteDetails() {
   const timeAgoCreatedAt = moment(createdAt).fromNow();
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      <div className="col-span-2">
+    <section className="grid md:grid-cols-3 gap-4 items-start">
+      <div className="md:col-span-2">
         <div className="bg-base-100 shadow rounded p-3">
           <div className="flex justify-between items-center">
             <Link to="/handnote/add" className="text-xs primary_btn">
               Add HandNote
             </Link>
-            <BackBtn />
+
+            <div className="flex items-center gap-3">
+              <button className="shadow hover:bg-primary/20 duration-200 w-7 h-7 flex justify-center items-center rounded">
+                <HandNoteDownload id={note?._id} />
+              </button>
+              <BackBtn />
+            </div>
           </div>
         </div>
 
         <div className="mt-2 bg-base-100 shadow rounded ">
-          <div className="p-3 border-b">
+          <div className="p-3 border-b flex justify-between items-center">
+            <Link
+              to={`/handnotes?active=${note?.category}`}
+              className="text-sm text-neutral-content hover:underline"
+            >
+              {note?.category}
+            </Link>
             <p className="mt-1 text-xs text-neutral-content">
               Created: {timeAgoCreatedAt}
             </p>
           </div>
-          <div className="p-3">
-            <h2 className="font-medium">{note?.title}</h2>
-            <p className="text-xs text-neutral-content">{note?.description}</p>
 
-            {note?.images?.map((img) => (
-              <img
-                key={img?._id}
-                src={`${import.meta.env.VITE_BACKEND_URL}/handnotes/${img}`}
-                alt=""
-                className="w-full h-44 sm:h-60 rounded mt-2 border"
-              />
-            ))}
+          <div className="p-3">
+            <h2 className="font-medium text-sm sm:text-2xl">{note?.title}</h2>
+            <p className="text-neutral-content">{note?.description}</p>
+
+            <PhotoProvider>
+              {note?.images?.map((img) => (
+                <PhotoView
+                  key={img?._id}
+                  src={`${import.meta.env.VITE_BACKEND_URL}/handnotes/${img}`}
+                >
+                  <img
+                    src={`${import.meta.env.VITE_BACKEND_URL}/handnotes/${img}`}
+                    alt=""
+                    className="w-full rounded mt-2 border"
+                  />
+                </PhotoView>
+              ))}
+            </PhotoProvider>
 
             <div className="mt-2 flex items-center justify-between">
               <div>
@@ -144,6 +168,8 @@ export default function HandNoteDetails() {
           </div>
         </div>
       </div>
-    </div>
+
+      <RelatedHandNote category={note?.category} />
+    </section>
   );
 }

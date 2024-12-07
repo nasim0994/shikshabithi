@@ -105,7 +105,7 @@ export default function Header() {
                       </li>
                       <li>
                         <Link to="/handnotes" className="py-0">
-                          Hand Notes
+                          Hand Notes & Question
                         </Link>
                       </li>
                       <li>

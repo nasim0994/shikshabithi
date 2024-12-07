@@ -80,7 +80,7 @@ export default function UserSidebarLists() {
         <li>
           <NavLink to="/handnotes">
             <MdNoteAlt />
-            Hand Note
+            Hand Note & Question
           </NavLink>
         </li>
 
