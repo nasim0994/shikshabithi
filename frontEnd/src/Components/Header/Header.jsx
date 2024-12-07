@@ -1,4 +1,3 @@
-import { BiSearch } from "react-icons/bi";
 import "/src/assets/css/Header.css";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
@@ -7,12 +6,12 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useGetLogoQuery } from "../../Redux/api/logoApi";
 import { useSelector } from "react-redux";
 import ProfileDropdown from "../UserLayoutComponents/ProfileDropdown/ProfileDropdown";
+import SearchBox from "../SearchBox/SearchBox";
 
 export default function Header() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [profileDropdown, setProfileDropdown] = useState(false);
   const [moreropdown, setMoreDropdown] = useState(false);
-  const [searchDropdown, setSearchDropdown] = useState(false);
 
   const { loggedUser } = useSelector((store) => store.user);
 
@@ -33,16 +32,8 @@ export default function Header() {
     });
   }, []);
 
-  useEffect(() => {
-    window.addEventListener("click", (e) => {
-      if (!e.target.closest(".searchBtn") && !e.target.closest(".searchBox")) {
-        setSearchDropdown(false);
-      }
-    });
-  }, []);
-
   return (
-    <header className={`py-2 xl:py-0 sticky top-0 z-[50] bg-base-100`}>
+    <header className={`py-2 xl:py-0 sticky top-0 z-40 bg-base-100`}>
       <div className="container">
         <div className="flex justify-between items-center">
           <Link to="/">
@@ -139,27 +130,7 @@ export default function Header() {
             </nav>
 
             <div className="flex items-center gap-4">
-              <div className="relative">
-                <button onClick={() => setSearchDropdown(!searchDropdown)}>
-                  <BiSearch className="searchBtn text-[22px] text-neutral/80 mt-2" />
-                </button>
-
-                <div
-                  className={`searchBox absolute top-10 right-0 bg-base-100 rounded p-3 shadow ${
-                    searchDropdown ? "block" : "hidden"
-                  }`}
-                >
-                  <div className="relative">
-                    <input
-                      type="text"
-                      placeholder="প্রশ্ন সার্চ করুন..."
-                      className="w-[95%] sm:w-80 placeholder:text-sm pl-7 px-3 border-primary/50 text-[15px]"
-                    />
-
-                    <BiSearch className="text-neutral/80 mt-2 absolute top-[2.5px] left-2" />
-                  </div>
-                </div>
-              </div>
+              <SearchBox />
 
               {loggedUser?.success ? (
                 <div className="relative">

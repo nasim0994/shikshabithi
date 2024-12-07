@@ -12,29 +12,43 @@ import {
   useGetTotalLengthByVendorQuery,
 } from "../../../../Redux/api/modelTestApi";
 import ExamCard from "./ExamCard";
+import Pagination from "../../../../Components/Pagination/Pagination";
+import AdmissionSet from "../../../../Components/Skeleton/AdmissionSet";
 
 export default function ExamList() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   let active = queryParams.get("active");
-
-  const [activeCategory, setActiveCategory] = useState(1);
-
-  const query = {};
-  if (active) query.mainCategory = active;
-  query.status = "active";
-
-  const { data: allModeltestData } = useGetModelTestQuery(query);
-  const allModeltest = allModeltestData?.data;
+  let search = queryParams.get("search");
 
   const { loggedUser } = useSelector((state) => state.user);
   const packageData = loggedUser?.data?.package;
 
+  const [activeCategory, setActiveCategory] = useState(0);
+  const [activePage, setActivePage] = useState(1);
+
+  const query = {};
+  if (active) query.mainCategory = active;
+  if (search) query.search = search;
+  query.status = "active";
+  query["limit"] = 10;
+  query["page"] = activePage;
+
+  const {
+    data: modeltest,
+    isLoading,
+    isFetching,
+  } = useGetModelTestQuery(query);
+  const allModeltest = modeltest?.data;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [activePage]);
+
   useEffect(() => {
     if (!active) {
-      navigate("/exam-list?active=academy");
-      setActiveCategory(1);
+      setActiveCategory(0);
     } else if (active == "academy") {
       setActiveCategory(1);
     } else if (active == "admission") {
@@ -42,9 +56,10 @@ export default function ExamList() {
     } else if (active == "job") {
       setActiveCategory(3);
     }
-  }, [active, navigate]);
+  }, [active]);
 
   let categories = [
+    { _id: 0, name: "All", icon: <HiBuildingLibrary /> },
     { _id: 1, name: "Academy", icon: <HiBuildingLibrary /> },
     { _id: 2, name: "Admission", icon: <FaBookReader className="text-xs" /> },
     { _id: 3, name: "Job", icon: <PiBagFill className="text-sm" /> },
@@ -91,17 +106,22 @@ export default function ExamList() {
               onClick={handleAddModelTest}
               className="text-xs primary_btn"
             >
-              Add Model Test
+              <span className="hidden sm:block">Add Model Test</span>
+              <span className="sm:hidden">+</span>
             </button>
           </div>
         </div>
 
-        <div className="flex overflow-x-auto gap-2 mt-2 horizontal_scroll">
+        <div className="flex flex-wrap overflow-x-auto gap-2 mt-2 horizontal_scroll">
           {categories?.map((category) => (
             <button
               key={category?._id}
               onClick={() => {
                 setActiveCategory(category?._id);
+                if (category?._id === 0) {
+                  navigate(`/exam-list`);
+                  return;
+                }
                 navigate(
                   `/exam-list?active=${category?.name.toLocaleLowerCase()}`
                 );
@@ -122,15 +142,27 @@ export default function ExamList() {
       </div>
 
       <div className="mt-2 flex flex-col gap-2">
-        {allModeltest?.map((modelTest, i) => (
-          <ExamCard
-            key={modelTest?._id}
-            modelTest={modelTest}
-            i={i}
-            packageData={packageData}
-          />
-        ))}
+        {isLoading || isFetching ? (
+          <AdmissionSet />
+        ) : (
+          allModeltest?.map((modelTest, i) => (
+            <ExamCard
+              key={modelTest?._id}
+              modelTest={modelTest}
+              i={i}
+              packageData={packageData}
+            />
+          ))
+        )}
       </div>
+
+      {modeltest?.meta?.pages > 1 && (
+        <Pagination
+          pages={modeltest?.meta?.pages}
+          currentPage={activePage}
+          setCurrentPage={setActivePage}
+        />
+      )}
     </div>
   );
 }

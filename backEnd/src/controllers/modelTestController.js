@@ -1,4 +1,6 @@
 const Model = require("../models/modelTestModel");
+const { calculatePagination } = require("../utils/calculatePagination");
+const { pick } = require("../utils/pick");
 
 exports.insert = async (req, res) => {
   try {
@@ -32,7 +34,9 @@ exports.insert = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
-  const { mainCategory, subject, chapter, status } = req.query;
+  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const { page, limit, skip } = calculatePagination(paginationOptions);
+  const { mainCategory, subject, chapter, status, search } = req.query;
 
   try {
     let query = {};
@@ -49,6 +53,10 @@ exports.get = async (req, res) => {
 
     if (chapter && chapter !== "undefined" && chapter !== null) {
       query.chapter = chapter;
+    }
+
+    if (search && search !== "undefined" && search !== null) {
+      query.$or = [{ name: { $regex: search, $options: "i" } }];
     }
 
     const result = await Model.find(query)
@@ -79,11 +87,22 @@ exports.get = async (req, res) => {
           path: "profile",
           select: "name",
         },
-      });
+      })
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Model.countDocuments(query);
+    const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({
       success: true,
       message: "Model test get success",
+      meta: {
+        total,
+        pages,
+        page,
+        limit,
+      },
       data: result,
     });
   } catch (err) {

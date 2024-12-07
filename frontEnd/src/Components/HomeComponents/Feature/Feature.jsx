@@ -52,7 +52,7 @@ export default function Feature() {
     ));
 
   return (
-    <section className="relative z-40 bg-[#F2F7FD] mb-6">
+    <section className="relative z-30 bg-[#F2F7FD] mb-6">
       <div className="container py-5 sm:py-10">
         <h2 className="text-2xl sm:text-3xl font-bold text-primary text-center section_line">
           স্মার্ট শিখন ফিচার্স
