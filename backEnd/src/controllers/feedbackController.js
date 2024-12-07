@@ -21,12 +21,14 @@ exports.add = async (req, res) => {
 
 exports.get = async (req, res) => {
   try {
-    const result = await Model.find({}).populate({
-      path: "user",
-      populate: {
-        path: "profile",
-      }.sort({ createdAt: -1 }),
-    });
+    const result = await Model.find({})
+      .populate({
+        path: "user",
+        populate: {
+          path: "profile",
+        },
+      })
+      .sort({ createdAt: -1 });
 
     if (!result) {
       return res.status(404).json({

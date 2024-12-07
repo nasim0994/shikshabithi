@@ -8,8 +8,6 @@ export default function Feedbacks() {
   const { data, isLoading } = useGetFeedbackQuery();
   const feedbacks = data?.data;
 
-  console.log(feedbacks);
-
   if (isLoading) return <FeedbackSkeleton />;
 
   return (
