@@ -11,7 +11,7 @@ export default function UserLayoutSidebar() {
       <div>
         <Link to="/" className="block pt-1">
           {isLoading ? (
-            "Smart Sikon"
+            "Shiksha Bithi"
           ) : (
             <img
               src={`${import.meta.env.VITE_BACKEND_URL}/logo/${

@@ -38,7 +38,7 @@ export default function Header() {
         <div className="flex justify-between items-center">
           <Link to="/">
             {isLoading ? (
-              "Smart Sikon"
+              "Shiksha Bithi"
             ) : (
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/logo/${

@@ -13,7 +13,7 @@ exports.emailSend = async (userMail, token) => {
   });
 
   const info = await transporter.sendMail({
-    from: "Smart Sikon", // sender address
+    from: "Shiksha Bithi", // sender address
     to: userMail, // list of receivers
     subject: "Password Recover", // Subject line
     html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
@@ -31,7 +31,7 @@ exports.emailSend = async (userMail, token) => {
     </p>
     <p style="color: #555; line-height: 1.5;">
       Best regards,<br>
-      Smart Sikon
+      Shiksha Bithi
     </p>
   </div>`, // html body
   });
@@ -47,7 +47,7 @@ exports.verifyEmailSend = async (userMail, token, userName) => {
   });
 
   const info = await transporter.sendMail({
-    from: "Smart Sikon", // sender address
+    from: "Shiksha Bithi", // sender address
     to: userMail, // list of receivers
     subject: "Verify Your Email", // Subject line
     html: `
@@ -55,7 +55,7 @@ exports.verifyEmailSend = async (userMail, token, userName) => {
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
     <h1 style="color: #333;">Hello ${userName}</h1>
     <p style="color: #555; line-height: 1.5;">
-      Thank you for signing up on Smart Sikon! To complete your registration and verify your email address, please click the button below.
+      Thank you for signing up on Shiksha Bithi! To complete your registration and verify your email address, please click the button below.
     </p>
     <p style="text-align: center;">
       <a href="${backendURL}/api/user/verify/${token}" style="display: inline-block; padding: 10px 20px; margin: 20px 0; font-size: 16px; color: #fff; background-color: #007BFF; border-radius: 5px; text-decoration: none;">
@@ -67,7 +67,7 @@ exports.verifyEmailSend = async (userMail, token, userName) => {
     </p>
     <p style="color: #555; line-height: 1.5;">
       Best regards,<br>
-      Smart Sikon
+      Shiksha Bithi
     </p>
   </div>`,
   });

@@ -49,7 +49,7 @@ export default function BlogHeader() {
     <div className="bg-base-100 p-4 rounded shadow">
       <div className="flex justify-between items-center">
         <h3 className="text-primary font-semibold text-lg">
-          Blogs || Smart Sikon
+          Blogs || Shiksha Bithi
         </h3>
         <Link to="/blog/add" className="text-xs primary_btn">
           Add Blog

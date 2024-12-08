@@ -26,7 +26,7 @@ export default function UserLayoutHeader({ setUserSidebar }) {
 
           <Link to="/" className="md:hidden">
             {isLoading ? (
-              "Smart Sikon"
+              "Shiksha Bithi"
             ) : (
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/logo/${
