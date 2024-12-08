@@ -159,10 +159,12 @@ export default function Header() {
                   )}
                 </div>
               ) : (
-                <Link to="/login" className="login_btn text-sm">
-                  <MdOutlineLogin />
-                  Sign In
-                </Link>
+                <>
+                  <Link to="/login" className="login_btn text-sm ">
+                    <MdOutlineLogin />
+                    <span className="hidden sm:block">Login</span>
+                  </Link>
+                </>
               )}
 
               <button onClick={() => setMobileMenu(true)} className="lg:hidden">
