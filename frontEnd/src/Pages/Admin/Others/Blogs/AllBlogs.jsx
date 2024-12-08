@@ -46,8 +46,10 @@ export default function AllBlogs() {
   let [targetedBlogs, setTargetedBlogs] = useState([]);
   let [active, setActive] = useState(0);
 
-  const { data: user } = useGetAllUsersQuery();
+  const { data: user } = useGetAllUsersQuery({});
   const users = user?.data;
+
+  console.log(user);
 
   const pendingBlogs = blogs?.filter((blog) => blog?.status == "pending");
   const activeBlogs = blogs?.filter((blog) => blog?.status == "active");

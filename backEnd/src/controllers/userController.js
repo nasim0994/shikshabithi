@@ -44,17 +44,17 @@ const frontendURL = process.env.FRONTEND_URL;
 // };
 
 exports.getAll = async (req, res) => {
-  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const paginationOptions = pick(req?.query, ["page", "limit"]);
   const { page, limit, skip } = calculatePagination(paginationOptions);
 
   try {
-    const result = await User.find({ password: 0 })
+    const result = await User.find({}, { password: 0 })
       .populate("profile", "name")
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 });
 
-    const total = await User.countDocuments(query);
+    const total = await User.countDocuments({});
     const pages = Math.ceil(parseInt(total) / parseInt(limit));
 
     res.status(200).json({
@@ -77,9 +77,9 @@ exports.getAll = async (req, res) => {
 };
 
 exports.gettAllUsers = async (req, res) => {
-  const paginationOptions = pick(req.query, ["page", "limit"]);
+  const paginationOptions = pick(req?.query, ["page", "limit"]);
   const { page, limit, skip } = calculatePagination(paginationOptions);
-  const { search } = req.query;
+  const { search } = req?.query;
 
   try {
     let query = {};

@@ -41,7 +41,7 @@ export default function SearchBox() {
           <input
             type="text"
             placeholder="প্রশ্ন সার্চ করুন..."
-            className="w-[95%] sm:w-80 placeholder:text-sm pl-7 px-3 border-primary/50 text-[15px]"
+            className="w-[65vw] sm:w-80 placeholder:text-sm pl-7 px-3 border-primary/50 text-[15px]"
             name="search"
           />
 
