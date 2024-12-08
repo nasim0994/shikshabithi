@@ -17,10 +17,10 @@ export default function Hero() {
   const totalContent = bannerCount?.totalContent || 0;
 
   if (isLoading)
-    return <div className="w-full h-[50vh] md:h-[70vh] bg-black/90"></div>;
+    return <div className="w-full h-[50vh] md:h-[75vh] bg-black/90"></div>;
 
   return (
-    <div className="h-[50vh] md:h-[70vh] relative overflow-hidden">
+    <div className="h-[50vh] md:h-[75vh] relative overflow-hidden">
       <div className="relative h-full">
         {/* bg */}
         <img
