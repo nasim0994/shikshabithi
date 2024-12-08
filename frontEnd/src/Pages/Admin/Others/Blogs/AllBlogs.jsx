@@ -2,7 +2,6 @@ import { AiFillEdit } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-
 import { toast } from "react-toastify";
 
 import {
@@ -12,6 +11,7 @@ import {
   useToggleBlogStatusMutation,
 } from "../../../../Redux/api/blogsApi";
 import { useEffect, useState } from "react";
+
 import Pagination from "../../../../Components/Pagination/Pagination";
 import TableSkeleton from "../../../../Components/Skeleton/TableSkeleton";
 import { useGetAllUsersQuery } from "../../../../Redux/api/user/userApi";
@@ -49,8 +49,6 @@ export default function AllBlogs() {
   const { data: user } = useGetAllUsersQuery({});
   const users = user?.data;
 
-  console.log(user);
-
   const pendingBlogs = blogs?.filter((blog) => blog?.status == "pending");
   const activeBlogs = blogs?.filter((blog) => blog?.status == "active");
 
@@ -80,7 +78,7 @@ export default function AllBlogs() {
     }
   };
 
-  let handleActive = async (id) => {
+  const handleActive = async (id) => {
     let isConfirm = window.confirm("are you sure change the status?");
     if (isConfirm) {
       let res = await toggleBlog({ id });

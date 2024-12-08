@@ -1,33 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary: #1b8daa;
-  --secondary: #ff3131;
-}
-
-@font-face {
-  font-family: "solaimanlipi";
-  src: url("./assets/font/SolaimanLipi_22-02-2012.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: "solaimanlipibold";
-  src: url("./assets/font/SolaimanLipi_Bold_10-03-12.ttf") format("truetype");
+  --primary: #1959ad;
+  --secondary: #042a8f;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Rubik", sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden !important;
-}
-
-h2 {
-  font-family: "solaimanlipibold", sans-serif;
-  -webkit-font-smoothing: antialiased;
 }
 
 .container {
@@ -74,7 +59,12 @@ nav a:hover {
 }
 
 .primary_text {
-  background: -webkit-linear-gradient(60deg, #1b8daa, #1b8daa, #f03449);
+  background: -webkit-linear-gradient(
+    60deg,
+    var(--primary),
+    var(--primary),
+    var(--secondary)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -134,7 +124,7 @@ nav a:hover {
   transform: translateX(-50%);
   width: 80%;
   height: 1.5px;
-  background: linear-gradient(90deg, #e7eae8, #1b8daa, #dee2df);
+  background: linear-gradient(90deg, #e7eae8, var(--primary), #dee2df);
 }
 
 /* ------------------Modal---------------- */

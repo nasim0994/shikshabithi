@@ -17,30 +17,32 @@ export default function Hero() {
   const totalContent = bannerCount?.totalContent || 0;
 
   if (isLoading)
-    return <div className="w-full h-[40vh] md:h-[60vh] bg-black/90"></div>;
+    return <div className="w-full h-[50vh] md:h-[70vh] bg-black/90"></div>;
 
   return (
-    <div className="h-[40vh] md:h-[60vh]">
+    <div className="h-[50vh] md:h-[70vh] relative overflow-hidden">
       <div className="relative h-full">
         {/* bg */}
         <img
           src={`${import.meta.env.VITE_BACKEND_URL}/banner/${banner?.bg}`}
-          alt=""
+          alt="banenrBg"
           className="absolute w-full h-full"
           loading="lazy"
         />
 
         {/* Content */}
         <div className="w-full h-full flex flex-col justify-center items-center relative z-30 bg-[#000000b1]">
-          <div className="mt-10 flex flex-col items-center justify-center sm:gap-3">
+          <div className="flex flex-col items-center justify-center sm:gap-3">
             <h3 className="text-2xl md:text-4xl font-bold text-base-100">
               {banner?.title}
             </h3>
-            <h2 className="md:text-xl text-base-100/70">{banner?.subTitle}</h2>
+            <h2 className="sm:w-2/3 text-center mt-2 text-base-100/70">
+              {banner?.subTitle}
+            </h2>
           </div>
 
           {/* Counter */}
-          <div className="md:mt-10 w-[90%] lg:w-1/2 bg-primary/5 rounded-lg mx-auto py-6 md:py-10 px-2 md:px-4 grid grid-cols-3 gap-6">
+          <div className="mt-5 w-[90%] lg:w-1/2 bg-primary/5 rounded-lg mx-auto py-6 md:py-10 px-2 md:px-4 grid grid-cols-3 gap-6">
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <div className="w-7 h-7 md:w-10 md:h-10 rounded-full bg-primary flex justify-center items-center">
                 <img

@@ -33,7 +33,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={`py-2 xl:py-0 sticky top-0 z-40 bg-base-100`}>
+    <header className={`py-2 xl:py-1 sticky top-0 z-40 bg-base-100`}>
       <div className="container">
         <div className="flex justify-between items-center">
           <Link to="/">
@@ -45,7 +45,7 @@ export default function Header() {
                   data?.data?.logo
                 }`}
                 alt="logo"
-                className="w-32 sm:w-44"
+                className="w-40 sm:w-52"
               />
             )}
           </Link>

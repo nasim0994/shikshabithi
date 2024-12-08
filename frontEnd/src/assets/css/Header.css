@@ -193,7 +193,7 @@
 }
 
 .login_btn {
-  background: radial-gradient(circle, #11667b 0%, #1b8daa 100%);
+  background: radial-gradient(circle, var(--primary) 0%, var(--secondary) 100%);
   color: #fff;
   padding: 5px 10px !important;
   border-radius: 4px;
