@@ -11,17 +11,19 @@ export default function FounderSpeech() {
   if (isLoading) return <FounderSkeleton />;
 
   return (
-    <section className="py-5 sm:py-10">
+    <section className="py-5 sm:py-10 bg-[#F2F7FD]">
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-10">
+        <div className="grid md:grid-cols-2">
           <div>
             <h2 className="text-4xl font-bold text-neutral">
               {speech?.name || "Nasim Uddin"}
             </h2>
+            <h4 className="text-primary text-lg mt-2">
+              Founder & CEO of Shiksha Bithi
+            </h4>
 
-            <h5 className="text-neutral/90 text-sm sm:text-[15px] mt-2">
-              {speech?.speech ||
-                "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia, assumenda totam quasi et modi at est ipsam sequi dicta, temporibus inventore ipsa incidunt minus consectetur quisquam, earum commodi quo. Minus doloremque, eligendi consequatur placeat similique perspiciatis ullam maxime repellendus, veritatis qui nulla, odit culpa et. Repellat culpa at officiis voluptate asperiores distinctio optio quam a eos excepturi dolorem minima tempora recusandae exercitationem sapiente obcaecati quis reprehenderit aliquam tempore dolore, ad et. Possimus ea amet magnam commodi."}
+            <h5 className="text-neutral/90 text-sm sm:text-[15px] mt-4">
+              {speech?.speech}
             </h5>
 
             <div className="mt-4">
@@ -36,7 +38,8 @@ export default function FounderSpeech() {
                   speech?.image
                 }`}
                 alt="founder"
-                className="w-[80%] h-[80%] rounded"
+                className="w-[90%] h-[90%] rounded"
+                loading="lazy"
               />
             </div>
 

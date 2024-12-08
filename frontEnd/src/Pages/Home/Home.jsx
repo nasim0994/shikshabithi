@@ -12,8 +12,8 @@ export default function Home() {
       <Feature />
       <Packages />
       <Campaign />
-      <BlogsHome />
       <FounderSpeech />
+      <BlogsHome />
     </main>
   );
 }
